@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cmb_Combo_Tools_Item0" xml:space="preserve">
+    <value>GCProfile (Log)</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item1" xml:space="preserve">
+    <value>GCProfile (PC)</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item10" xml:space="preserve">
+    <value>Rapports SCCM (PC - APPS)</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item12" xml:space="preserve">
+    <value>Démarreur Admin</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item2" xml:space="preserve">
+    <value>GCProfile (User)</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item4" xml:space="preserve">
+    <value>Explorer ++</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item5" xml:space="preserve">
+    <value>Observateur d’événements</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item6" xml:space="preserve">
+    <value>Gestion de l’ordinateur</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item7" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="cmb_Combo_Tools_Item9" xml:space="preserve">
+    <value>Rapports SCCM (PC - PKG)</value>
+  </data>
+  <data name="cmb_Combo_Tools_Text" xml:space="preserve">
+    <value>Sélectionner un item</value>
+  </data>
+  <data name="txt_language_text_en" xml:space="preserve">
+    <value>(Anglais)</value>
+  </data>
+  <data name="txt_language_text_fr" xml:space="preserve">
+    <value>(Français)</value>
+  </data>
+  <data name="txt_logged_no_user" xml:space="preserve">
+    <value>Aucun utilisateur connecté</value>
+  </data>
+  <data name="txt_TypePC_text_desktop" xml:space="preserve">
+    <value>Ordinateur de bureau</value>
+  </data>
+  <data name="txt_TypePC_text_mobile" xml:space="preserve">
+    <value>Appareil mobile</value>
+  </data>
+  <data name="ChoiceMWBypassNo" xml:space="preserve">
+    <value>Non = Installation à la prochaine fenêtre de maintenance (ex. entre 23h00 et 6h00)</value>
+  </data>
+  <data name="ChoiceMWBypassYes" xml:space="preserve">
+    <value>Oui = Installation immédiate</value>
+  </data>
+  <data name="ConfirmAction" xml:space="preserve">
+    <value>Êtes-vous sûr de bien vouloir faire ceci ?</value>
+  </data>
+  <data name="ConfirmComputerName" xml:space="preserve">
+    <value>Assurez-vous que vous avez entré un nom d'ordinateur valide.</value>
+  </data>
+  <data name="ConfirmGPOUpdate" xml:space="preserve">
+    <value>Attention ! Vous êtes sur le point d'envoyer une commande pour mettre à jour le 'GPO' de l’ordinateur à distance.</value>
+  </data>
+  <data name="ConfirmMWBypass" xml:space="preserve">
+    <value>Voulez-vous lancer l'installation de cette application sans attendre la prochaine fenêtre de maintenance?</value>
+  </data>
+  <data name="ConfirmReboot" xml:space="preserve">
+    <value>Attention !  Vous êtes sur le point d’envoyer une commande de redémarrage de l’ordinateur à distance.</value>
+  </data>
+  <data name="ConfirmRemoveHistory" xml:space="preserve">
+    <value>Voulez-vous retirer cette installation de l'historique de l'ordinateur ?</value>
+  </data>
+  <data name="ConfirmRemoveMW" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir retirer ces fenêtres de maintenance?</value>
+  </data>
+  <data name="ConfirmRemoveWMINamespace" xml:space="preserve">
+    <value>L'espace de noms WMI a bien été supprimé</value>
+  </data>
+  <data name="ConfirmStartService" xml:space="preserve">
+    <value>Voulez-vous démarrer le service suivant ?</value>
+  </data>
+  <data name="ConfirmStopProcess" xml:space="preserve">
+    <value>Voulez-vous arrêter le processus suivant ?</value>
+  </data>
+  <data name="ConfirmStopService" xml:space="preserve">
+    <value>Voulez-vous arrêter le service suivant ?</value>
+  </data>
+  <data name="ErrorAnalyzeBeforeRetry" xml:space="preserve">
+    <value>Une erreur s'est produite. Vous devriez analyser la situation avant de relancer cette installation.</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>Impossible de se connecter à l'ordinateur ...</value>
+  </data>
+  <data name="ErrorRegistryConnection" xml:space="preserve">
+    <value>Erreur d'accès au service de registre à distance. Certaines commandes ne fonctionneront pas correctement</value>
+  </data>
+  <data name="ErrorRemoveHistory" xml:space="preserve">
+    <value>Erreur lors de la suppression de l’historique sélectionné.</value>
+  </data>
+  <data name="ErrorSiteCode" xml:space="preserve">
+    <value>Erreur - Impossible de définir le nouveau code de site</value>
+  </data>
+  <data name="ErrorStartService" xml:space="preserve">
+    <value>Une erreur est survenue avec le service lors de la tentative de démarrage. Son état n'a pas été changé.</value>
+  </data>
+  <data name="ErrorStopService" xml:space="preserve">
+    <value>Une erreur est survenue avec le service lors de la tentative d'arrêt. Son état n'a pas été changé.</value>
+  </data>
+  <data name="ErrorTaskSchedule" xml:space="preserve">
+    <value>Erreur de la planification de la tâche suivante</value>
+  </data>
+  <data name="ErrorUnexpected" xml:space="preserve">
+    <value>Erreur inattendue : </value>
+  </data>
+  <data name="ErrorUnreachableComputer" xml:space="preserve">
+    <value>Le nom de l’ordinateur n’est pas valide ou il n’est pas sous tension!</value>
+  </data>
+  <data name="MessageReboot" xml:space="preserve">
+    <value>Redémarrage de l'ordinateur</value>
+  </data>
+  <data name="MessageReinstallClient" xml:space="preserve">
+    <value>Réinstaller le client SCCM sur</value>
+  </data>
+  <data name="SuccessPlannedInstall" xml:space="preserve">
+    <value>Installation planifiée avec succès.</value>
+  </data>
+  <data name="SuccessReboot" xml:space="preserve">
+    <value>Le redémarrage a été envoyé avec succès</value>
+  </data>
+  <data name="SuccessRemoveHistory" xml:space="preserve">
+    <value>L’historique sélectionné a bien été supprimé.</value>
+  </data>
+  <data name="TitleGPUpdate" xml:space="preserve">
+    <value>GPUpdate</value>
+  </data>
+  <data name="WarningReinstallClient" xml:space="preserve">
+    <value>Attention ! Vous êtes sur le point d'envoyer une commande pour réinstaller le client SCCM de l’ordinateur à distance.</value>
+  </data>
+  <data name="WarningVPNSlowRequests" xml:space="preserve">
+    <value> Une connexion à distance RPV a été détectée, les requêtes avec le périphérique client peuvent être plus lentes que d'habitude.</value>
+  </data>
+  <data name="DNSError" xml:space="preserve">
+    <value>Erreur DNS</value>
+  </data>
+  <data name="ServiceWindowDateTimeFormat" xml:space="preserve">
+    <value>yyyy/MM/dd - HH:mm</value>
+  </data>
+  <data name="EvaluationState0" xml:space="preserve">
+    <value>Aucune information n'est disponible.</value>
+  </data>
+  <data name="EvaluationState1" xml:space="preserve">
+    <value>L'application a été réglée à l'état désiré / déterminé</value>
+  </data>
+  <data name="EvaluationState10" xml:space="preserve">
+    <value>L'application attend actuellement l'exécution sérialisée.</value>
+  </data>
+  <data name="EvaluationState11" xml:space="preserve">
+    <value>L'application applique actuellement des dépendances.</value>
+  </data>
+  <data name="EvaluationState12" xml:space="preserve">
+    <value>La demande est actuellement en vigueur.</value>
+  </data>
+  <data name="EvaluationState13" xml:space="preserve">
+    <value>L'installation / désinstallation de l'application requise et le redémarrage sont en attente.</value>
+  </data>
+  <data name="EvaluationState14" xml:space="preserve">
+    <value>L'application est installée / désinstallée et le redémarrage est en attente.</value>
+  </data>
+  <data name="EvaluationState15" xml:space="preserve">
+    <value>La mise à jour est disponible mais en attente d'installation.</value>
+  </data>
+  <data name="EvaluationState16" xml:space="preserve">
+    <value>Échec de l'évaluation de l'application.</value>
+  </data>
+  <data name="EvaluationState17" xml:space="preserve">
+    <value>L'application est actuellement en attente d'une session utilisateur active pour s'appliquer.</value>
+  </data>
+  <data name="EvaluationState18" xml:space="preserve">
+    <value>L'application est actuellement en attente de la déconnexion de tous les utilisateurs.</value>
+  </data>
+  <data name="EvaluationState19" xml:space="preserve">
+    <value>L'application est actuellement en attente d'une connexion utilisateur.</value>
+  </data>
+  <data name="EvaluationState2" xml:space="preserve">
+    <value>L'application n'est pas requise sur le client.</value>
+  </data>
+  <data name="EvaluationState20" xml:space="preserve">
+    <value>Application en cours, en attente de nouvelle tentative.</value>
+  </data>
+  <data name="EvaluationState21" xml:space="preserve">
+    <value>L'application attend que le mode présentation soit désactivé.</value>
+  </data>
+  <data name="EvaluationState22" xml:space="preserve">
+    <value>L'application précharge le contenu (téléchargement en dehors du travail d'installation).</value>
+  </data>
+  <data name="EvaluationState23" xml:space="preserve">
+    <value>L'application précharge le contenu dépendant (téléchargement en dehors du travail d'installation).</value>
+  </data>
+  <data name="EvaluationState24" xml:space="preserve">
+    <value>Échec du téléchargement de l'application (téléchargement pendant le travail d'installation).</value>
+  </data>
+  <data name="EvaluationState25" xml:space="preserve">
+    <value>Échec du préchargement de l'application (téléchargement en dehors du travail d'installation).</value>
+  </data>
+  <data name="EvaluationState26" xml:space="preserve">
+    <value>Succès de téléchargement (téléchargement pendant le travail d'installation).</value>
+  </data>
+  <data name="EvaluationState27" xml:space="preserve">
+    <value>Évaluation post-exécution.</value>
+  </data>
+  <data name="EvaluationState28" xml:space="preserve">
+    <value>En attente de connectivité réseau.</value>
+  </data>
+  <data name="EvaluationState3" xml:space="preserve">
+    <value>L'application est disponible pour l'exécution (installation ou désinstallation basée sur l'état résolu). Le contenu peut / ne peut pas avoir été téléchargé.</value>
+  </data>
+  <data name="EvaluationState4" xml:space="preserve">
+    <value>La dernière application n'a pas réussi à s'appliquer (installer / désinstaller).</value>
+  </data>
+  <data name="EvaluationState5" xml:space="preserve">
+    <value>L'application attend actuellement le téléchargement du contenu pour terminer.</value>
+  </data>
+  <data name="EvaluationState6" xml:space="preserve">
+    <value>L'application attend actuellement le téléchargement du contenu pour terminer.</value>
+  </data>
+  <data name="EvaluationState7" xml:space="preserve">
+    <value>L'application est actuellement en attente de téléchargement de ses dépendances.</value>
+  </data>
+  <data name="EvaluationState8" xml:space="preserve">
+    <value>L'application attend actuellement une fenêtre de maintenance.</value>
+  </data>
+  <data name="EvaluationState9" xml:space="preserve">
+    <value>L'application attend actuellement un redémarrage en attente.</value>
+  </data>
+  <data name="EvaluationStateElse" xml:space="preserve">
+    <value>Aucune information n'est disponible.</value>
+  </data>
+  <data name="MsgClipboard" xml:space="preserve">
+    <value>Pour faciliter l'accès au site externe le nom de l'ordinateur a été ajouté au presse-papier. Vous pouvez le coller (CTRL+V) dans le champ demandé.</value>
+  </data>
+  <data name="ServiceWindowTimeFormat" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+  <data name="ToolTip_Main_Assistance" xml:space="preserve">
+    <value>Assistance à distance</value>
+  </data>
+  <data name="ToolTip_Main_Explorer" xml:space="preserve">
+    <value>Explorer ++</value>
+  </data>
+  <data name="ToolTip_Main_GroupBox2" xml:space="preserve">
+    <value>Double-cliquez sur une fenêtre de maintenance entrée manuellement (en rouge) pour l'effacer</value>
+  </data>
+  <data name="ToolTip_Main_Reboot" xml:space="preserve">
+    <value>Redémarrage de l'ordinateur</value>
+  </data>
+  <data name="ToolTip_Main_remote" xml:space="preserve">
+    <value>Bureau à distance</value>
+  </data>
+  <data name="ToolTip_Main_SiteCode_result" xml:space="preserve">
+    <value>Double-cliquez sur un code de site erroné pour le changer</value>
+  </data>
+  <data name="ToolTip_UserGuide" xml:space="preserve">
+    <value>Guide d'utilisation</value>
+  </data>
+  <data name="ToolStripMenuItem_About" xml:space="preserve">
+    <value>À propos de</value>
+  </data>
+  <data name="ToolStripMenuItem_UserGuide" xml:space="preserve">
+    <value>Guide d'utilisateur</value>
+  </data>
+  <data name="WarningUninstallClient" xml:space="preserve">
+    <value>Attention ! Vous êtes sur le point d'envoyer une commande pour déinstaller le client SCCM de l’ordinateur à distance.</value>
+  </data>
+  <data name="Message_Delete_TS" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir retirer cette Séquence de tâches?</value>
+  </data>
+  <data name="AppDiscovery" xml:space="preserve">
+    <value>Enregistre les détails concernant la découverte ou la détection des applications sur les ordinateurs clients.</value>
+  </data>
+  <data name="AppEnforce" xml:space="preserve">
+    <value>Enregistre des détails concernant les actions de mise en œuvre (installation et désinstallation) effectuées pour les applications sur le client.</value>
+  </data>
+  <data name="AppIntentEval" xml:space="preserve">
+    <value>Enregistre des détails concernant l'état actuel et prévu des applications, leur applicabilité, si les exigences ont été respectées, les types de déploiement et les dépendances.</value>
+  </data>
+  <data name="AssetAdvisor" xml:space="preserve">
+    <value>Enregistre les activités des actions d'inventaire d'Asset Intelligence.</value>
+  </data>
+  <data name="BgbHttpProxy" xml:space="preserve">
+    <value>Enregistre les activités du proxy HTTP de notification lors de la transmission des messages des clients via HTTP depuis et vers le serveur de notification.</value>
+  </data>
+  <data name="CAS" xml:space="preserve">
+    <value>Service d’accès au contenu. Conserve le cache du package local sur le client.</value>
+  </data>
+  <data name="Ccm32BitLauncher" xml:space="preserve">
+    <value>Enregistre les actions liées au démarrage des applications sur le client marqué « run as 32bit » (exécuter en 32 bits).</value>
+  </data>
+  <data name="CcmEval" xml:space="preserve">
+    <value>Enregistre des activités d’évaluation liées à l’état du client Configuration Manager et des détails sur les composants exigés par le client Configuration Manager.</value>
+  </data>
+  <data name="CcmEvalTask" xml:space="preserve">
+    <value>Enregistre des activités d’évaluation liées à l’état du client Configuration Manager lancées par la tâche planifiée d’évaluation.</value>
+  </data>
+  <data name="CcmExec" xml:space="preserve">
+    <value>Enregistre les activités du client et du service Hôte d'agent SMS. Ce fichier journal inclut également des informations sur l'activation et la désactivation du proxy de mise en éveil.</value>
+  </data>
+  <data name="CcmMessaging" xml:space="preserve">
+    <value>Enregistre les activités liées à la communication entre le client et les points de gestion.</value>
+  </data>
+  <data name="CCMNotificationAgent" xml:space="preserve">
+    <value>Enregistre les activités liées aux opérations de notification du client.</value>
+  </data>
+  <data name="Ccmperf" xml:space="preserve">
+    <value>Enregistre les activités liées à la maintenance et la capture de données relatives aux compteurs de performances du client.</value>
+  </data>
+  <data name="CcmRepair" xml:space="preserve">
+    <value>Enregistre les activités de réparation de l'agent du client.</value>
+  </data>
+  <data name="CcmRestart" xml:space="preserve">
+    <value>Enregistre les activités de redémarrage du client.</value>
+  </data>
+  <data name="CCMSDKProvider" xml:space="preserve">
+    <value>Enregistre les activités pour les interfaces du kit de développement logiciel (SDK) client.</value>
+  </data>
+  <data name="ccmsetup" xml:space="preserve">
+    <value>Enregistre les tâches de ccmsetup.exe liées au programme d’installation du client, à la mise à niveau du client et à la suppression de client. Permet de dépanner des problèmes d'installation du client.</value>
+  </data>
+  <data name="ccmsetup_ccmeval" xml:space="preserve">
+    <value>Enregistre les tâches de ccmsetup.exe liées à l’état et à la correction du client.</value>
+  </data>
+  <data name="CertificateMaintenance" xml:space="preserve">
+    <value>Conserve les certificats pour les points de gestion et le service de domaine Active Directory.</value>
+  </data>
+  <data name="CIAgent" xml:space="preserve">
+    <value>Enregistre des détails concernant le processus de correction et de compatibilité pour les paramètres de compatibilité, les mises à jour logicielles et la gestion d'applications.</value>
+  </data>
+  <data name="CIDownloader" xml:space="preserve">
+    <value>Enregistre des détails sur les téléchargements des définitions des éléments de configuration.</value>
+  </data>
+  <data name="CITaskManager" xml:space="preserve">
+    <value>Enregistre des informations sur la planification des tâches des éléments de configuration.</value>
+  </data>
+  <data name="CITaskMgr" xml:space="preserve">
+    <value>Enregistre les tâches lancées pour chaque type d’application et de déploiement, comme le téléchargement de contenu, et les actions d’installation ou de désinstallation.</value>
+  </data>
+  <data name="ClientAuth" xml:space="preserve">
+    <value>Enregistre l’activité de signature et d’authentification pour le client.</value>
+  </data>
+  <data name="ClientIDManagerStartup" xml:space="preserve">
+    <value>Crée et conserve le GUID du client et identifie les tâches effectuées pendant l'inscription et l'attribution des clients.</value>
+  </data>
+  <data name="ClientLocation" xml:space="preserve">
+    <value>Enregistre les tâches liées à l'attribution d'un site client.</value>
+  </data>
+  <data name="client_msi" xml:space="preserve">
+    <value>Enregistre les tâches d'installation exécutées par client.msi. Permet de dépanner les problèmes d'installation ou de suppression du client.</value>
+  </data>
+  <data name="CMHttpsReadiness" xml:space="preserve">
+    <value>Enregistre les résultats de l’exécution de l’outil d’évaluation d’analyse HTTPS de Configuration Manager. Cet outil vérifie si les ordinateurs disposent d’un certificat d’authentification de client PKI qui peut être utilisé avec Configuration Manager.</value>
+  </data>
+  <data name="CmRcService" xml:space="preserve">
+    <value>Enregistre des informations pour le service de contrôle à distance.</value>
+  </data>
+  <data name="ConfigMgrSoftwareCatalog" xml:space="preserve">
+    <value>Enregistre l'activité du catalogue d'applications, dont l'utilisation de Silverlight.</value>
+  </data>
+  <data name="ContentTransferManager" xml:space="preserve">
+    <value>Planifie le service BITS (Background Intelligent Transfer Service) ou SMB (Server Message Block) pour leur permettre de télécharger des packages ou d’y accéder.</value>
+  </data>
+  <data name="DataTransferService" xml:space="preserve">
+    <value>Enregistre toutes les communications BITS relatives à l'accès aux stratégies ou aux packages.</value>
+  </data>
+  <data name="DCMAgent" xml:space="preserve">
+    <value>Enregistre les informations principales concernant l'évaluation, les rapports de conflit et la correction des éléments de configuration et des applications.</value>
+  </data>
+  <data name="DCMReporting" xml:space="preserve">
+    <value>Enregistre des informations sur les rapports des résultats de la plateforme de stratégie sous forme de messages d'état pour les éléments de configuration.</value>
+  </data>
+  <data name="DcmWmiProvider" xml:space="preserve">
+    <value>Enregistre des informations sur la lecture des synclets d’élément de configuration provenant de WMI.</value>
+  </data>
+  <data name="EndpointProtectionAgent" xml:space="preserve">
+    <value>Enregistre des informations concernant l’installation du client System Center Endpoint Protection et l’application de la stratégie anti-programme malveillant à ce client.</value>
+  </data>
+  <data name="execmgr" xml:space="preserve">
+    <value>Enregistre des détails concernant les packages et les séquences de tâches qui s'exécutent sur le client.</value>
+  </data>
+  <data name="ExpressionSolver" xml:space="preserve">
+    <value>Enregistre des informations détaillées concernant les méthodes de détection améliorées utilisées quand la journalisation détaillée ou de débogage est activée.</value>
+  </data>
+  <data name="ExternalEventAgent" xml:space="preserve">
+    <value>Enregistre l'historique de la détection des programmes malveillants par Endpoint Protection et des événements liés à l'état du client.</value>
+  </data>
+  <data name="FileBITS" xml:space="preserve">
+    <value>Enregistre toutes les tâches d'accès aux packages SMB.</value>
+  </data>
+  <data name="FileSystemFile" xml:space="preserve">
+    <value>Enregistre l'activité du fournisseur de l'infrastructure de gestion Windows (WMI) pour l'inventaire logiciel et le regroupement de fichiers.</value>
+  </data>
+  <data name="FSPStateMessage" xml:space="preserve">
+    <value>Enregistre l'activité des messages d'état envoyés par le client au point d'état de secours.</value>
+  </data>
+  <data name="InternetProxy" xml:space="preserve">
+    <value>Enregistre l’activité de configuration de proxy et d’utilisation réseau pour le client.</value>
+  </data>
+  <data name="InventoryAgent" xml:space="preserve">
+    <value>Enregistre les activités de l'inventaire matériel et logiciel et les actions de découverte par pulsations effectuées sur le client.</value>
+  </data>
+  <data name="loadstate" xml:space="preserve">
+    <value>Enregistre des détails concernant l'outil de migration de l'état utilisateur (USMT) et la restauration des données d'état de l'utilisateur.</value>
+  </data>
+  <data name="LocationCache" xml:space="preserve">
+    <value>Enregistre l’activité d’utilisation de l’emplacement du cache et de maintenance pour le client.</value>
+  </data>
+  <data name="LocationServices" xml:space="preserve">
+    <value>Enregistre l'activité du client pour la localisation des points de gestion, des points de mise à jour logicielle et des points de distribution.</value>
+  </data>
+  <data name="MaintenanceCoordinator" xml:space="preserve">
+    <value>Enregistre l’activité des tâches de maintenance générale pour le client.</value>
+  </data>
+  <data name="Mifprovider" xml:space="preserve">
+    <value>Enregistre l’activité du fournisseur WMI pour les fichiers .MIF (Management Information Format).</value>
+  </data>
+  <data name="mtrmgr" xml:space="preserve">
+    <value>Surveille tous les processus de contrôle des logiciels.</value>
+  </data>
+  <data name="PolicyAgent" xml:space="preserve">
+    <value>Enregistre les demandes de stratégie effectuées via le service de transfert de données.</value>
+  </data>
+  <data name="PolicyAgentProvider" xml:space="preserve">
+    <value>Enregistre les changements de stratégie.</value>
+  </data>
+  <data name="PolicyEvaluator" xml:space="preserve">
+    <value>Enregistre des détails concernant l'évaluation des stratégies sur les ordinateurs clients, dont les stratégies de mises à jour logicielles.</value>
+  </data>
+  <data name="PolicyPlatformClient" xml:space="preserve">
+    <value>Enregistre le processus de correction et de conformité pour tous les fournisseurs dans %Program Files%\Microsoft Policy Platform, à l’exception du fournisseur de fichier.</value>
+  </data>
+  <data name="PolicySdk" xml:space="preserve">
+    <value>Enregistre les activités pour les interfaces du kit de développement logiciel (SDK) de système de stratégie.</value>
+  </data>
+  <data name="Pwrmgmt" xml:space="preserve">
+    <value>Enregistre les informations liées à l'activation ou à la désactivation et à la configuration des paramètres client du proxy de mise en éveil.</value>
+  </data>
+  <data name="PwrProvider" xml:space="preserve">
+    <value>Enregistre les activités du fournisseur de la gestion de l’alimentation (PWRInvProvider) hébergé dans le service WMI. Sur toutes les versions prises en charge de Windows, le fournisseur énumère les paramètres actuels sur les ordinateurs pendant l'inventaire matériel et applique des paramètres de mode d'alimentation.</value>
+  </data>
+  <data name="RebootCoordinator" xml:space="preserve">
+    <value>Enregistre des détails concernant la coordination des redémarrages du système sur des ordinateurs clients après l'installation de mises à jour logicielles.</value>
+  </data>
+  <data name="ScanAgent" xml:space="preserve">
+    <value>Enregistre des détails concernant les demandes d'analyse pour les mises à jour logicielles, l'emplacement de WSUS et des actions connexes.</value>
+  </data>
+  <data name="scanstate" xml:space="preserve">
+    <value>Enregistre des détails concernant l'outil de migration de l'état utilisateur (USMT) et la capture des données d'état de l'utilisateur.</value>
+  </data>
+  <data name="Scheduler" xml:space="preserve">
+    <value>Enregistre les activités des tâches planifiées pour toutes les opérations du client.</value>
+  </data>
+  <data name="SdmAgent" xml:space="preserve">
+    <value>Enregistre les détails concernant le suivi des corrections et de la conformité. Cependant, le fichier journal des mises à jour logicielles, Updateshandler.log, fournit plus d’informations sur l’installation des mises à jour logicielles nécessaires pour la conformité. Ce fichier journal est partagé avec les paramètres de compatibilité.</value>
+  </data>
+  <data name="ServiceWindowManager" xml:space="preserve">
+    <value>Enregistre des détails concernant l'évaluation des fenêtres de maintenance.</value>
+  </data>
+  <data name="Setupact" xml:space="preserve">
+    <value>Enregistre des détails sur Windows Sysprep et les journaux d'installation.</value>
+  </data>
+  <data name="Setupapi" xml:space="preserve">
+    <value>Enregistre des détails sur Windows Sysprep et les journaux d'installation.</value>
+  </data>
+  <data name="Setuperr" xml:space="preserve">
+    <value>Enregistre des détails sur Windows Sysprep et les journaux d'installation.</value>
+  </data>
+  <data name="setuppolicyevaluator" xml:space="preserve">
+    <value>Enregistre la création de stratégies d'inventaire et de configuration dans WMI.</value>
+  </data>
+  <data name="smpisapi" xml:space="preserve">
+    <value>Enregistre des détails concernant les actions de capture de l'état du client et de restauration, et les informations de seuil.</value>
+  </data>
+  <data name="smscliui" xml:space="preserve">
+    <value>Enregistre l’utilisation du client Configuration Manager dans le Panneau de configuration.</value>
+  </data>
+  <data name="Smsts" xml:space="preserve">
+    <value>Enregistre les activités de séquences de tâches.</value>
+  </data>
+  <data name="SmsWusHandler" xml:space="preserve">
+    <value>Enregistre des détails concernant le processus d'analyse pour l'outil d'inventaire de Microsoft Updates.</value>
+  </data>
+  <data name="SoftwareCatalogUpdateEndpoint" xml:space="preserve">
+    <value>Enregistre les activités de gestion de l’URL du catalogue d’applications indiquée dans le Centre logiciel.</value>
+  </data>
+  <data name="SoftwareCenterSystemTasks" xml:space="preserve">
+    <value>Enregistre les activités liées à la validation des composants prérequis du Centre logiciel.</value>
+  </data>
+  <data name="SrcUpdateMgr" xml:space="preserve">
+    <value>Enregistre l'activité pour les applications Windows Installer installées, qui sont mises à jour avec les emplacements sources du point de distribution actuel.</value>
+  </data>
+  <data name="StateMessage" xml:space="preserve">
+    <value>Enregistre les détails concernant les messages d’état des mises à jour logicielles qui sont créés et envoyés au point de gestion.</value>
+  </data>
+  <data name="StatusAgent" xml:space="preserve">
+    <value>Enregistre les messages d'état créés par les composants des clients.</value>
+  </data>
+  <data name="SWMTRReportGen" xml:space="preserve">
+    <value>Génère un rapport des données d’utilisation collectées par l’agent de contrôle. Ces données sont enregistrées dans le fichier journal Mtrmgr.log.</value>
+  </data>
+  <data name="TSAgent" xml:space="preserve">
+    <value>Enregistre le résultat des dépendances des séquences de tâche avant de démarrer une séquence de tâches.</value>
+  </data>
+  <data name="UpdatesDeployment" xml:space="preserve">
+    <value>Enregistre des détails concernant les déploiements sur le client, y compris l'activation, l'évaluation et l'application des mises à jour logicielles. La journalisation documentée contient des informations supplémentaires sur l'interaction avec l'interface utilisateur du client.</value>
+  </data>
+  <data name="UpdatesHandler" xml:space="preserve">
+    <value>Enregistre des détails concernant l'analyse de la compatibilité des mises à jour logicielles, ainsi que le téléchargement et l'installation des mises à jour logicielles sur le client.</value>
+  </data>
+  <data name="UpdatesStore" xml:space="preserve">
+    <value>Enregistre des détails concernant l'état de compatibilité des mises à jour logicielles qui ont été évaluées au cours du cycle d'analyse de la compatibilité.</value>
+  </data>
+  <data name="UserAffinity" xml:space="preserve">
+    <value>Enregistre les détails relatifs à l'affinité entre appareil et utilisateur.</value>
+  </data>
+  <data name="VirtualApp" xml:space="preserve">
+    <value>Enregistre des informations spécifiques à l’évaluation des types de déploiement App-V (Application Virtualization).</value>
+  </data>
+  <data name="wakeprxy_install" xml:space="preserve">
+    <value>Enregistre les informations liées à l’installation quand les clients reçoivent l’option du paramètre client d’activation du proxy de mise en éveil.</value>
+  </data>
+  <data name="wakeprxy_uninstall" xml:space="preserve">
+    <value>Enregistre les informations liées à la désinstallation du proxy de mise en éveil quand les clients reçoivent l’option de désactivation du paramètre client du proxy de mise en éveil, si ce proxy a été précédemment activé.</value>
+  </data>
+  <data name="Wedmtrace" xml:space="preserve">
+    <value>Enregistre les opérations liées aux filtres d'écriture sur les clients Windows Embedded.</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Enregistre les détails concernant les connexions de l’agent Windows Update au serveur WSUS et la récupération des mises à jour logicielles pour l’évaluation de la conformité, et s’il existe des mises à jour pour les composants de l’agent.</value>
+  </data>
+  <data name="WUAHandler" xml:space="preserve">
+    <value>Enregistre des détails concernant l'agent Windows Update sur le client, lors de la recherche des mises à jour logicielles.</value>
+  </data>
+  <data name="Message_file_ini_missing" xml:space="preserve">
+    <value>Le fichier SCCMPCADMIN.INI est manquant.</value>
+  </data>
+  <data name="Message_Domain_Missing" xml:space="preserve">
+    <value>L'ordinateur doit être joint a un domain avant de réinstaller le client SCCM.</value>
+  </data>
+  <data name="Missing_INI_Files" xml:space="preserve">
+    <value>Le fichier "C:\Utils-outils\SCCMPCAdmin\SCCMPCAdmin.ini" est manquant, assurez-vous que tous les fichiers sont présents avant d'exécuter SCCMPCAdmin</value>
+  </data>
+  <data name="CCM_COMMAND_1" xml:space="preserve">
+    <value>Empêche l’exécution de CCMSetup comme service (comportement par défaut). Quand CCMSetup est exécuté comme service, il s’exécute dans le contexte du compte système local de l’ordinateur, qui peut ne pas disposer des droits suffisants pour accéder aux ressources réseau nécessaires pour l’installation. Avec /noservice, CCMSetup.exe s’exécute dans le contexte du compte d’utilisateur que vous utilisez pour démarrer l’installation. Par ailleurs, si vous utilisez un script pour exécuter CCMSetup.exe avec la propriété /service, CCMSetup.exe s’arrête au démarrage du service et risque de ne pas renvoyer correctement les détails de l’installation.</value>
+  </data>
+  <data name="CCM_COMMAND_10" xml:space="preserve">
+    <value>Indique la priorité de téléchargement lorsque les fichiers d'installation du client sont téléchargés via une connexion HTTP. Les valeurs possibles sont les suivantes : FOREGROUND (avant-plan), HIGH (élevée), NORMAL (normale), LOW (faible), La valeur par défaut est NORMAL.</value>
+  </data>
+  <data name="CCM_COMMAND_11" xml:space="preserve">
+    <value>Durée (en minutes) pendant laquelle CCMSetup essaie de télécharger les fichiers d’installation avant d’arrêter. La valeur par défaut est 1 440 minutes (1 jour).</value>
+  </data>
+  <data name="CCM_COMMAND_12" xml:space="preserve">
+    <value>Indique que CCMSetup.exe ne doit pas installer le programme prérequis spécifié pendant l’installation du client Configuration Manager. Cette propriété accepte plusieurs valeurs. Pour séparer chaque valeur, utilisez le point-virgule (;).</value>
+  </data>
+  <data name="CCM_COMMAND_13" xml:space="preserve">
+    <value>Utilisez ceci pour indiquer une ligne de commande personnalisée après le "ccmsetup.exe"</value>
+  </data>
+  <data name="CCM_COMMAND_14" xml:space="preserve">
+    <value> Indique le site Configuration Manager auquel attribuer le client Configuration Manager. Il peut s’agir d’un code de site à trois caractères ou du mot AUTO. Si AUTO est spécifié ou si cette propriété n’est pas spécifiée, le client tente de déterminer son affectation de site Configuration Manager à partir des services de domaine Active Directory ou d’un point de gestion spécifié. Pour activer AUTO pour les mises à niveau du client, vous devez également affecter à SITEREASSIGN la valeur TRUE.  N'utilisez pas AUTO si vous spécifiez également le point de gestion basé sur Internet (CCMHOSTNAME). Dans ce cas, vous devez directement attribuer le client à son site. </value>
+  </data>
+  <data name="CCM_COMMAND_15" xml:space="preserve">
+    <value>Spécifie un point de gestion initial à utiliser par le client Configuration Manager.  Si le point de gestion accepte uniquement les connexions clientes sur HTTPS, vous devez ajouter le préfixe https:// au nom du point de gestion. </value>
+  </data>
+  <data name="CCM_COMMAND_16" xml:space="preserve">
+    <value>Active l’enregistrement du débogage dans le journal (journalisation). Les valeurs peuvent être définies sur 0 (désactivée, par défaut) ou sur 1 (activée). Dans ce cas, le client enregistre dans le journal des informations détaillées pour le dépannage. Nous vous recommandons d'éviter d'utiliser cette propriété dans des sites en production, car une journalisation excessive peut alors se produire et compliquer la recherche d'informations pertinentes dans les fichiers journaux. CCMENABLELOGGING doit être également définie sur TRUE pour activer la journalisation du débogage.</value>
+  </data>
+  <data name="CCM_COMMAND_17" xml:space="preserve">
+    <value>Fréquence d’exécution de l’outil d’évaluation de l’intégrité du client (ccmeval.exe). La valeur peut être comprise entre 1 et 1440 minutes. Par défaut, il est exécuté une fois par jour.</value>
+  </data>
+  <data name="CCM_COMMAND_18" xml:space="preserve">
+    <value>Heure d’exécution de l’outil d’évaluation de l’intégrité du client (ccmeval.exe), entre 0 (minuit) et 23 (23 h). S’exécute à minuit par défaut.</value>
+  </data>
+  <data name="CCM_COMMAND_19" xml:space="preserve">
+    <value>Indique le nom de domaine complet du point de gestion basé sur Internet, si le client est géré sur Internet.  N'attribuez pas la propriété d'installation SMSSITECODE=AUTO à cette option. Vous devez directement attribuer les clients Internet à leur site Internet. </value>
+  </data>
+  <data name="CCM_COMMAND_2" xml:space="preserve">
+    <value>Indique que CCMSetup doit s'exécuter comme un service qui utilise le compte système local.</value>
+  </data>
+  <data name="CCM_COMMAND_20" xml:space="preserve">
+    <value>Indique le port que le client doit utiliser lors de la communication sur HTTP avec des serveurs de système de site. Le port 80 est le port par défaut.</value>
+  </data>
+  <data name="CCM_COMMAND_21" xml:space="preserve">
+    <value>Indique le port que le client doit utiliser lors de la communication sur HTTPS avec des serveurs de système de site. Le port 443 est le port par défaut.</value>
+  </data>
+  <data name="CCM_COMMAND_22" xml:space="preserve">
+    <value>Indique le niveau de détails à écrire dans les fichiers journaux de Configuration Manager. Spécifiez un entier entre 0 et 3, où 0 représente la journalisation la plus complète et où 3 ne consigne que les erreurs. La valeur par défaut est 1.</value>
+  </data>
+  <data name="CCM_COMMAND_23" xml:space="preserve">
+    <value> Spécifie un domaine DNS pour que les clients localisent les points de gestion qui sont publiés dans DNS. Lorsqu'un point de gestion est localisé, il indique au client d'autres points de gestion dans la hiérarchie. Cela signifie qu'il n'est pas nécessaire que le point de gestion qui est localisé à l'aide de la publication DNS provienne du site du client, et il peut s'agir de n'importe quel point de gestion de la hiérarchie. Vous n'êtes pas tenu de spécifier cette propriété si le client se trouve dans le même domaine qu'un point de gestion publié. Dans ce cas, le domaine du client est automatiquement utilisé pour rechercher des points de gestion dans DNS. Par défaut, la publication DNS n’est pas activée dans Configuration Manager.</value>
+  </data>
+  <data name="CCM_COMMAND_24" xml:space="preserve">
+    <value>Indique le point d’état de secours qui reçoit et traite les messages d’état envoyés par les ordinateurs clients Configuration Manager.</value>
+  </data>
+  <data name="CCM_COMMAND_25" xml:space="preserve">
+    <value>Permet la réattribution de site automatique pour les mises à niveau du client si cette propriété est utilisée avec SMSSITECODE=AUTO.</value>
+  </data>
+  <data name="CCM_COMMAND_26" xml:space="preserve">
+    <value>Indique que l’état du client sera signalé, mais que les problèmes détectés au niveau du client ne seront pas corrigés.</value>
+  </data>
+  <data name="CCM_COMMAND_27" xml:space="preserve">
+    <value>À partir de Configuration Manager version 1606, de nouveaux paramètres client sont disponibles pour spécifier la taille du dossier du cache du client. L’ajout de ces paramètres du client remplace l’utilisation de SMSCACHESIZE comme propriété client.msi pour spécifier la taille du cache du client. Pour plus d’informations, consultez les paramètres du client pour la taille du cache. Pour la version 1602 et antérieure, SMSCACHESIZE indique la taille du dossier mis dans la mémoire cache du client en mégaoctets (Mo) ou sous forme de pourcentage quand elle est utilisée avec la propriété PERCENTDISKSPACE ou PERCENTFREEDISKSPACE. Si cette propriété n’est pas définie, la taille maximale du dossier est par défaut de 5120 Mo. La valeur la plus basse que vous pouvez spécifier est 1 Mo.  Si un nouveau package qui doit être téléchargé peut provoquer le dépassement de la taille maximale du dossier et que le dossier ne peut pas être purgé pour libérer un espace suffisant, le téléchargement du package échoue et le programme ou l'application ne s'exécute pas. Ce paramètre est ignoré lorsque vous mettez à niveau un client existant et lorsque le client télécharge les mises à jour logicielles.</value>
+  </data>
+  <data name="CCM_COMMAND_28" xml:space="preserve">
+    <value>Indique si le client peut utiliser les services WINS (Windows Internet Name Service) pour trouver un point de gestion qui accepte les connexions HTTP. Les clients utilisent cette méthode lorsqu'ils ne peuvent pas trouver de point de gestion dans les services de domaine Active Directory ou dans DNS. Cette propriété n’a pas d’impact sur le fait que le client utilise ou non WINS pour la résolution de noms. Vous pouvez configurer deux modes différents pour cette propriété : -NOWINS : il s’agit du paramètre le plus sûr pour cette propriété et il empêche les clients de trouver un point de gestion dans le service WINS. Lorsque vous utilisez ce paramètre, les clients doivent disposer d'une autre méthode de localisation d'un point de gestion sur l'Intranet, telle que les services de domaine Active Directory ou en utilisant la publication DNS. -WINSSECURE (valeur par défaut) : dans ce mode, un client qui utilise la communication HTTP peut utiliser WINS pour trouver un point de gestion. Toutefois, le client doit disposer d'une copie de la clé racine approuvée avant de pouvoir se connecter correctement au point de gestion.</value>
+  </data>
+  <data name="CCM_COMMAND_3" xml:space="preserve">
+    <value>Indique que le logiciel client doit être désinstallé. Pour plus d'informations, voir Comment gérer des clients dans Configuration Manager.</value>
+  </data>
+  <data name="CCM_COMMAND_4" xml:space="preserve">
+    <value>Force l’installation du client à s’arrêter si une version du client est déjà installée.</value>
+  </data>
+  <data name="CCM_COMMAND_5" xml:space="preserve">
+    <value>Indique que CCMSetup doit forcer l’ordinateur client à redémarrer si nécessaire pour terminer l’installation. Sinon, CCMSetup se ferme quand un redémarrage est nécessaire et continue après le prochain redémarrage manuel.</value>
+  </data>
+  <data name="CCM_COMMAND_6" xml:space="preserve">
+    <value>Spécifie que l’ordinateur est autorisé à redémarrer après l’installation du client, si nécessaire. ***  L’ordinateur redémarre sans avertissement, même si un utilisateur est connecté. ***</value>
+  </data>
+  <data name="CCM_COMMAND_7" xml:space="preserve">
+    <value> Spécifie qu’un client ne doit pas vérifier la liste de révocation de certificats (CRL) quand il communique via HTTPS avec un certificat PKI.  Quand cette propriété n’est pas spécifiée, le client vérifie la liste de révocation de certificats avant d’établir une connexion HTTPS. </value>
+  </data>
+  <data name="CCM_COMMAND_8" xml:space="preserve">
+    <value>Force la désinstallation du client existant avant l’installation du nouveau client.</value>
+  </data>
+  <data name="CCM_COMMAND_9" xml:space="preserve">
+    <value>Intervalle entre les tentatives si CCMSetup.exe ne réussit pas à télécharger les fichiers d’installation. CCMSetup renouvelle les tentatives jusqu’à atteindre la limite indiquée dans la propriété downloadtimeout.</value>
+  </data>
+  <data name="Error_BAD_AD" xml:space="preserve">
+    <value>L'ordinateur, que vous venez d'entré, ce retrouve dans un "OU" qui n'est pas pris en compte dans SCCM, SVP veuille a vous assurez que vous avez le bon nom d'ordinateur ou déplacer le dans le bon "OU".</value>
+  </data>
+</root>

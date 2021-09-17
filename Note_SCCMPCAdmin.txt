@@ -1,0 +1,16 @@
+Note et page web importante
+
+*********************************************************************************************************************************
+
+FR (Fichiers journaux dans System Center Configuration Manager)
+https://docs.microsoft.com/fr-ca/sccm/core/plan-design/hierarchy/log-files#BKMK_AppManageLog
+EN (Log files in System Center Configuration Manager)
+https://docs.microsoft.com/en-us/sccm/core/plan-design/hierarchy/log-files#BKMK_CompSettingsLog
+
+*********************************************************************************************************************************
+
+About client installation properties in System Center Configuration Manager
+https://docs.microsoft.com/en-us/sccm/core/clients/deploy/about-client-installation-properties
+
+*********************************************************************************************************************************
+

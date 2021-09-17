@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{320F8418-EEA8-4863-8383-823757DE410C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>PC_.My.MyApplication</StartupObject>
+    <RootNamespace>PC_</RootNamespace>
+    <AssemblyName>SCCMPCAdmin</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>publier\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SCCMPCAdmin.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SCCMPCAdmin.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Oxygen-Icons.org-Oxygen-Devices-computer.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adv_Mode - Collection.Designer.vb">
+      <DependentUpon>Adv_Mode - Collection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adv_Mode - Collection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adv_Mode - SCCM_Client.Designer.vb">
+      <DependentUpon>Adv_Mode - SCCM_Client.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adv_Mode - SCCM_Client.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="DEBUG.Designer.vb">
+      <DependentUpon>DEBUG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DEBUG.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PC_Information.Designer.vb">
+      <DependentUpon>PC_Information.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PC_Information.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalizedForm.Designer.vb">
+      <DependentUpon>LocalizedForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adv_Clean.Designer.vb">
+      <DependentUpon>Adv_Clean.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adv_Clean.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Adv_Mode.Designer.vb">
+      <DependentUpon>Adv_Mode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adv_Mode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_MultiUser.Designer.vb">
+      <DependentUpon>Popup_MultiUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_MultiUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_Reinstall_Client_INFOMSG.Designer.vb">
+      <DependentUpon>Popup_Reinstall_Client_INFOMSG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_Reinstall_Client_INFOMSG.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources.en-CA.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.en-CA.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources.fr-CA.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.fr-CA.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Wait.Designer.vb">
+      <DependentUpon>Wait.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Wait.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_MW_Time.Designer.vb">
+      <DependentUpon>Popup_MW_Time.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_MW_Time.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_Reinstall_Client.Designer.vb">
+      <DependentUpon>Popup_Reinstall_Client.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_Reinstall_Client.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SCCM_Action_Tools.Designer.vb">
+      <DependentUpon>SCCM_Action_Tools.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SCCM_Action_Tools.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Software.Designer.vb">
+      <DependentUpon>Software.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Software.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_Refresh_WSUS.Designer.vb">
+      <DependentUpon>Popup_Refresh_WSUS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_Refresh_WSUS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_Refresh_Apps.Designer.vb">
+      <DependentUpon>Popup_Refresh_Apps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_Refresh_Apps.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WSUS_SCUP.Designer.vb">
+      <DependentUpon>WSUS_SCUP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WSUS_SCUP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Package_Apps.Designer.vb">
+      <DependentUpon>Package_Apps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Package_Apps.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main_Start_Form.Designer.vb">
+      <DependentUpon>Main_Start_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main_Start_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mod_Class.vb" />
+    <Compile Include="Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.vb">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="About.en-CA.resx">
+      <DependentUpon>About.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About.fr-CA.resx">
+      <DependentUpon>About.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Clean.en-CA.resx">
+      <DependentUpon>Adv_Clean.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Clean.fr-CA.resx">
+      <DependentUpon>Adv_Clean.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - Collection.en-CA.resx">
+      <DependentUpon>Adv_Mode - Collection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - Collection.fr-CA.resx">
+      <DependentUpon>Adv_Mode - Collection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - Collection.resx">
+      <DependentUpon>Adv_Mode - Collection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - SCCM_Client.en-CA.resx">
+      <DependentUpon>Adv_Mode - SCCM_Client.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - SCCM_Client.fr-CA.resx">
+      <DependentUpon>Adv_Mode - SCCM_Client.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode - SCCM_Client.resx">
+      <DependentUpon>Adv_Mode - SCCM_Client.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode.en-CA.resx">
+      <DependentUpon>Adv_Mode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode.fr-CA.resx">
+      <DependentUpon>Adv_Mode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DEBUG.resx">
+      <DependentUpon>DEBUG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PC_Information.en-CA.resx">
+      <DependentUpon>PC_Information.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PC_Information.fr-CA.resx">
+      <DependentUpon>PC_Information.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PC_Information.resx">
+      <DependentUpon>PC_Information.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedForm.resx">
+      <DependentUpon>LocalizedForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Clean.resx">
+      <DependentUpon>Adv_Clean.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Adv_Mode.resx">
+      <DependentUpon>Adv_Mode.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.en-CA.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.fr-CA.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main_Start_Form.en-CA.resx">
+      <DependentUpon>Main_Start_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main_Start_Form.fr-CA.resx">
+      <DependentUpon>Main_Start_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Package_Apps.en-CA.resx">
+      <DependentUpon>Package_Apps.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Package_Apps.fr-CA.resx">
+      <DependentUpon>Package_Apps.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MW_Time.en-CA.resx">
+      <DependentUpon>Popup_MW_Time.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MW_Time.fr-CA.resx">
+      <DependentUpon>Popup_MW_Time.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_Apps.en-CA.resx">
+      <DependentUpon>Popup_Refresh_Apps.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_Apps.fr-CA.resx">
+      <DependentUpon>Popup_Refresh_Apps.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MultiUser.en-CA.resx">
+      <DependentUpon>Popup_MultiUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MultiUser.fr-CA.resx">
+      <DependentUpon>Popup_MultiUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MultiUser.resx">
+      <DependentUpon>Popup_MultiUser.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client_INFOMSG.en-CA.resx">
+      <DependentUpon>Popup_Reinstall_Client_INFOMSG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client_INFOMSG.fr-CA.resx">
+      <DependentUpon>Popup_Reinstall_Client_INFOMSG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client_INFOMSG.resx">
+      <DependentUpon>Popup_Reinstall_Client_INFOMSG.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.en-CA.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en-CA.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.fr-CA.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.fr-CA.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SCCM_Action_Tools.en-CA.resx">
+      <DependentUpon>SCCM_Action_Tools.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SCCM_Action_Tools.fr-CA.resx">
+      <DependentUpon>SCCM_Action_Tools.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Software.en-CA.resx">
+      <DependentUpon>Software.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Software.fr-CA.resx">
+      <DependentUpon>Software.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wait.resx">
+      <DependentUpon>Wait.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_MW_Time.resx">
+      <DependentUpon>Popup_MW_Time.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_WSUS.en-CA.resx">
+      <DependentUpon>Popup_Refresh_WSUS.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_WSUS.fr-CA.resx">
+      <DependentUpon>Popup_Refresh_WSUS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client.en-CA.resx">
+      <DependentUpon>Popup_Reinstall_Client.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client.fr-CA.resx">
+      <DependentUpon>Popup_Reinstall_Client.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Reinstall_Client.resx">
+      <DependentUpon>Popup_Reinstall_Client.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SCCM_Action_Tools.resx">
+      <DependentUpon>SCCM_Action_Tools.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Software.resx">
+      <DependentUpon>Software.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_WSUS.resx">
+      <DependentUpon>Popup_Refresh_WSUS.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_Refresh_Apps.resx">
+      <DependentUpon>Popup_Refresh_Apps.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WSUS_SCUP.en-CA.resx">
+      <DependentUpon>WSUS_SCUP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WSUS_SCUP.fr-CA.resx">
+      <DependentUpon>WSUS_SCUP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WSUS_SCUP.resx">
+      <DependentUpon>WSUS_SCUP.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Package_Apps.resx">
+      <DependentUpon>Package_Apps.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main_Start_Form.resx">
+      <DependentUpon>Main_Start_Form.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Class Diagrams\Localization.cd" />
+    <None Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Oxygen-Icons.org-Oxygen-Devices-computer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

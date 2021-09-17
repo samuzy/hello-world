@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PC_.About" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgCAAAAECAAAAAAAACAAACCAAAAgAAAIEAAAIAQAAI=</HashCode>
+      <FileName>About.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Adv_Clean" Collapsed="true">
+    <Position X="10.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GwABAIkkFKBgMEAIgICAA0giwAYAVEABINgIBAACCgQ=</HashCode>
+      <FileName>Adv_Clean.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Adv_Mode" Collapsed="true">
+    <Position X="21.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkkBDAIIEGQAQAAEEACAABADAAIaJMBhQGAAgEAgBCY=</HashCode>
+      <FileName>Adv_Mode.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.DF" Collapsed="true">
+    <Position X="37.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAACAAAAAAAACAAAACAAIAAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Default_form.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.LocalizedForm" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCIAAAAAACAAAACCAAAAAAAAAABEAAAAIA=</HashCode>
+      <FileName>LocalizedForm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Main" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iy4ehqIIt6QcCgpgZMzjDUQT6or5oVDJ4OADxPsARQ4=</HashCode>
+      <FileName>Main.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Main_Start_Form" Collapsed="true">
+    <Position X="19.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEGBAAAFCAcAAAAIESCSAACAAKAAAABQAAAgCEAAAA=</HashCode>
+      <FileName>Main_Start_Form.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Pack_Apps" Collapsed="true">
+    <Position X="23.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAYIgAAMCAAEQAAQv6DAAojAAIAQIAggQAAIBBAAAQ=</HashCode>
+      <FileName>Package_Apps.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Popup_MW_Time" Collapsed="true">
+    <Position X="14.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAUCAAAAAAAACAEAACAAoACAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Popup_MW_Time.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Popup_Refresh_Apps" Collapsed="true">
+    <Position X="32.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAUCAAAAAAIACAAAACgAIAAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Popup_Refresh_Apps.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Popup_Refresh_WSUS" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAUCAAAAAAIACAAAACgAIAAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Popup_Refresh_WSUS.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Popup_Reinstall_Client" Collapsed="true">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAUCAAAAAAIACAAIACgAIAAAABAAAAAAAAAAQ=</HashCode>
+      <FileName>Popup_Reinstall_Client.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.SCCM_Action_Tools" Collapsed="true">
+    <Position X="26" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAjgAAAwRLcAyAQAeACAwToCAuNAcAghACCAAAAAAAQ=</HashCode>
+      <FileName>SCCM_Action_Tools.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Site_Code" Collapsed="true">
+    <Position X="30.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECABAAAAAACAAAECAKIAAAABAAAAAAAAABQ=</HashCode>
+      <FileName>Site_Code.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Site_Code_Reinstall_Client" Collapsed="true">
+    <Position X="35" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECABAAAAAACAAAECAKIAAAABAAAAAAAAABQ=</HashCode>
+      <FileName>Site_Code_Reinstall_Client.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Software" Collapsed="true">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCAQIgAAMCAAEQAAQv6DAAIiAAIAQIAAgQAAADBAAAQ=</HashCode>
+      <FileName>Software.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.Wait" Collapsed="true">
+    <Position X="17" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECAAAAAAAACQAAACAAAAAAAAAAAAEAAAAAQ=</HashCode>
+      <FileName>Wait.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PC_.WSUS_SCUP" Collapsed="true">
+    <Position X="28.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAQAAEAECRAEAAIAOCDACACAAIAAAAgkAAAAAAASAQ=</HashCode>
+      <FileName>WSUS_SCUP.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
