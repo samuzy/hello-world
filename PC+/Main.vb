@@ -9,6 +9,8 @@ Imports System.ServiceProcess
 Imports System.Threading
 Imports System.ComponentModel
 Imports System.Text.RegularExpressions
+Imports Microsoft.Win32
+Imports System.DirectoryServices.AccountManagement
 
 ' *******************************************************************************************************************************************************
 '      PC++ Créé en Janvier 2015, Mise a jour en 2016 (orienté vers SCCM) et renomée SCCM PC Admin
@@ -25,6 +27,14 @@ Public Class Main
 
 #Region "Singleton"
     Private Shared _instance As Main
+    Private lastCol As Integer = 0
+    Private Tab_Select As Integer = 0
+    Private loadExecutionPKGSTab As Integer = 0
+    Private loadExecutionAPPSTab As Integer = 0
+    Private loadRunningPKGSTab As Integer = 0
+    Private loadAdvertisementsTab As Integer = 0
+    Private loadInfoTab As Integer = 0
+    Private loadServiceWindows As Integer = 0
 
     Public Shared ReadOnly Property Instance() As Main
         Get
@@ -143,7 +153,7 @@ Public Class Main
         Me.Cursor = Cursors.WaitCursor
 
         'Masque par default l'icone VPN
-        Me.Pic_VPN.Visible = False
+        'Me.Pic_VPN.Visible = False
 
         ResetVersion()
         Affichage_Defaut()
@@ -155,6 +165,12 @@ Public Class Main
         ResetLanguageMenuItems()
         Me.ServiceWindowsListView.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
         Me.txt_PCName.Select()
+        btnCenterConsole2.Hide() ' need to hide this one at startup
+        InitialLoadingSetLayoutDefaults()
+    End Sub
+
+    Private Sub InitialLoadingSetLayoutDefaults()
+        'Throw New NotImplementedException()
     End Sub
 
     Friend Sub Connexion()
@@ -180,23 +196,55 @@ Public Class Main
             End If
         End If
 
-        PCName = New PC_CheckDevice()
+        If CheckDNSAndIP() Then
+            PCName = New PC_CheckDevice()
 
-        Try
-            PCName.Ping(ComputerName, PC_Status)
-            If PC_Status = True Then
-                pic_rightArrow.Visible = False
-                pic_notOk.Visible = False
-                pic_Ok.Visible = True
-                Me.Text = "SCCM PC Admin " & ComputerName
+            Try
+                PCName.Ping(ComputerName, PC_Status)
+                If PC_Status = True Then
+                    pic_rightArrow.Visible = False
+                    pic_notOk.Visible = False
+                    pic_Ok.Visible = True
+                    Me.Text = "SCCM PC Admin " & ComputerName
 
-            Else
+                Else
+                    pic_rightArrow.Visible = False
+                    pic_notOk.Visible = True
+                    pic_Ok.Visible = False
+                    Me.Text = "SCCM PC Admin"
+
+                    'Validation Du OU du PC qui ne ce retouve pas dans le OU Inactif ou Surplus
+                    GetAD_Info(ComputerName)
+                    If str_AD_computer = "NotFound" Then
+                        MsgBox(My.Resources.ErrorUnreachableComputer, MsgBoxStyle.Critical)
+                    Else
+                        If str_AD_computer.Contains("Inactive") OrElse str_AD_computer.Contains("Surplus") OrElse str_AD_computer.Contains("Warehouse") Then
+                            MsgBox(My.Resources.Error_BAD_AD & Chr(13) & Chr(10) & str_AD_computer, MsgBoxStyle.Critical)
+                        Else
+                            MsgBox(My.Resources.ErrorUnreachableComputer, MsgBoxStyle.Critical)
+                        End If
+                    End If
+
+                    'ComputerName = System.Net.Dns.GetHostName.Trim
+                    Main_Start_Form.Instance.txt_PCName.Text = ComputerName
+                    Main_Start_Form.Instance.pic_rightArrow.Visible = False
+                    Main_Start_Form.Instance.pic_notOk.Visible = True
+                    Main_Start_Form.Instance.pic_Ok.Visible = False
+                    Main_Start_Form.Instance.Text = "SCCM PC Admin"
+                    Main_Start_Form.Instance.Show()
+                    Me.Cursor = Cursors.Default
+                    Main.Instance.Close()
+
+                    Exit Sub
+                End If
+
+            Catch ex As Exception
                 pic_rightArrow.Visible = False
                 pic_notOk.Visible = True
                 pic_Ok.Visible = False
                 Me.Text = "SCCM PC Admin"
 
-                'Validation Du OU du PC qui ne ce retouve pas dans le OU Inactif ou Surplus
+                ' En cas d'erreur il va vérifier ou est le PC 
                 GetAD_Info(ComputerName)
                 If str_AD_computer = "NotFound" Then
                     MsgBox(My.Resources.ErrorUnreachableComputer, MsgBoxStyle.Critical)
@@ -219,171 +267,224 @@ Public Class Main
                 Main.Instance.Close()
 
                 Exit Sub
+
+            End Try
+
+            'Post vérification maintenant qu on à l'assurance que le PC est à ON
+            'Service RemoteRegistry  = Service du Registre à distance
+            'Service que on est obliger de vérifier pour avoir acces au fonction ne peux pas etre mis uniquement dans la fonction de validation
+            'Services.Service_Verification("RemoteRegistry")
+            'Valide les services du PC a distance
+            Services_verify()
+
+            'Vérification si un utilisateur est connecter à distance
+            RemoteUser.GetUser(ComputerName)
+            If Trim(User) = "" Then
+                'test un seconde fois pour etre sur que le délais de vérification est respecter
+                Thread.Sleep(3000)
+                RemoteUser.GetUser(ComputerName)
+            End If
+            If Not Trim(User) = "" Then
+                txtLogged.Text = User
+                pic_Assitance.Cursor = Cursors.Hand
+            Else
+                txtLogged.Text = My.Resources.txt_logged_no_user
+                User = ""
+                pic_Assitance.Cursor = Cursors.No
             End If
 
-        Catch ex As Exception
-            pic_rightArrow.Visible = False
-            pic_notOk.Visible = True
-            pic_Ok.Visible = False
-            Me.Text = "SCCM PC Admin"
+            'Fonction pour allez chercher les information de l'ordinateur au régistre
+            Get_PC_Information.Get_PC_Info_REG()
 
-            ' En cas d'erreur il va vérifier ou est le PC 
-            GetAD_Info(ComputerName)
-            If str_AD_computer = "NotFound" Then
-                MsgBox(My.Resources.ErrorUnreachableComputer, MsgBoxStyle.Critical)
+            'Fonction pour allez chercher les information de l'ordinateur au régistre
+            Get_PC_Information.Get_PC_Info_WMI()
+
+            'Ajouter des valeur dans les champ requis
+
+            txt_OSCaption.Text = OSName
+            If OSName = "Microsoft Windows 10 Enterprise" Then
+                lbl_img_ver_win10.Visible = True
+                txt_img_ver_win10.Visible = True
+                txt_img_ver_win10.Text = CORE_Image_version
             Else
-                If str_AD_computer.Contains("Inactive") OrElse str_AD_computer.Contains("Surplus") OrElse str_AD_computer.Contains("Warehouse") Then
+                lbl_img_ver_win10.Visible = False
+                txt_img_ver_win10.Visible = False
+                txt_img_ver_win10.Text = ""
+            End If
+
+            txt_img_ver.Text = VerImg_data
+            txt_SiteCode_result_NEW.Text = SiteCode
+            txt_ManagementPoint_NEW.Text = ManagementPoint
+            txt_Client_Version_Result_NEW.Text = ClientVer
+            txt_SCCM_Catalogue_NEW.Text = SCCM_Catalogue_Number
+            txt_WUA_NEW.Text = SCCM_WSUS_Server
+
+            ResetLanguage()
+
+            'Obtention de l'adresse IP si ces une adresse DNS qui est entrée
+            If IsIpValid(ComputerName) = False Then
+                'Va checher l'adress IP car le nom Entré et un nom DNS
+                RemoteUser.IPAddress(ComputerName)
+                txt_IP.Text = IPAddress_Value
+            Else
+                'Va checher le nom DNS ar le nom Entré et une Adresse IP
+                IPAddress_Value = ComputerName
+                txt_IP.Text = IPAddress_Value
+                DNS_Name(ComputerName)
+                txt_PCName.Text = DNS_Name_Value
+                ComputerName = DNS_Name_Value
+            End If
+
+            'Validation pour l'activation du mode Avancé seulement pour le HRDC-DRHC.NET
+            RemoteUser.GetGroups(Username)
+            If Advance_mode = True Then Me.AdvancedMode_Menu.Visible = True Else Me.AdvancedMode_Menu.Visible = False
+
+            'Validation si un reboot est nesséssaire
+            If Need_Reboot = True Then
+                txt_reboot_status.Visible = True
+                pic_reboot_status.Visible = True
+            Else
+                txt_reboot_status.Visible = False
+                pic_reboot_status.Visible = False
+            End If
+
+            'Validation Du OU du PC qui ne ce retouve pas dans le OU Inactif ou Surplus
+            GetAD_Info(ComputerName)
+            If str_AD_computer.Contains("Inactive") OrElse str_AD_computer.Contains("Surplus") OrElse str_AD_computer.Contains("Warehouse") Then
+                If Not str_AD_computer.Contains("_STAGING") Then
+                    'désactive les commandes
                     MsgBox(My.Resources.Error_BAD_AD & Chr(13) & Chr(10) & str_AD_computer, MsgBoxStyle.Critical)
+                    'cmd_Event_Viewer.Enabled = False
+                    'cmd_Computer_Management.Enabled = False
+                    'cmd_Services.Enabled = False
+                    cmd_pc_info.Enabled = False
+                    cmd_pkg_apps.Enabled = False
+                    cmd_SCCM_WSUS_SCUP_Approved.Enabled = False
+                    cmdSoftware.Enabled = False
+                    cmd_SCCM_Action.Enabled = False
+                    cmd_Force_WSUS.Enabled = False
+                    cmd_Force_Apps_update.Enabled = False
+                    cmd_Reinstall_client.Enabled = False
+                    cmd_Clear_cache_bits.Enabled = False
+                    cmd_Show_SW.Enabled = False
+
+                    pic_Reboot.Enabled = False
+                    pic_Explorer.Enabled = False
+                    pic_Assitance.Enabled = False
+                    pic_remote.Enabled = False
                 Else
-                    MsgBox(My.Resources.ErrorUnreachableComputer, MsgBoxStyle.Critical)
+                    'Active les commandes
+                    'cmd_Event_Viewer.Enabled = True
+                    'cmd_Computer_Management.Enabled = True
+                    'cmd_Services.Enabled = True
+                    cmd_pc_info.Enabled = True
+                    cmd_pkg_apps.Enabled = True
+                    cmd_SCCM_WSUS_SCUP_Approved.Enabled = True
+                    cmdSoftware.Enabled = True
+                    cmd_SCCM_Action.Enabled = True
+                    cmd_Force_WSUS.Enabled = True
+                    cmd_Force_Apps_update.Enabled = True
+                    cmd_Reinstall_client.Enabled = True
+                    cmd_Clear_cache_bits.Enabled = True
+                    cmd_Show_SW.Enabled = True
+
+                    pic_Reboot.Enabled = True
+                    pic_Explorer.Enabled = True
+                    pic_Assitance.Enabled = True
+                    pic_remote.Enabled = True
                 End If
             End If
 
-            'ComputerName = System.Net.Dns.GetHostName.Trim
-            Main_Start_Form.Instance.txt_PCName.Text = ComputerName
-            Main_Start_Form.Instance.pic_rightArrow.Visible = False
-            Main_Start_Form.Instance.pic_notOk.Visible = True
-            Main_Start_Form.Instance.pic_Ok.Visible = False
-            Main_Start_Form.Instance.Text = "SCCM PC Admin"
-            Main_Start_Form.Instance.Show()
+            ' SAADI
+            ' changed Type of equipment to load AD info (membership)
+
+            'Membership du PC
+            Dim strCommand = "nltest /server:" & ComputerName & " /dsgetsite"
+            Dim strResults = ""
+            Dim Newline As String
+            Newline = System.Environment.NewLine
+
+            'RunDosCommand(strCommand)
+            CMDAutomate(strCommand, strResults)
+            strResults = strResults.Replace(" & vbCrLf & vbCrLf & ", " & vbCrLf & ")
+            Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+            txt_TypePC.Text = parts(4)
+
+            ' Show Execution History
+            'ShowExecutionHistory()
+
+
+            LoadMorePcInfo()
+
+            'Désactive les loading
+            Main_Start_Form.Instance.Label1.Visible = False
+            Me.lbl_loading.Visible = False
             Me.Cursor = Cursors.Default
-            Main.Instance.Close()
-
-            Exit Sub
-
-        End Try
-
-        'Post vérification maintenant qu on à l'assurance que le PC est à ON
-        'Service RemoteRegistry  = Service du Registre à distance
-        'Service que on est obliger de vérifier pour avoir acces au fonction ne peux pas etre mis uniquement dans la fonction de validation
-        'Services.Service_Verification("RemoteRegistry")
-        'Valide les services du PC a distance
-        Services_verify()
-
-        'Vérification si un utilisateur est connecter à distance
-        RemoteUser.GetUser(ComputerName)
-        If Trim(User) = "" Then
-            'test un seconde fois pour etre sur que le délais de vérification est respecter
-            Thread.Sleep(3000)
-            RemoteUser.GetUser(ComputerName)
-        End If
-        If Not Trim(User) = "" Then
-            txtLogged.Text = User
-            pic_Assitance.Cursor = Cursors.Hand
         Else
-            txtLogged.Text = My.Resources.txt_logged_no_user
-            User = ""
-            pic_Assitance.Cursor = Cursors.No
+            pic_notOk.Visible = True
+            pic_Ok.Visible = False
         End If
 
-        'Fonction pour allez chercher les information de l'ordinateur au régistre
-        Get_PC_Information.Get_PC_Info_REG()
-
-        'Fonction pour allez chercher les information de l'ordinateur au régistre
-        Get_PC_Information.Get_PC_Info_WMI()
-
-        'Ajouter des valeur dans les champ requis
-
-        txt_OSCaption.Text = OSName
-        If OSName = "Microsoft Windows 10 Enterprise" Then
-            lbl_img_ver_win10.Visible = True
-            txt_img_ver_win10.Visible = True
-            txt_img_ver_win10.Text = CORE_Image_version
-        Else
-            lbl_img_ver_win10.Visible = False
-            txt_img_ver_win10.Visible = False
-            txt_img_ver_win10.Text = ""
-        End If
-
-        txt_img_ver.Text = VerImg_data
-        txt_SiteCode_result.Text = SiteCode
-        txt_ManagementPoint.Text = ManagementPoint
-        txt_Client_Version_Result.Text = ClientVer
-        txt_SCCM_Catalogue.Text = SCCM_Catalogue_Number
-        txt_WUA.Text = SCCM_WSUS_Server
-
-        ResetLanguage()
-
-        'Obtention de l'adresse IP si ces une adresse DNS qui est entrée
-        If IsIpValid(ComputerName) = False Then
-            'Va checher l'adress IP car le nom Entré et un nom DNS
-            RemoteUser.IPAddress(ComputerName)
-            txt_IP.Text = IPAddress_Value
-        Else
-            'Va checher le nom DNS ar le nom Entré et une Adresse IP
-            IPAddress_Value = ComputerName
-            txt_IP.Text = IPAddress_Value
-            DNS_Name(ComputerName)
-            txt_PCName.Text = DNS_Name_Value
-            ComputerName = DNS_Name_Value
-        End If
-
-        'Validation pour l'activation du mode Avancé seulement pour le HRDC-DRHC.NET
-        RemoteUser.GetGroups(Username)
-        If Advance_mode = True Then Me.AdvancedMode_Menu.Visible = True Else Me.AdvancedMode_Menu.Visible = False
-
-        'Validation si un reboot est nesséssaire
-        If Need_Reboot = True Then
-            txt_reboot_status.Visible = True
-            pic_reboot_status.Visible = True
-        Else
-            txt_reboot_status.Visible = False
-            pic_reboot_status.Visible = False
-        End If
-
-        'Validation Du OU du PC qui ne ce retouve pas dans le OU Inactif ou Surplus
-        GetAD_Info(ComputerName)
-        If str_AD_computer.Contains("Inactive") OrElse str_AD_computer.Contains("Surplus") OrElse str_AD_computer.Contains("Warehouse") Then
-            If Not str_AD_computer.Contains("_STAGING") Then
-                'désactive les commandes
-                MsgBox(My.Resources.Error_BAD_AD & Chr(13) & Chr(10) & str_AD_computer, MsgBoxStyle.Critical)
-                'cmd_Event_Viewer.Enabled = False
-                'cmd_Computer_Management.Enabled = False
-                'cmd_Services.Enabled = False
-                cmd_pc_info.Enabled = False
-                cmd_pkg_apps.Enabled = False
-                cmd_SCCM_WSUS_SCUP_Approved.Enabled = False
-                cmdSoftware.Enabled = False
-                cmd_SCCM_Action.Enabled = False
-                cmd_Force_WSUS.Enabled = False
-                cmd_Force_Apps_update.Enabled = False
-                cmd_Reinstall_client.Enabled = False
-                cmd_Clear_cache_bits.Enabled = False
-                cmd_Show_SW.Enabled = False
-
-                pic_Reboot.Enabled = False
-                pic_Explorer.Enabled = False
-                pic_Assitance.Enabled = False
-                pic_remote.Enabled = False
-            Else
-                'Active les commandes
-                'cmd_Event_Viewer.Enabled = True
-                'cmd_Computer_Management.Enabled = True
-                'cmd_Services.Enabled = True
-                cmd_pc_info.Enabled = True
-                cmd_pkg_apps.Enabled = True
-                cmd_SCCM_WSUS_SCUP_Approved.Enabled = True
-                cmdSoftware.Enabled = True
-                cmd_SCCM_Action.Enabled = True
-                cmd_Force_WSUS.Enabled = True
-                cmd_Force_Apps_update.Enabled = True
-                cmd_Reinstall_client.Enabled = True
-                cmd_Clear_cache_bits.Enabled = True
-                cmd_Show_SW.Enabled = True
-
-                pic_Reboot.Enabled = True
-                pic_Explorer.Enabled = True
-                pic_Assitance.Enabled = True
-                pic_remote.Enabled = True
-            End If
-        End If
-
-
-        'Désactive les loading
-        Main_Start_Form.Instance.Label1.Visible = False
-        Me.lbl_loading.Visible = False
-        Me.Cursor = Cursors.Default
     End Sub
+
+    Function CheckDNSAndIP() As Boolean
+        ' SAADI
+        ' show results of nslookup
+        Dim retVal As Boolean = False
+        Dim strCommand = ""
+        Dim strResults = ""
+        Dim Newline As String
+        Dim strListOfIPs As String = ""
+        Newline = System.Environment.NewLine
+        strCommand = "NSLOOKUP " & ComputerName
+        strResults = ""
+        CMDAutomate(strCommand, strResults)
+        Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+        If parts.Length > 10 Then
+            'txt_NSLookup.Text = strCommand & Newline & parts(4) & Newline & parts(5) & Newline & parts(7) & Newline & parts(8)
+            For i = 0 To UBound(parts)
+                If (Not parts(i).Equals("")) Then
+                    strListOfIPs = strListOfIPs & "###" & parts(i).Substring(9).Trim()
+                    'Exit For
+                End If
+            Next
+
+            'Run twice
+
+            Dim arrayIPs = strListOfIPs.Split("###")
+            strResults = ""
+
+
+            For i = 0 To UBound(arrayIPs)
+                If (Not arrayIPs(i).Equals("")) Then
+                    strCommand = "NSLOOKUP " & arrayIPs(i)
+                    CMDAutomate(strCommand, strResults)
+                    'parts = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+                    'For j = 0 To UBound(parts)
+                    '    If (parts(i).Contains(ComputerName)) Then
+                    '        retVal = True
+                    '        Exit For
+                    '    End If
+                    'Next
+                    If strResults.Contains(ComputerName) Then
+                        retVal = True
+                        Exit For
+                    End If
+                End If
+            Next
+
+            'Dim strListedComputerName = parts(7)
+            If Not retVal Then
+                txt_PCName.Text = ""
+                txt_PCName.Text = txt_PCName.Text & " - DNS ISSUE"
+            End If
+            'txt_NSLookup.Text = txt_NSLookup.Text & Newline & Newline & strCommand & Newline & parts(4) & Newline & parts(5) & Newline & parts(7) & Newline & parts(8)
+        Else
+            'txt_NSLookup.Text = "Not connected" & Newline & parts(4) & Newline & parts(5)
+        End If
+
+        Return retVal
+    End Function
 
     Friend Sub Affichage_Defaut()
         'Active le loading
@@ -391,20 +492,20 @@ Public Class Main
 
         'Reset des valeurs par default
         txt_PCName.Text = ComputerName
-        txt_Client_Version_Result.Text = "..."
+        txt_Client_Version_Result_NEW.Text = "..."
         txt_img_ver.Text = "..."
         txt_img_install_Date.Text = "..."
         txt_language.Text = "..."
         txt_last_reboot.Text = "..."
-        txt_SiteCode_result.Text = "..."
+        txt_SiteCode_result_NEW.Text = "..."
         txt_OSCaption.Text = "..."
         txt_TypePC.Text = "..."
         txtLogged.Text = "..."
         txt_IP.Text = "..."
         User = ""
-        txt_ManagementPoint.Text = "..."
-        txt_SCCM_Catalogue.Text = "..."
-        txt_WUA.Text = "..."
+        txt_ManagementPoint_NEW.Text = "..."
+        txt_SCCM_Catalogue_NEW.Text = "..."
+        txt_WUA_NEW.Text = "..."
 
 
         pic_OFF_RemoteRegistry.Visible = True
@@ -444,13 +545,13 @@ Public Class Main
         pic_reboot_status.Visible = False
         txt_reboot_status.Visible = False
 
-        Pic_VPN.Visible = False
+        'Pic_VPN.Visible = False
 
         lbl_img_ver_win10.Visible = False
         txt_img_ver_win10.Visible = False
 
         'Masque par default l'icone VPN
-        Me.Pic_VPN.Visible = False
+        'Me.Pic_VPN.Visible = False
 
         'Fait une mise a jour de l'affichage de la forme
         Me.Refresh()
@@ -794,12 +895,12 @@ Public Class Main
         sccmActionTools.ShowDialog(Me)
     End Sub
 
-    Private Sub UILanguage_Click(sender As Object, e As EventArgs) Handles Menu_Francais.Click, Menu_English.Click
+    Private Sub UILanguage_Click(sender As Object, e As EventArgs) Handles Menu_Francais.Click, Menu_English.Click, ENToolStripMenuItem.Click, FRToolStripMenuItem.Click
         Dim cultureName As String = GlobalUICulture.Name
 
-        If sender.Equals(Menu_Francais) Then
+        If sender.Equals(Menu_Francais) Or sender.Equals(FRToolStripMenuItem) Then
             cultureName = "fr-CA"
-        ElseIf sender.Equals(Menu_English) Then
+        ElseIf sender.Equals(Menu_English) Or sender.Equals(ENToolStripMenuItem) Then
             cultureName = "en-CA"
         End If
 
@@ -828,9 +929,9 @@ Public Class Main
             Me.TT.SetToolTip(Me.pic_Explorer, My.Resources.ToolTip_Main_Explorer)
             Me.TT.SetToolTip(Me.pic_Reboot, My.Resources.ToolTip_Main_Reboot)
             Me.TT.SetToolTip(Me.pic_remote, My.Resources.ToolTip_Main_remote)
-            Me.TT.SetToolTip(Me.txt_SiteCode_result, My.Resources.ToolTip_Main_SiteCode_result)
+            Me.TT.SetToolTip(Me.txt_SiteCode_result_NEW, My.Resources.ToolTip_Main_SiteCode_result)
             Me.TT.SetToolTip(Me.GroupBox2, My.Resources.ToolTip_Main_GroupBox2)
-            Me.TT.SetToolTip(Me.pic_UserGuide, My.Resources.ToolTip_UserGuide)
+            'Me.TT.SetToolTip('Me.pic_UserGuide, My.Resources.ToolTip_UserGuide)
 
             Me.Refresh()
         End If
@@ -892,8 +993,8 @@ Public Class Main
         aboutForm.ShowDialog()
     End Sub
 
-    Private Sub pic_UserGuide_MouseDown(sender As Object, e As MouseEventArgs) Handles pic_UserGuide.MouseDown
-        Me.pic_UserGuide.BorderStyle = BorderStyle.Fixed3D
+    Private Sub pic_UserGuide_MouseDown(sender As Object, e As MouseEventArgs)
+        'Me.pic_UserGuide.BorderStyle = BorderStyle.Fixed3D
     End Sub
 
     Private Sub pic_Reboot_MouseDown(sender As Object, e As MouseEventArgs) Handles pic_Reboot.MouseDown
@@ -965,8 +1066,8 @@ Public Class Main
         If Result_msg = 6 Then
 
             'Mes le site et le cient version en mode vide
-            txt_Client_Version_Result.Text = "?"
-            txt_SiteCode_result.Text = "?"
+            txt_Client_Version_Result_NEW.Text = "?"
+            txt_SiteCode_result_NEW.Text = "?"
             SiteCode = "?"
             ClientVer = "?"
 
@@ -1252,16 +1353,16 @@ Public Class Main
     End Sub
 #End Region
 
-    Private Sub cmd_pc_info_Click(sender As Object, e As EventArgs) Handles cmd_pc_info.Click
-        Dim PC_Information As PC_Info = New PC_Info
-        PC_Information.ShowDialog(Me)
-    End Sub
+    'Private Sub cmd_pc_info_Click(sender As Object, e As EventArgs) Handles cmd_pc_info.Click
+    '    Dim PC_Information As PC_Info = New PC_Info
+    '    PC_Information.ShowDialog(Me)
+    'End Sub
 
     Private Sub cmd_multi_user_Click(sender As Object, e As EventArgs) Handles cmd_multi_user.Click
         GetUser_Multi(ComputerName)
     End Sub
 
-    Private Sub pic_UserGuide_Click(sender As Object, e As EventArgs) Handles pic_UserGuide.Click
+    Private Sub pic_UserGuide_Click(sender As Object, e As EventArgs) Handles UserGuideToolStripMenuItem1.Click
 
         Const WebPageFR = "http://dialogue/grp/DS-SD/Shared%20Documents/Guides%20de%20l'utilisateur%20-%20User%20Guides/Guide%20d’utilisation%20de%20SCCM%20PC%20Admin_F.docx"
         Const WebPageEN = "http://dialogue/grp/DS-SD/Shared%20Documents/Guides%20de%20l'utilisateur%20-%20User%20Guides/SCCM%20PC%20Admin%20-%20User%20Guide_E.docx"
@@ -1275,7 +1376,7 @@ Public Class Main
                 Process.Start(WebPageEN)
         End Select
 
-        Me.pic_UserGuide.BorderStyle = BorderStyle.None
+        'Me.pic_UserGuide.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub UserGuideToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UserGuideToolStripMenuItem.Click
@@ -1436,7 +1537,7 @@ Public Class Main
     End Sub
 
     Private Sub RefreshServiceWindows(sender As Object, e As EventArgs) Handles cmd_Show_SW.Click
-
+        RefreshServiceWindows()
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
@@ -1483,5 +1584,848 @@ Public Class Main
     Private Sub GCProfileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GCProfileToolStripMenuItem.Click
         Dim WebPage = ("http://gcprofilelog?wsname=" & ComputerName)
         Process.Start(WebPage)
+    End Sub
+
+    Private Sub MainTab_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles MainTab.DrawItem
+        Dim g As Graphics = e.Graphics
+        Dim tp As TabPage = MainTab.TabPages(e.Index)
+        Dim br As Brush
+        Dim sf As New StringFormat
+
+        Dim r As New RectangleF(e.Bounds.X, e.Bounds.Y + 2, e.Bounds.Width, e.Bounds.Height - 2)
+
+        sf.Alignment = StringAlignment.Center
+
+        Dim strTitle As String = tp.Text
+
+        'If the current index is the Selected Index, change the color 
+        If MainTab.SelectedIndex = e.Index Then
+
+            'this is the background color of the tabpage header
+            br = New SolidBrush(Color.Aquamarine) ' chnge to your choice
+            g.FillRectangle(br, e.Bounds)
+
+            'this is the foreground color of the text in the tab header
+            br = New SolidBrush(Color.Black) ' change to your choice
+            g.DrawString(strTitle, MainTab.Font, br, r, sf)
+
+        Else
+
+            'these are the colors for the unselected tab pages 
+            br = New SolidBrush(Color.White) ' Change this to your preference
+            g.FillRectangle(br, e.Bounds)
+            br = New SolidBrush(Color.Black)
+            g.DrawString(strTitle, MainTab.Font, br, r, sf)
+
+        End If
+    End Sub
+
+    Public Sub MainTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MainTab.SelectedIndexChanged
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Select Case MainTab.SelectedIndex
+                Case 0 'TAB 1
+                    If loadExecutionPKGSTab < 1 Then
+                        ShowExecutionHistoryPKGS()
+                    End If
+                    loadExecutionPKGSTab = loadExecutionPKGSTab + 1
+                Case 1
+                    If loadExecutionAPPSTab < 1 Then
+                        ShowExecutionHistoryPKGS()
+                    End If
+                    ShowExecutionHistoryAPPS()
+                    loadExecutionAPPSTab = loadExecutionAPPSTab + 1
+                Case 2
+                    If loadRunningPKGSTab < 1 Then
+                        ShowRunningPKGS()
+                    End If
+                    loadRunningPKGSTab = loadRunningPKGSTab + 1
+                Case 3
+                    If loadAdvertisementsTab < 1 Then
+                        ShowAdvertisements()
+                    End If
+                    loadAdvertisementsTab = loadAdvertisementsTab + 1
+                Case 4
+                    If loadInfoTab < 1 Then
+                        ShowInfoTab()
+                    End If
+                    loadInfoTab = loadInfoTab + 1
+                    'Case 5-8 go here
+                Case 9
+                    If loadServiceWindows < 10 Then
+                        RefreshServiceWindows()
+                    End If
+                    loadServiceWindows = loadServiceWindows + 1
+            End Select
+
+        Catch ex As Exception
+            Me.Cursor = Cursors.Default
+        End Try
+        Me.Cursor = Cursors.Default
+
+
+    End Sub
+
+    Public Sub ShowExecutionHistoryPKGS()
+
+        onetime = 0
+        Me.Refresh()
+        If ListView1.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView1.Items(0).Selected = True
+            ListView1.Select()
+            Label1.Visible = True
+            'Exit Select
+        End If
+        ListView1.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        'Valide que ce se script ne passe que une fois
+        If onetime = 1 Then Exit Sub
+
+        Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86, False)
+        Dim SubKeyName() As String = Key.GetSubKeyNames()
+        Dim Index, count, countVal As Integer
+        Dim SubKey As RegistryKey
+        Dim SubLevel2_Name As String()
+        Dim SubLevel2_Key As String
+        Dim SubLevel3_Key As RegistryKey
+        Dim Key_PkgName, Key_Date, Key_State As String
+        Dim tasksequence As Boolean = False
+        ProgressBar.Value = 1
+        count = Key.SubKeyCount
+        Me.Update()
+
+        For Index = 0 To Key.SubKeyCount - 1
+            SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index), False)
+            SubLevel2_Name = SubKey.GetSubKeyNames()
+            For Each SubLevel2_Key In SubLevel2_Name
+                SubLevel3_Key = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index) + "\" + SubLevel2_Key, False)
+
+
+                Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+
+                'Vérification si ces un TS
+                '***************************************************************************************************************
+                If Key_PkgName = "*" Then
+                    Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
+                    Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
+                    Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+                    Dim info As ManagementObject
+                    For Each info In search.Get()
+                        If SubKeyName(Index) = info("PKG_PackageID") Then
+                            Key_PkgName = "(TS) " & info("PKG_Name")
+                            tasksequence = True
+                        End If
+                    Next
+                    If Key_PkgName = "*" Then
+                        Key_PkgName = "(TS) " & "Task Sequence"
+                        tasksequence = True
+                    End If
+                Else
+                    Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+                    tasksequence = False
+                End If
+                '***************************************************************************************************************
+
+                Key_Date = SubLevel3_Key.GetValue("_RunStartTime")
+                Key_State = SubLevel3_Key.GetValue("_State")
+
+                'ListView1.Sorting = Windows.Forms.SortOrder.Ascending
+                Me.ListView1.Sorting = Windows.Forms.SortOrder.None
+
+                Dim item As New ListViewItem(SubKeyName(Index))
+
+                If tasksequence = True Then
+                    item.BackColor = Color.LightBlue
+                    item.ForeColor = Color.DarkBlue
+                End If
+
+                item.SubItems.Add(Key_PkgName)
+                item.SubItems.Add(Key_State)
+
+                If Key_State = "Failure" Then
+                    item.BackColor = Color.DarkRed
+                    item.ForeColor = Color.White
+                End If
+
+                item.SubItems.Add(Key_Date)
+                ListView1.Items.Add(item)
+
+                Me.Update()
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+            Next
+        Next
+        ProgressBar.Visible = False
+        onetime = 1
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 1
+        AddHandler Me.ListView1.ColumnClick, AddressOf ColumnClick
+        Label1.Visible = True
+
+        If ListView1.Items.Count > 0 Then
+            ListView1.Items(0).Selected = True
+            ListView1.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+    Private Sub ColumnClick(sender As Object, e As ColumnClickEventArgs)
+        ' Set the ListViewItemSorter property to a new ListViewItemComparer object.
+        Dim sortIt As SortOrder
+
+        If e.Column <> lastCol Then
+
+            Select Case Tab_Select
+                Case 1
+                    ListView1.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                Case 2
+                    ListView2.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                Case 3
+                    ListView3.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                Case 4
+                    ListView4.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                    'Case 5
+                    '    ListView5.Sorting = SortOrder.Descending
+                    '    sortIt = SortOrder.Descending
+            End Select
+
+        End If
+
+        'ce souvin de la derniere colonne
+        lastCol = e.Column
+
+        Select Case Tab_Select
+
+            Case 1
+                If ListView1.Sorting = SortOrder.Descending Then
+                    ListView1.Sorting = SortOrder.Ascending
+                    sortIt = SortOrder.Ascending
+                Else
+                    ListView1.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                End If
+
+                Me.ListView1.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+
+            Case 2
+                If ListView2.Sorting = SortOrder.Descending Then
+                    ListView2.Sorting = SortOrder.Ascending
+                    sortIt = SortOrder.Ascending
+                Else
+                    ListView2.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                End If
+
+                Me.ListView2.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+
+            Case 3
+                If ListView3.Sorting = SortOrder.Descending Then
+                    ListView3.Sorting = SortOrder.Ascending
+                    sortIt = SortOrder.Ascending
+                Else
+                    ListView3.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                End If
+
+                Me.ListView3.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+
+            Case 4
+                If ListView4.Sorting = SortOrder.Descending Then
+                    ListView4.Sorting = SortOrder.Ascending
+                    sortIt = SortOrder.Ascending
+                Else
+                    ListView4.Sorting = SortOrder.Descending
+                    sortIt = SortOrder.Descending
+                End If
+
+                Me.ListView4.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+
+                'Case 5
+                '    If ListView5.Sorting = SortOrder.Descending Then
+                '        ListView5.Sorting = SortOrder.Ascending
+                '        sortIt = SortOrder.Ascending
+                '    Else
+                '        ListView5.Sorting = SortOrder.Descending
+                '        sortIt = SortOrder.Descending
+                '    End If
+
+                '    Me.ListView5.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+        End Select
+
+    End Sub
+
+
+    Sub ShowExecutionHistoryAPPS()
+        onetime = 0
+        Me.Refresh()
+
+        If ListView2.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView2.Items(0).Selected = True
+            ListView2.Select()
+            'cmd_apps_refresh.Visible = True
+            'Exit Select
+        End If
+
+        ListView2.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+        'cmd_apps_refresh.Visible = True
+
+        Try
+            'Valide que ce se script ne passe que une fois
+            If onetime = 1 Then Exit Sub
+
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\ccm\ClientSDK")
+            Dim Query As New SelectQuery("SELECT * FROM CCM_Application")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+            Dim Index, count, countVal As Integer
+            Dim AppName, AppStatus, Date_Start, Date_Dealine, Date_LastEvalTime, Date_LastInstallTime As String
+            Dim EvaluationState = ""
+            Dim EvaluationState_Code
+            count = 0
+            Index = 0
+
+            'count numer of record
+            Dim info As ManagementObject
+            count = search.Get().Count
+
+            ' enum each entry
+            ProgressBar.Value = 1
+            Me.Update()
+            For Each info In search.Get()
+                AppName = info("FullName")
+                AppStatus = info("InstallState")
+                EvaluationState_Code = info("EvaluationState")
+
+                Date_Start = WMIDateConvert(info("StartTime"))
+                Date_Dealine = WMIDateConvert(info("Deadline"))
+                Date_LastEvalTime = WMIDateConvert(info("LastEvalTime"))
+                Date_LastInstallTime = WMIDateConvert(info("LastInstallTime"))
+
+                If Date_Start = "00:00:00" Or Date_Start = "12:00:00 AM" Then Date_Start = " "
+                If Date_Dealine = "00:00:00" Or Date_Dealine = "12:00:00 AM" Then Date_Dealine = " "
+                If Date_LastEvalTime = "00:00:00" Or Date_LastEvalTime = "12:00:00 AM" Then Date_LastEvalTime = " "
+                If Date_LastInstallTime = "00:00:00" Or Date_LastInstallTime = "12:00:00 AM" Then Date_LastInstallTime = " "
+
+                Try
+                    EvaluationState = ""
+                    If Not EvaluationState_Code = vbEmpty Then
+
+                        Select Case EvaluationState_Code
+
+                            Case 0
+                                EvaluationState = My.Resources.EvaluationState0
+                            Case 1
+                                EvaluationState = My.Resources.EvaluationState1
+                            Case 2
+                                EvaluationState = My.Resources.EvaluationState2
+                            Case 3
+                                EvaluationState = My.Resources.EvaluationState3
+                            Case 4
+                                EvaluationState = My.Resources.EvaluationState4
+                            Case 5
+                                EvaluationState = My.Resources.EvaluationState5
+                            Case 6
+                                EvaluationState = My.Resources.EvaluationState6
+                            Case 7
+                                EvaluationState = My.Resources.EvaluationState7
+                            Case 8
+                                EvaluationState = My.Resources.EvaluationState8
+                            Case 9
+                                EvaluationState = My.Resources.EvaluationState9
+                            Case 10
+                                EvaluationState = My.Resources.EvaluationState10
+                            Case 11
+                                EvaluationState = My.Resources.EvaluationState11
+                            Case 12
+                                EvaluationState = My.Resources.EvaluationState12
+                            Case 13
+                                EvaluationState = My.Resources.EvaluationState13
+                            Case 14
+                                EvaluationState = My.Resources.EvaluationState14
+                            Case 15
+                                EvaluationState = My.Resources.EvaluationState15
+                            Case 16
+                                EvaluationState = My.Resources.EvaluationState16
+                            Case 17
+                                EvaluationState = My.Resources.EvaluationState17
+                            Case 18
+                                EvaluationState = My.Resources.EvaluationState18
+                            Case 19
+                                EvaluationState = My.Resources.EvaluationState19
+                            Case 20
+                                EvaluationState = My.Resources.EvaluationState20
+                            Case 21
+                                EvaluationState = My.Resources.EvaluationState21
+                            Case 22
+                                EvaluationState = My.Resources.EvaluationState22
+                            Case 23
+                                EvaluationState = My.Resources.EvaluationState23
+                            Case 24
+                                EvaluationState = My.Resources.EvaluationState24
+                            Case 25
+                                EvaluationState = My.Resources.EvaluationState25
+                            Case 26
+                                EvaluationState = My.Resources.EvaluationState26
+                            Case 27
+                                EvaluationState = My.Resources.EvaluationState27
+                            Case 28
+                                EvaluationState = My.Resources.EvaluationState28
+                            Case Else
+                                EvaluationState = My.Resources.EvaluationStateElse
+                        End Select
+
+
+                    End If
+                Catch ex As Exception
+                    EvaluationState = My.Resources.EvaluationState0
+                End Try
+
+
+                If Not AppName Is "" Then
+                    'ListView2.Sorting = Windows.Forms.SortOrder.Ascending
+                    Me.ListView2.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem(AppName)
+                    item.SubItems.Add(AppStatus)
+                    item.SubItems.Add(EvaluationState)
+                    item.SubItems.Add(Date_Start)
+                    item.SubItems.Add(Date_Dealine)
+                    item.SubItems.Add(Date_LastEvalTime)
+                    item.SubItems.Add(Date_LastInstallTime)
+                    ListView2.Items.Add(item)
+                    Me.Update()
+                End If
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+                Index = Index + 1
+                Me.Update()
+            Next
+            ProgressBar.Visible = False
+            onetime = 1
+        Catch ex As Exception
+            ProgressBar.Value = 100
+            ProgressBar.Visible = False
+            onetime = 1
+            'cmd_apps_refresh.Visible = False
+            'GEstion de l'erreur
+        End Try
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 2
+        AddHandler Me.ListView2.ColumnClick, AddressOf ColumnClick
+
+        'Active le autosize
+        ColumnHeader5.Width = -2
+        ColumnHeader6.Width = -2
+        ColumnHeader17.Width = -2
+        ColumnHeader18.Width = -2
+        ColumnHeader19.Width = -2
+        ColumnHeader20.Width = -2
+        ColumnHeader21.Width = -2
+
+        If ListView2.Items.Count > 0 Then
+            ListView2.Items(0).Selected = True
+            ListView2.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+    Sub ShowRunningPKGS()
+        onetime = 0
+        Me.Refresh()
+
+        If ListView3.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView3.Items(0).Selected = True
+            ListView3.Select()
+            'Exit Select
+        End If
+
+        ListView3.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        Try
+            'Valide que ce se script ne passe que une fois
+            If onetime = 1 Then Exit Sub
+
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\softmgmtagent")
+            Dim Query As New SelectQuery("SELECT * FROM CCM_ExecutionRequestEx")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+            Dim Index, count, countVal As Integer
+            Dim AppName, AppStatus, AppID, AppDate As String
+            count = 0
+            Index = 0
+
+            Dim tasksequence As Boolean = False
+            Dim info As ManagementObject
+            count = search.Get().Count
+
+            ' enum each entry
+            ProgressBar.Value = 1
+            Me.Update()
+            For Each info In search.Get()
+                AppName = info("ProgramID")
+                AppID = info("ContentID")
+
+                If info("ProgramID") = "*" Then
+                    AppName = "(TS) " & info("MIFPackageName")
+                    tasksequence = True
+                Else
+                    AppName = info("ProgramID")
+                    tasksequence = False
+                End If
+
+                ' enum each entry
+                AppStatus = info("State")
+                AppDate = Mid(info("ReceivedTime"), 1, 4) + "/" + Mid(info("ReceivedTime"), 5, 2) + "/" + Mid(info("ReceivedTime"), 7, 2)
+
+                If Not AppName Is "" Then
+                    'ListView3.Sorting = Windows.Forms.SortOrder.Ascending
+                    Me.ListView3.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem(AppID)
+                    item.SubItems.Add(AppName)
+                    item.SubItems.Add(AppStatus)
+                    item.SubItems.Add(AppDate)
+                    If tasksequence = True Then
+                        item.BackColor = Color.LightBlue
+                        item.ForeColor = Color.DarkBlue
+                    End If
+                    ListView3.Items.Add(item)
+                    Me.Update()
+                End If
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+                Index = Index + 1
+                Me.Update()
+            Next
+            ProgressBar.Visible = False
+            onetime = 1
+        Catch ex As Exception
+            'GEstion de l'erreur
+        End Try
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 3
+        AddHandler Me.ListView3.ColumnClick, AddressOf ColumnClick
+        If ListView3.Items.Count > 0 Then
+            ListView3.Items(0).Selected = True
+            ListView3.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+    Sub ShowAdvertisements()
+        onetime = 0
+        Me.Refresh()
+
+        If ListView4.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView4.Items(0).Selected = True
+            ListView4.Select()
+            Label1.Visible = True
+            'Exit Select
+        End If
+
+        ListView4.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        Try
+            'Valide que ce se script ne passe que une fois
+            If onetime = 1 Then Exit Sub
+
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
+            Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+            Dim Index, count, countVal As Integer
+            Dim AppName, AppID, AppAdv As String
+            count = 0
+            Index = 0
+
+            'count numer of record
+            Dim tasksequence As Boolean = False
+            Dim info As ManagementObject
+            count = search.Get().Count
+
+            ' enum each entry
+            ProgressBar.Value = 1
+            Me.Update()
+            For Each info In search.Get()
+                AppAdv = info("ADV_AdvertisementID")
+                AppID = info("PKG_PackageID")
+
+                If info("PRG_ProgramID") = "*" Then
+                    AppName = "(TS) " & info("PKG_Name")
+                    tasksequence = True
+                Else
+                    AppName = info("PRG_ProgramID")
+                    tasksequence = False
+                End If
+
+
+                If Not AppName Is "" Then
+                    'ListView2.Sorting = Windows.Forms.SortOrder.Ascending
+                    Me.ListView4.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem(AppID)
+                    item.SubItems.Add(AppName)
+                    item.SubItems.Add(AppAdv)
+                    If tasksequence = True Then
+                        item.BackColor = Color.LightBlue
+                        item.ForeColor = Color.DarkBlue
+                    End If
+
+                    If Not Microsoft.VisualBasic.Left(info("PKG_Name"), 1) = "*" Then ListView4.Items.Add(item)
+                    Me.Update()
+                End If
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+                Index = Index + 1
+                Me.Update()
+            Next
+            ProgressBar.Visible = False
+            onetime = 1
+        Catch ex As Exception
+            'GEstion de l'erreur
+        End Try
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 4
+        AddHandler Me.ListView4.ColumnClick, AddressOf ColumnClick
+        Label1.Visible = True
+        If ListView4.Items.Count > 0 Then
+            ListView4.Items(0).Selected = True
+            ListView4.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+    Sub ShowInfoTab()
+
+        onetime = 0
+        Me.Refresh()
+
+        If ListView5.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView5.Items(0).Selected = True
+            ListView5.Select()
+            'Exit Select
+        End If
+
+        ListView5.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        Try
+            'Valide que ce se script ne passe que une fois
+            If onetime = 1 Then Exit Sub
+
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\SoftMgmtAgent")
+            Dim Query As New SelectQuery("SELECT * FROM CacheInfoEx")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+            Dim Index, count, countVal As Integer
+            Dim AppCacheID, AppContentID, AppLocation As String
+            count = 0
+            Index = 0
+
+            'count numer of record
+            Dim info As ManagementObject
+            count = search.Get().Count
+
+            ' enum each entry
+            ProgressBar.Value = 1
+            Me.Update()
+            For Each info In search.Get()
+                AppCacheID = info("CacheId")
+                AppContentID = info("ContentId")
+                AppLocation = info("Location")
+
+                If Not AppCacheID Is "" Then
+                    Me.ListView5.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem(AppContentID)
+                    item.SubItems.Add(AppLocation)
+                    item.SubItems.Add(AppCacheID)
+                    ListView5.Items.Add(item)
+                    Me.Update()
+                End If
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+                Index = Index + 1
+                Me.Update()
+            Next
+            ProgressBar.Visible = False
+            onetime = 1
+
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        Tab_Select = 5
+        AddHandler Me.ListView5.ColumnClick, AddressOf ColumnClick
+        'Label1.Visible = True
+        If ListView5.Items.Count > 0 Then
+            ListView5.Items(0).Selected = True
+            ListView5.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick, Tab_pkg_app.DoubleClick, ServiceWindowsListView.DoubleClick
+        ShowExecutionHistoryPKGS()
+    End Sub
+
+    Private Sub LoadMorePcInfo()
+        Me.Cursor = Cursors.WaitCursor
+
+        Me.Text = "SCCM PC Admin  " & ComputerName
+
+        'Affichage de la version du programme
+        Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+        Dim WMI_Info3 As New ManagementScope("\\" & ComputerName & "\ROOT\CIMV2")
+        Dim Query3 As New SelectQuery("SELECT * FROM Win32_Processor")
+        Dim search3 As New ManagementObjectSearcher(WMI_Info3, Query3)
+
+        Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+
+        'txt_ComputerName.Text = ComputerName
+
+        txt_img_ver.Text = VerImg_data
+        txt_SRU_Verimg.Text = SRU_VerImg_data
+        'txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
+        'txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
+        txt_Domain_NEW.Text = PC_Domain
+        txt_OSCaption.Text = OSName
+        'txt_IP.Text = IPAddress_Value
+
+        If m_strChassisTypes = "MOBILE_DEVICE" Then
+            txt_EquipmentType.Text = My.Resources.txt_TypePC_text_mobile
+        ElseIf m_strChassisTypes = "DESKTOP" Then
+            txt_EquipmentType.Text = My.Resources.txt_TypePC_text_desktop
+        Else
+            txt_EquipmentType.Text = m_strChassisTypes
+        End If
+
+        'If OSLanguage = "1036" Then
+        '    txt_language.Text = My.Resources.txt_language_text_fr
+        'ElseIf OSLanguage = "1033" Then
+        '    txt_language.Text = My.Resources.txt_language_text_en
+        'End If
+
+
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\CIMV2")
+        Dim Query As New SelectQuery("SELECT * FROM Win32_ComputerSystemProduct")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+        Dim info As ManagementObject
+
+        Try
+            For Each info In search.Get()
+                txt_Vendor.Text = info("Vendor")
+                txt_Name.Text = info("Name")
+                'txt_Version.Text = info("Version")
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        txt_RAM.Text = PC_Mem_size
+
+        Dim info3 As ManagementObject
+
+        Try
+            For Each info3 In search3.Get()
+                txt_CPU.Text = info3("Name")
+            Next
+
+        Catch ex As Exception
+
+        End Try
+
+        ''Membership du PC
+
+        Try
+
+            Dim Group_Val As String
+            Using ctx As New PrincipalContext(ContextType.Domain)
+                Using p = Principal.FindByIdentity(ctx, ComputerName)
+                    If Not p Is Nothing Then
+                        Dim groups = p.GetGroups()
+                        For Each group In groups
+                            Group_Val = group.DisplayName
+                            If Not Group_Val = "" Then
+                                'ListView3.Sorting = Windows.Forms.SortOrder.Ascending
+                                Me.MembershipListView.Sorting = Windows.Forms.SortOrder.None
+                                Dim item As New ListViewItem(Group_Val)
+                                MembershipListView.Items.Add(item)
+                                Me.Update()
+                            End If
+                            Me.Update()
+                        Next
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            'GEstion de l'erreur
+        End Try
+
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub btnCenterConsole_Click(sender As Object, e As EventArgs) Handles btnCenterConsole.Click
+
+        MainTab.Width = 1437
+        SecondaryTab.Hide()
+        MainTab.Refresh()
+        btnCenterConsole.Hide()
+        btnCenterConsole2.Show()
+        Me.Refresh()
+    End Sub
+
+    Private Sub btnCenterConsole2_Click(sender As Object, e As EventArgs) Handles btnCenterConsole2.Click
+
+        MainTab.Width = 773
+        SecondaryTab.Show()
+        MainTab.Refresh()
+        btnCenterConsole.Show()
+        btnCenterConsole2.Hide()
+        Me.Refresh()
+    End Sub
+
+    Private Sub UserGuideToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles UserGuideToolStripMenuItem1.Click
+
+    End Sub
+
+
+    Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem1.Click
+
+    End Sub
+
+    Private Sub Menu_Option_Click(sender As Object, e As EventArgs) Handles Menu_Option.Click
+
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
     End Sub
 End Class

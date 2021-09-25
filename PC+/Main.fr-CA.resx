@@ -14628,7 +14628,7 @@
     <value>170, 20</value>
   </data>
   <data name="Label13.AccessibleName" xml:space="preserve">
-    <value>Type d'équipement</value>
+    <value>Site AD</value>
   </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 112</value>
@@ -14637,7 +14637,7 @@
     <value>84, 12</value>
   </data>
   <data name="Label13.Text" xml:space="preserve">
-    <value>Type d'équipement</value>
+    <value>Site AD</value>
   </data>
   <data name="txt_OSCaption.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 37</value>

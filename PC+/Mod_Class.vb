@@ -297,6 +297,28 @@ Module RemoteUser
     Private Declare Function inet_addr Lib "wsock32.dll" (ByVal cp As String) As Long
     Private Declare Function ntohl Lib "wsock32.dll" (ByVal netlong As Long) As Long
 
+    Public Sub CMDAutomate(ByVal strCommand As String, ByRef Results As String)
+        Dim myprocess As New Process
+        Dim StartInfo As New System.Diagnostics.ProcessStartInfo
+        StartInfo.FileName = " cmd.exe " 'starts cmd window
+        StartInfo.RedirectStandardInput = True
+        StartInfo.RedirectStandardOutput = True
+        StartInfo.UseShellExecute = False 'required to redirect
+        StartInfo.CreateNoWindow = True 'creates no cmd window
+        myprocess.StartInfo = StartInfo
+        myprocess.Start()
+        Dim SR As System.IO.StreamReader = myprocess.StandardOutput
+        Dim SW As System.IO.StreamWriter = myprocess.StandardInput
+        SW.WriteLine(strCommand) 'the command you wish to run.....
+        SW.WriteLine("exit") 'exits command prompt window
+        Results = SR.ReadToEnd 'returns results of the command window
+        Console.WriteLine("Results of running command : " & Results)
+        SW.Close()
+        SR.Close()
+        'invokes Finished delegate, which updates textbox with the results text
+        'Invoke(Finished)
+    End Sub
+
     Public Sub RemoteExec(strCommand)
         Dim result, objInstance, processid
         processid = 0
@@ -453,7 +475,7 @@ Module RemoteUser
     End Function
 
     Public Function IPAddress(ByVal computername As String) As String
-        Main.Instance.Pic_VPN.Visible = False
+        'Main.Instance.Pic_VPN.Visible = False
         Dim mainObjInstance = Main.Instance
         Dim onVPN As Boolean = False
 
@@ -484,7 +506,7 @@ Module RemoteUser
                         If (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Moncton_Start, str_VPN_Moncton_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Montreal_Start, str_VPN_Montreal_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_NHQ_Start, str_VPN_NHQ_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_MonctonBranch_Start, str_VPN_MonctonBranch_End)) Then
                             'VPN
                             MsgBox(computername & " " & My.Resources.WarningVPNSlowRequests, MsgBoxStyle.Exclamation, "SCCM PC Admin " & computername)
-                            Main.Instance.Pic_VPN.Visible = True
+                            'Main.Instance.Pic_VPN.Visible = True
                             '            Me.Pic_ON_PeerDistSvc.Visible = False
                             '  Me.Pic_OFF_PeerDistSvc.Visible = True
                             'Main.Instance.Pic_OFF_PeerDistSvc.Visible = False
@@ -508,7 +530,7 @@ Module RemoteUser
 
         Catch ex As Exception
             IPAddress_Value = My.Resources.DNSError
-            Main.Instance.Pic_VPN.Visible = False
+            'Main.Instance.Pic_VPN.Visible = False
         End Try
         Return IPAddress_Value
     End Function
