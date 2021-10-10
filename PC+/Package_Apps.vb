@@ -929,4 +929,8 @@ Public Class Pack_Apps
         Dim popupRefreshApps As Popup_Refresh_Apps = New Popup_Refresh_Apps
         popupRefreshApps.ShowDialog(Me)
     End Sub
+
+    Private Sub ListView5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView5.SelectedIndexChanged
+
+    End Sub
 End Class

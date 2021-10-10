@@ -34,6 +34,8 @@ Partial Class About
         Me.Label_CompanyName = New System.Windows.Forms.Label()
         Me.OKButton = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.txtCopyRight2 = New System.Windows.Forms.TextBox()
+        Me.lblUpdatedBy = New System.Windows.Forms.Label()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -94,11 +96,24 @@ Partial Class About
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '
+        'txtCopyRight2
+        '
+        resources.ApplyResources(Me.txtCopyRight2, "txtCopyRight2")
+        Me.txtCopyRight2.Name = "txtCopyRight2"
+        Me.txtCopyRight2.ReadOnly = True
+        '
+        'lblUpdatedBy
+        '
+        resources.ApplyResources(Me.lblUpdatedBy, "lblUpdatedBy")
+        Me.lblUpdatedBy.Name = "lblUpdatedBy"
+        '
         'About
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me, "$this")
+        Me.Controls.Add(Me.txtCopyRight2)
+        Me.Controls.Add(Me.lblUpdatedBy)
         Me.Controls.Add(Me.TextCopyright)
         Me.Controls.Add(Me.Lbl_CreePar)
         Me.Controls.Add(Me.TextVersion)
@@ -129,5 +144,6 @@ Partial Class About
     Friend WithEvents Label_CompanyName As System.Windows.Forms.Label
     Friend WithEvents OKButton As System.Windows.Forms.Button
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
-
+    Friend WithEvents txtCopyRight2 As TextBox
+    Friend WithEvents lblUpdatedBy As Label
 End Class

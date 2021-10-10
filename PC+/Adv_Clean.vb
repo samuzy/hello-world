@@ -261,7 +261,7 @@ Public Class Adv_Clean
         End Try
 
         Try
-            If strOS = Nothing Then strOS = Main.Instance.txt_OSCaption.Text
+            If strOS = Nothing Then strOS = Main.Instance.txt_OSCaption_NEW.Text
             TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
             ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
 

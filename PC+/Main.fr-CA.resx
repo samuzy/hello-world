@@ -14732,9 +14732,181 @@
   <data name="cmd_SCCM_WSUS_SCUP_Approved.Text" xml:space="preserve">
     <value>SCCM (WSUS/SCUP)</value>
   </data>
+  
+  <!-- SAADI NEW-->
   <data name="txt_PCName.Size" type="System.Drawing.Size, System.Drawing">
     <value>238, 22</value>
   </data>
+  <data name="lblImageVersion.Text" xml:space="preserve">
+    <value>Image Version</value>
+  </data>
+  <data name="lbl_ADSite_NEW.Text" xml:space="preserve">
+    <value>AD Site</value>
+  </data>
+  <data name="lblOsInstallDate.Text" xml:space="preserve">
+    <value>OS Installation Date</value>
+  </data>
+  <data name="lbl_LastRestart_NEW.Text" xml:space="preserve">
+    <value>Last Restart</value>
+  </data>
+  <data name="lbl_OSLang_NEW.Text" xml:space="preserve">
+    <value>OS Language</value>
+  </data>
+  <data name="lbl_IPAddress_NEW.Text" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="lbl_OS_NEW.Text" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+  <data name="lbl_Ram.Text" xml:space="preserve">
+    <value>Ram</value>
+  </data>
+  <data name="lbl_EquipmentType_NEW.Text" xml:space="preserve">
+    <value>Equipment Type</value>
+  </data>
+  <data name="lbl_Vendor.Text" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="lbl_Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="lbl_CPU.Text" xml:space="preserve">
+    <value>Cpu</value>
+  </data>
+  <data name="SCCM_INFORMATION_BOX.Text" xml:space="preserve">
+    <value>SCCM Information</value>
+  </data>
+  <data name="lbl_Management_Point_NEW.Text" xml:space="preserve">
+    <value>Management Point</value>
+  </data>
+  <data name="lbl_Domain_NEW.Text" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="lbl_WUPoint_NEW.Text" xml:space="preserve">
+    <value>Windows Update Site</value>
+  </data>
+  <data name="lblSiteCode_NEW.Text" xml:space="preserve">
+    <value>Site Code</value>
+  </data>
+  <data name="lblClientVersion_NEW.Text" xml:space="preserve">
+    <value>Client Version</value>
+  </data>
+  <data name="lbl_SRUVerimg.Text" xml:space="preserve">
+    <value>Image Version (SRU)</value>
+  </data>
+  <data name="lbl_CCM_UPDUSER_NEW.Text" xml:space="preserve">
+    <value>Catalog #</value>
+  </data>  
+  <data name="lbl_PCName_NEW.Text" xml:space="preserve">
+    <value>Computer Name</value>
+  </data>
+  <data name="lbl_UserLoggedIn_NEW.Text" xml:space="preserve">
+    <value>Active User</value>
+  </data>
+  <data name="lbl_img_ver_win10_NEW.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="groupBoxMembership_NEW.Text" xml:space="preserve">
+    <value>Membership</value>
+  </data>
+  <data name="CompInfoGroupBox.Text" xml:space="preserve">
+    <value>Computer Information</value>
+  </data>
+  <data name="cmd_Check_NEW.Text" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="FORCESECURITYUPDATEToolStripMenuItem.Text" xml:space="preserve">
+    <value>Force Security Update</value>
+  </data>
+  <data name="FORCEAPPLICATIONUPDATEToolStripMenuItem.Text" xml:space="preserve">
+    <value>Force Application Update</value>
+  </data>
+  <data name="REBOOTREMOTECOMPUTERToolStripMenuItem.Text" xml:space="preserve">
+    <value>Reboot Remote Computer</value>
+  </data>
+  <data name="REMOTEASSISTANCEToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remote Assistance</value>
+  </data>
+  <data name="EXPLORERToolStripMenuItem.Text" xml:space="preserve">
+    <value>Explorer</value>
+  </data>
+  <data name="REMOTEDESKTOPToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remote Desktop</value>
+  </data>
+  <data name="cmd_Check_NEW.Text" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="COMPUTER_INFORMATION_TAB.Text" xml:space="preserve">
+    <value>Computer Information</value>
+  </data>
+  <data name="SCCM_PK_APPS_TAB.Text" xml:space="preserve">
+    <value>SCCM (PKGS/APPS)</value>
+  </data>
+  <data name="SCCM_WSUS_SCUP_TAB.Text" xml:space="preserve">
+    <value>SCCM (WSUS/SCUP)</value>
+  </data>
+  <data name="PROGRAMS_FEATURES_TAB.Text" xml:space="preserve">
+    <value>Program and Features</value>
+  </data>
+  <data name="SCCM_ACTIONS_TAB.Text" xml:space="preserve">
+    <value>SCCM (Actions)</value>
+  </data>
+  <data name="REPAIR_CLEANING_TAB.Text" xml:space="preserve">
+    <value>Repair and clean</value>
+   </data>
+  <data name="DISPLAY_MAINTENANCE_WINDOWS_TAB.Text" xml:space="preserve">
+    <value>Maintenance Window</value>
+  </data>
+  <data name="ADVANCE_MODE_TAB_1.Text" xml:space="preserve">
+    <value>Log Files</value>
+    </data>
+  <data name="ADVANCE_MODE_TAB_2.Text" xml:space="preserve">
+    <value>Advance Mode 2</value>
+  </data>
+  <data name="START.Text" xml:space="preserve">
+    <value>Start</value>
+    </data>
+  <data name="EXEC_HIST_PKG_TAB.Text" xml:space="preserve">
+    <value>Execution History (PKGS)</value>
+  </data>
+   <data name="EXEC_HIST_APPS.Text" xml:space="preserve">
+    <value>Execution History (APPS)</value>
+  </data>
+  <data name="RUNNING_PKGS_TAB.Text" xml:space="preserve">
+    <value>Running Packages</value>
+    </data>
+  <data name="ADVERTISEMENTS_TAB.Text" xml:space="preserve">
+    <value>Advertisements</value>
+    </data>
+  <data name="SoftwareCacheLocation_Tab.Text" xml:space="preserve">
+    <value>Software Cache Location</value>
+    </data>
+  <data name="GroupBoxMaintenanceWindow_NEW.Text" xml:space="preserve">
+    <value>Maintenance Window</value>
+    </data>
+  <data name="GroupBoxLogWindow_NEW.Text" xml:space="preserve">
+    <value>Running Log Window</value>
+    </data>
+  <data name="INSTALLED_SOFTWARE_TAB.Text" xml:space="preserve">
+    <value>Installed Software</value>
+    </data>
+  <data name="PF_SUBTAB_OTHER.Text" xml:space="preserve">
+    <value>Other</value>
+    </data>
+  <data name="JAVA_TAB.Text" xml:space="preserve">
+    <value>Java</value>
+    </data>
+  <data name="PROCESS_TAB.Text" xml:space="preserve">
+    <value>Processes</value>
+    </data>
+  <data name="SERVICES_TAB.Text" xml:space="preserve">
+    <value>Services</value>
+    </data>
+  
+  <!-- lbl_Name-->
+  
+  
+  
   <data name="pic_notOk.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

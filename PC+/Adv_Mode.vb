@@ -372,7 +372,7 @@ Public Class Adv_Mode
             Reboot_Send = True
             Thread.Sleep(5000)
             ComputerName = ""
-            Main.Instance.txt_PCName.Text = "..."
+            Main.Instance.txt_PCName_NEW.Text = "..."
             Me.Close()
             'Active le chagement de la souris en mode attente
             Main.Instance.Affichage_Defaut()
@@ -485,7 +485,7 @@ Public Class Adv_Mode
             Reboot_Send = True
             Thread.Sleep(5000)
             ComputerName = ""
-            Main.Instance.txt_PCName.Text = "..."
+            Main.Instance.txt_PCName_NEW.Text = "..."
             Me.Close()
             'Active le chagement de la souris en mode attente
             Main.Instance.Affichage_Defaut()

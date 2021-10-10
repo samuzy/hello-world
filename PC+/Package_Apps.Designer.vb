@@ -107,6 +107,7 @@ Partial Class Pack_Apps
         resources.ApplyResources(Me.ListView1, "ListView1")
         Me.ListView1.FullRowSelect = True
         Me.ListView1.GridLines = True
+        Me.ListView1.HideSelection = False
         Me.ListView1.MultiSelect = False
         Me.ListView1.Name = "ListView1"
         Me.ListView1.UseCompatibleStateImageBehavior = False
@@ -141,6 +142,7 @@ Partial Class Pack_Apps
         resources.ApplyResources(Me.ListView2, "ListView2")
         Me.ListView2.FullRowSelect = True
         Me.ListView2.GridLines = True
+        Me.ListView2.HideSelection = False
         Me.ListView2.MultiSelect = False
         Me.ListView2.Name = "ListView2"
         Me.ListView2.UseCompatibleStateImageBehavior = False
@@ -187,6 +189,7 @@ Partial Class Pack_Apps
         resources.ApplyResources(Me.ListView3, "ListView3")
         Me.ListView3.FullRowSelect = True
         Me.ListView3.GridLines = True
+        Me.ListView3.HideSelection = False
         Me.ListView3.MultiSelect = False
         Me.ListView3.Name = "ListView3"
         Me.ListView3.UseCompatibleStateImageBehavior = False
@@ -221,6 +224,7 @@ Partial Class Pack_Apps
         resources.ApplyResources(Me.ListView4, "ListView4")
         Me.ListView4.FullRowSelect = True
         Me.ListView4.GridLines = True
+        Me.ListView4.HideSelection = False
         Me.ListView4.MultiSelect = False
         Me.ListView4.Name = "ListView4"
         Me.ListView4.UseCompatibleStateImageBehavior = False
@@ -251,6 +255,7 @@ Partial Class Pack_Apps
         resources.ApplyResources(Me.ListView5, "ListView5")
         Me.ListView5.FullRowSelect = True
         Me.ListView5.GridLines = True
+        Me.ListView5.HideSelection = False
         Me.ListView5.MultiSelect = False
         Me.ListView5.Name = "ListView5"
         Me.ListView5.UseCompatibleStateImageBehavior = False

@@ -503,18 +503,18 @@ Module RemoteUser
                 Try
                     If Left(ip(index).MapToIPv4.ToString, 2) = "10" Then
 
-                        If (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Moncton_Start, str_VPN_Moncton_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Montreal_Start, str_VPN_Montreal_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_NHQ_Start, str_VPN_NHQ_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_MonctonBranch_Start, str_VPN_MonctonBranch_End)) Then
-                            'VPN
-                            MsgBox(computername & " " & My.Resources.WarningVPNSlowRequests, MsgBoxStyle.Exclamation, "SCCM PC Admin " & computername)
-                            'Main.Instance.Pic_VPN.Visible = True
-                            '            Me.Pic_ON_PeerDistSvc.Visible = False
-                            '  Me.Pic_OFF_PeerDistSvc.Visible = True
-                            'Main.Instance.Pic_OFF_PeerDistSvc.Visible = False
-                            'Main.Instance.Pic_ON_PeerDistSvc.Visible = False
-                            'mainObjInstance.DisableBranchCache()
-                            onVPN = True
+                        'If (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Moncton_Start, str_VPN_Moncton_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_Montreal_Start, str_VPN_Montreal_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_NHQ_Start, str_VPN_NHQ_End)) Or (IPInRange(ip(index).MapToIPv4.ToString, str_VPN_MonctonBranch_Start, str_VPN_MonctonBranch_End)) Then
+                        '    'VPN
+                        '    MsgBox(computername & " " & My.Resources.WarningVPNSlowRequests, MsgBoxStyle.Exclamation, "SCCM PC Admin " & computername)
+                        '    'Main.Instance.Pic_VPN.Visible = True
+                        '    '            Me.Pic_ON_PeerDistSvc.Visible = False
+                        '    '  Me.Pic_OFF_PeerDistSvc.Visible = True
+                        '    'Main.Instance.Pic_OFF_PeerDistSvc.Visible = False
+                        '    'Main.Instance.Pic_ON_PeerDistSvc.Visible = False
+                        '    'mainObjInstance.DisableBranchCache()
+                        '    onVPN = True
 
-                        End If
+                        'End If
                         IPAddress_Value = ip(index).MapToIPv4.ToString
                     End If
 
@@ -524,9 +524,9 @@ Module RemoteUser
                 End Try
             Next index
 
-            If Not onVPN Then
-                mainObjInstance.EnableBranchCache()
-            End If
+            'If Not onVPN Then
+            '    mainObjInstance.EnableBranchCache()
+            'End If
 
         Catch ex As Exception
             IPAddress_Value = My.Resources.DNSError

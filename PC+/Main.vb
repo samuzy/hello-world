@@ -35,6 +35,32 @@ Public Class Main
     Private loadAdvertisementsTab As Integer = 0
     Private loadInfoTab As Integer = 0
     Private loadServiceWindows As Integer = 0
+    Private loadRunningWSUS_SCUP As Integer = 0
+    Private loadProgramsAndFeaturesTab As Integer = 0
+    Private WithEvents MyProcess As Process
+    Private Delegate Sub AppendOutputTextDelegate(ByVal text As String)
+    Dim strComputer, strRService, strSName
+    Const Adv_Clean_boot = 0   'ADS_SERVICE_BOOT_START
+    Const Adv_Clean_system = 1   'ADS_SERVICE_SYSTEM_START
+    Const Adv_Clean_auto = 2   'ADS_SERVICE_AUTO_START
+    Const Adv_Clean_manual = 3   'ADS_SERVICE_DEMAND_START
+    Const Adv_Clean_disabled = 4   'ADS_SERVICE_DISABLED
+    Const strKeyPath = "SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate"
+    Dim Check1 As Boolean = False
+    Dim Check2 As Boolean = False
+    Dim Check3 As Boolean = False
+    Dim Check4 As Boolean = False
+    Dim Check5 As Boolean = False
+    Dim Check6 As Boolean = False
+    Dim strMessage, strErrorMessage
+    Dim strProgPath, strCommandLine, strArgs
+    Dim quote, squote, command, errReturn
+    Dim oCP, oService, strServiceState, strStartType, oShellExec
+    Dim oReg, bSkipService, myCMDLine, myCMDLine2
+    Dim bFirst As Boolean = False
+    Dim fso = CreateObject("Scripting.FileSystemObject")
+    Dim All As Boolean = False
+
 
     Public Shared ReadOnly Property Instance() As Main
         Get
@@ -60,7 +86,7 @@ Public Class Main
         MyBase.ApplyResources()
 
         If User.Trim = String.Empty Then
-            txtLogged.Text = My.Resources.txt_logged_no_user
+            txtLoggedIn_NEW.Text = My.Resources.txt_logged_no_user
         End If
 
         ResetLanguage()
@@ -71,21 +97,21 @@ Public Class Main
     Private Sub ResetLanguage()
 
         If OSLanguage = "1036" Then
-            txt_language.Text = My.Resources.txt_language_text_fr
+            txt_language_NEW.Text = My.Resources.txt_language_text_fr
         ElseIf OSLanguage = "1033" Then
-            txt_language.Text = My.Resources.txt_language_text_en
+            txt_language_NEW.Text = My.Resources.txt_language_text_en
         End If
 
         If m_strChassisTypes = "MOBILE_DEVICE" Then
-            txt_TypePC.Text = My.Resources.txt_TypePC_text_mobile
+            txt_ADSite_NEW.Text = My.Resources.txt_TypePC_text_mobile
         ElseIf m_strChassisTypes = "DESKTOP" Then
-            txt_TypePC.Text = My.Resources.txt_TypePC_text_desktop
+            txt_ADSite_NEW.Text = My.Resources.txt_TypePC_text_desktop
         Else
-            txt_TypePC.Text = m_strChassisTypes
+            txt_ADSite_NEW.Text = m_strChassisTypes
         End If
 
         txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
-        txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
+        txt_last_reboot_NEW.Text = WMIDateConvert(str_LastBootUpTime)
 
     End Sub
 
@@ -107,11 +133,11 @@ Public Class Main
 
 #End Region
 
-    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         _instance = Nothing
     End Sub
 
-    Private Sub Main_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub Main_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         'CRTL+1 = Remote Logs
         If (e.KeyCode = Keys.D1 AndAlso e.Modifiers = Keys.Control) Then
@@ -142,7 +168,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub Main_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         KeyPreview = True
 
@@ -164,7 +190,7 @@ Public Class Main
 
         ResetLanguageMenuItems()
         Me.ServiceWindowsListView.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
-        Me.txt_PCName.Select()
+        Me.txt_PCName_NEW.Select()
         btnCenterConsole2.Hide() ' need to hide this one at startup
         InitialLoadingSetLayoutDefaults()
     End Sub
@@ -178,7 +204,7 @@ Public Class Main
         Me.Cursor = Cursors.WaitCursor
 
         'Vérification si le PC est "Online"
-        ComputerName = Trim(txt_PCName.Text)
+        ComputerName = Trim(txt_PCName_NEW.Text)
         'corrige le bug du CHAR invisible a la fin quand on entre une IP
         ComputerName = Regex.Replace(ComputerName, "[^a-zA-Z0-9.]", "")
 
@@ -202,7 +228,7 @@ Public Class Main
             Try
                 PCName.Ping(ComputerName, PC_Status)
                 If PC_Status = True Then
-                    pic_rightArrow.Visible = False
+                    pic_rightArrow.Visible = True
                     pic_notOk.Visible = False
                     pic_Ok.Visible = True
                     Me.Text = "SCCM PC Admin " & ComputerName
@@ -285,10 +311,10 @@ Public Class Main
                 RemoteUser.GetUser(ComputerName)
             End If
             If Not Trim(User) = "" Then
-                txtLogged.Text = User
+                txtLoggedIn_NEW.Text = User
                 pic_Assitance.Cursor = Cursors.Hand
             Else
-                txtLogged.Text = My.Resources.txt_logged_no_user
+                txtLoggedIn_NEW.Text = My.Resources.txt_logged_no_user
                 User = ""
                 pic_Assitance.Cursor = Cursors.No
             End If
@@ -301,15 +327,15 @@ Public Class Main
 
             'Ajouter des valeur dans les champ requis
 
-            txt_OSCaption.Text = OSName
+            txt_OSCaption_NEW.Text = OSName
             If OSName = "Microsoft Windows 10 Enterprise" Then
-                lbl_img_ver_win10.Visible = True
-                txt_img_ver_win10.Visible = True
-                txt_img_ver_win10.Text = CORE_Image_version
+                lbl_img_ver_win10_NEW.Visible = True
+                txt_img_ver_win10_NEW.Visible = True
+                txt_img_ver_win10_NEW.Text = CORE_Image_version
             Else
-                lbl_img_ver_win10.Visible = False
-                txt_img_ver_win10.Visible = False
-                txt_img_ver_win10.Text = ""
+                lbl_img_ver_win10_NEW.Visible = False
+                txt_img_ver_win10_NEW.Visible = False
+                txt_img_ver_win10_NEW.Text = ""
             End If
 
             txt_img_ver.Text = VerImg_data
@@ -325,19 +351,23 @@ Public Class Main
             If IsIpValid(ComputerName) = False Then
                 'Va checher l'adress IP car le nom Entré et un nom DNS
                 RemoteUser.IPAddress(ComputerName)
-                txt_IP.Text = IPAddress_Value
+                txt_IP_NEW.Text = IPAddress_Value
             Else
                 'Va checher le nom DNS ar le nom Entré et une Adresse IP
                 IPAddress_Value = ComputerName
-                txt_IP.Text = IPAddress_Value
+                txt_IP_NEW.Text = IPAddress_Value
                 DNS_Name(ComputerName)
-                txt_PCName.Text = DNS_Name_Value
+                txt_PCName_NEW.Text = DNS_Name_Value
                 ComputerName = DNS_Name_Value
             End If
 
             'Validation pour l'activation du mode Avancé seulement pour le HRDC-DRHC.NET
             RemoteUser.GetGroups(Username)
-            If Advance_mode = True Then Me.AdvancedMode_Menu.Visible = True Else Me.AdvancedMode_Menu.Visible = False
+            If Advance_mode = True Then
+                Me.AdvancedMode_Menu.Visible = True
+            Else
+                Me.AdvancedMode_Menu.Visible = False
+            End If
 
             'Validation si un reboot est nesséssaire
             If Need_Reboot = True Then
@@ -408,7 +438,19 @@ Public Class Main
             CMDAutomate(strCommand, strResults)
             strResults = strResults.Replace(" & vbCrLf & vbCrLf & ", " & vbCrLf & ")
             Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
-            txt_TypePC.Text = parts(4)
+            If (parts(4).Contains("VPN")) Then
+                txt_ADSite_NEW.Text = parts(4)
+                pic_notOk.Visible = False
+                pic_Ok.Visible = True
+                pic_rightArrow.Visible = False
+
+            Else
+                pic_notOk.Visible = True
+                pic_Ok.Visible = False
+                pic_rightArrow.Visible = False
+
+            End If
+
 
             ' Show Execution History
             'ShowExecutionHistory()
@@ -423,6 +465,8 @@ Public Class Main
         Else
             pic_notOk.Visible = True
             pic_Ok.Visible = False
+            pic_rightArrow.Visible = False
+
         End If
 
     End Sub
@@ -439,6 +483,8 @@ Public Class Main
         strCommand = "NSLOOKUP " & ComputerName
         strResults = ""
         CMDAutomate(strCommand, strResults)
+        'send to log window
+        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & strResults
         Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
         If parts.Length > 10 Then
             'txt_NSLookup.Text = strCommand & Newline & parts(4) & Newline & parts(5) & Newline & parts(7) & Newline & parts(8)
@@ -467,6 +513,8 @@ Public Class Main
                     '    End If
                     'Next
                     If strResults.Contains(ComputerName) Then
+                        'send to log window
+                        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & strResults
                         retVal = True
                         Exit For
                     End If
@@ -475,8 +523,8 @@ Public Class Main
 
             'Dim strListedComputerName = parts(7)
             If Not retVal Then
-                txt_PCName.Text = ""
-                txt_PCName.Text = txt_PCName.Text & " - DNS ISSUE"
+                txt_PCName_NEW.Text = ""
+                txt_PCName_NEW.Text = txt_PCName_NEW.Text & " - DNS ISSUE"
             End If
             'txt_NSLookup.Text = txt_NSLookup.Text & Newline & Newline & strCommand & Newline & parts(4) & Newline & parts(5) & Newline & parts(7) & Newline & parts(8)
         Else
@@ -491,17 +539,17 @@ Public Class Main
         Me.lbl_loading.Visible = True
 
         'Reset des valeurs par default
-        txt_PCName.Text = ComputerName
+        txt_PCName_NEW.Text = ComputerName
         txt_Client_Version_Result_NEW.Text = "..."
         txt_img_ver.Text = "..."
         txt_img_install_Date.Text = "..."
-        txt_language.Text = "..."
-        txt_last_reboot.Text = "..."
+        txt_language_NEW.Text = "..."
+        txt_last_reboot_NEW.Text = "..."
         txt_SiteCode_result_NEW.Text = "..."
-        txt_OSCaption.Text = "..."
-        txt_TypePC.Text = "..."
-        txtLogged.Text = "..."
-        txt_IP.Text = "..."
+        txt_OSCaption_NEW.Text = "..."
+        txt_ADSite_NEW.Text = "..."
+        txtLoggedIn_NEW.Text = "..."
+        txt_IP_NEW.Text = "..."
         User = ""
         txt_ManagementPoint_NEW.Text = "..."
         txt_SCCM_Catalogue_NEW.Text = "..."
@@ -547,8 +595,8 @@ Public Class Main
 
         'Pic_VPN.Visible = False
 
-        lbl_img_ver_win10.Visible = False
-        txt_img_ver_win10.Visible = False
+        lbl_img_ver_win10_NEW.Visible = False
+        txt_img_ver_win10_NEW.Visible = False
 
         'Masque par default l'icone VPN
         'Me.Pic_VPN.Visible = False
@@ -558,9 +606,9 @@ Public Class Main
 
     End Sub
 
-    Private Sub cmd_Check_Click(sender As Object, e As EventArgs) Handles cmd_Check.Click
+    Private Sub cmd_Check_Click(sender As Object, e As EventArgs) Handles cmd_Check_NEW.Click
         'Modification du ComputerName
-        ComputerName = txt_PCName.Text
+        ComputerName = txt_PCName_NEW.Text
 
         'Active le chagement de la souris en mode attente
         Me.Cursor = Cursors.WaitCursor
@@ -575,7 +623,7 @@ Public Class Main
         softwareForm.ShowDialog(Me)
     End Sub
 
-    Private Sub pic_Assitance_Click(sender As Object, e As EventArgs) Handles pic_Assitance.Click
+    Private Sub pic_Assitance_Click(sender As Object, e As EventArgs) Handles pic_Assitance.Click, REMOTEASSISTANCEToolStripMenuItem.Click
         If pic_Assitance.Cursor = Cursors.Hand Then
             Me.Enabled = False
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\msra.exe", "/offerra " & ComputerName)
@@ -585,7 +633,7 @@ Public Class Main
         Me.Enabled = True
     End Sub
 
-    Private Sub pic_remote_Click(sender As Object, e As EventArgs) Handles pic_remote.Click
+    Private Sub pic_remote_Click(sender As Object, e As EventArgs) Handles pic_remote.Click, REMOTEDESKTOPToolStripMenuItem.Click
         'mstsc.exe
         Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\mstsc.exe", "/v: " & ComputerName)
         Thread.Sleep(1000)
@@ -797,7 +845,7 @@ Public Class Main
             sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout)
 
         Catch ex As Exception
-            txtLogged.Text = "problem stopping branch cache"
+            txtLoggedIn_NEW.Text = "problem stopping branch cache"
         End Try
     End Sub
 
@@ -816,7 +864,7 @@ Public Class Main
             sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout)
 
         Catch ex As Exception
-            txtLogged.Text = "problem stopping branch cache"
+            txtLoggedIn_NEW.Text = "problem stopping branch cache"
         End Try
     End Sub
 
@@ -895,7 +943,7 @@ Public Class Main
         sccmActionTools.ShowDialog(Me)
     End Sub
 
-    Private Sub UILanguage_Click(sender As Object, e As EventArgs) Handles Menu_Francais.Click, Menu_English.Click, ENToolStripMenuItem.Click, FRToolStripMenuItem.Click
+    Private Sub UILanguage_Click(sender As Object, e As EventArgs) Handles Menu_Francais.Click, Menu_English.Click, FRToolStripMenuItem.Click, ENToolStripMenuItem.Click
         Dim cultureName As String = GlobalUICulture.Name
 
         If sender.Equals(Menu_Francais) Or sender.Equals(FRToolStripMenuItem) Then
@@ -930,14 +978,14 @@ Public Class Main
             Me.TT.SetToolTip(Me.pic_Reboot, My.Resources.ToolTip_Main_Reboot)
             Me.TT.SetToolTip(Me.pic_remote, My.Resources.ToolTip_Main_remote)
             Me.TT.SetToolTip(Me.txt_SiteCode_result_NEW, My.Resources.ToolTip_Main_SiteCode_result)
-            Me.TT.SetToolTip(Me.GroupBox2, My.Resources.ToolTip_Main_GroupBox2)
+            Me.TT.SetToolTip(Me.GroupBoxMaintenanceWindow_NEW, My.Resources.ToolTip_Main_GroupBox2)
             'Me.TT.SetToolTip('Me.pic_UserGuide, My.Resources.ToolTip_UserGuide)
 
             Me.Refresh()
         End If
     End Sub
 
-    Private Sub pic_Reboot_Click(sender As Object, e As EventArgs) Handles pic_Reboot.Click
+    Private Sub pic_Reboot_Click(sender As Object, e As EventArgs) Handles pic_Reboot.Click, REBOOTREMOTECOMPUTERToolStripMenuItem.Click
         Me.Cursor = Cursors.WaitCursor
 
         Dim Result_msg = MsgBox(My.Resources.ConfirmReboot & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.MessageReboot & " : " & ComputerName)
@@ -967,7 +1015,7 @@ Public Class Main
         If Reboot_Send = True Then
             'Modification du ComputerName
             ComputerName = ""
-            txt_PCName.Text = "..."
+            txt_PCName_NEW.Text = "..."
             'Active le chagement de la souris en mode attente
             Me.Cursor = Cursors.WaitCursor
             Affichage_Defaut()
@@ -1023,17 +1071,17 @@ Public Class Main
         packageApps.ShowDialog(Me)
     End Sub
 
-    Private Sub cmd_Force_WSUS_Click(sender As Object, e As EventArgs) Handles cmd_Force_WSUS.Click
+    Private Sub cmd_Force_WSUS_Click(sender As Object, e As EventArgs) Handles cmd_Force_WSUS.Click, FORCESECURITYUPDATEToolStripMenuItem.Click
         Dim popupRefreshWSUSForm As Popup_Refresh_WSUS = New Popup_Refresh_WSUS
         popupRefreshWSUSForm.ShowDialog(Me)
     End Sub
 
-    Private Sub cmd_Force_Apps_update_Click(sender As Object, e As EventArgs) Handles cmd_Force_Apps_update.Click
+    Private Sub cmd_Force_Apps_update_Click(sender As Object, e As EventArgs) Handles cmd_Force_Apps_update.Click, FORCEAPPLICATIONUPDATEToolStripMenuItem.Click
         Dim popupRefreshApps As Popup_Refresh_Apps = New Popup_Refresh_Apps
         popupRefreshApps.ShowDialog(Me)
     End Sub
 
-    Private Sub pic_Explorer_Click(sender As Object, e As EventArgs) Handles pic_Explorer.Click
+    Private Sub pic_Explorer_Click(sender As Object, e As EventArgs) Handles pic_Explorer.Click, EXPLORERToolStripMenuItem.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$")
         Catch ex As Exception
@@ -1043,7 +1091,7 @@ Public Class Main
         Me.pic_Explorer.BorderStyle = BorderStyle.None
     End Sub
 
-    Private Sub cmd_Reinstall_client_Click(sender As Object, e As EventArgs) Handles cmd_Reinstall_client.Click
+    Private Sub cmd_Reinstall_client_Click(sender As Object, e As EventArgs) Handles cmd_Reinstall_client.Click, REINSTALLSCCMCLIENTToolStripMenuItem1.Click
 
         'Valide que le fichier INI est la 
         If CheckFileExists(INI_Files) = False Then
@@ -1078,6 +1126,11 @@ Public Class Main
 
 #Region "Service Windows"
     Private _serviceWindows As IEnumerable(Of ServiceWindow)
+    Private loadInstalledSoftwareTab As Integer
+    Private loadJavaTab As Integer
+    Private loadProcessTab As Integer
+    Private loadServiceTab As Integer
+
     Private Property ServiceWindows() As IEnumerable(Of ServiceWindow)
         Get
             Return _serviceWindows
@@ -1475,20 +1528,6 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub cmd_GCProfile_log_Click(sender As Object, e As EventArgs)
-        Dim WebPage = "http://gcprofilelog/"
-        Process.Start(WebPage)
-    End Sub
-
-    Private Sub cmd_GCProfile_PC_Click(sender As Object, e As EventArgs)
-        Dim WebPage = ("http://gcprofilelog?wsname=" & ComputerName)
-        Process.Start(WebPage)
-    End Sub
-
-    Private Sub cmd_GCProfile_User_Click(sender As Object, e As EventArgs)
-        Dim WebPage = ("http://gcprofilelog?username=" & Trim(User))
-        Process.Start(WebPage)
-    End Sub
 
     Private Sub cmd_SCCM_report_Click(sender As Object, e As EventArgs)
         Dim WebPage = ""
@@ -1581,10 +1620,7 @@ Public Class Main
         Me.Close()
     End Sub
 
-    Private Sub GCProfileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GCProfileToolStripMenuItem.Click
-        Dim WebPage = ("http://gcprofilelog?wsname=" & ComputerName)
-        Process.Start(WebPage)
-    End Sub
+
 
     Private Sub MainTab_DrawItem(ByVal sender As Object, ByVal e As System.Windows.Forms.DrawItemEventArgs) Handles MainTab.DrawItem
         Dim g As Graphics = e.Graphics
@@ -1625,44 +1661,1186 @@ Public Class Main
         Try
             Select Case MainTab.SelectedIndex
                 Case 0 'TAB 1
-                    If loadExecutionPKGSTab < 1 Then
-                        ShowExecutionHistoryPKGS()
-                    End If
-                    loadExecutionPKGSTab = loadExecutionPKGSTab + 1
+                    'If loadExecutionPKGSTab < 1 Then
+                    '    ShowExecutionHistoryPKGS()
+                    'End If
+                    'loadExecutionPKGSTab = loadExecutionPKGSTab + 1
                 Case 1
-                    If loadExecutionAPPSTab < 1 Then
-                        ShowExecutionHistoryPKGS()
-                    End If
-                    ShowExecutionHistoryAPPS()
-                    loadExecutionAPPSTab = loadExecutionAPPSTab + 1
+
+                    'ShowExecutionHistoryPKGS()
+                    Me.Tab_pkg_app.SelectedIndex = Me.Tab_pkg_app.TabPages.IndexOf(START)
+                    'Tab_pkg_app.SelectedTab = Me.Tab_pkg_app.Tabp
+
+                    'ShowExecutionHistoryAPPS()
+                    'loadExecutionAPPSTab = loadExecutionAPPSTab + 1
                 Case 2
-                    If loadRunningPKGSTab < 1 Then
-                        ShowRunningPKGS()
+                    If loadRunningWSUS_SCUP < 1 Then
+                        ShowRunningWSUS_SCUP()
                     End If
                     loadRunningPKGSTab = loadRunningPKGSTab + 1
                 Case 3
-                    If loadAdvertisementsTab < 1 Then
-                        ShowAdvertisements()
-                    End If
-                    loadAdvertisementsTab = loadAdvertisementsTab + 1
+                    Me.ProgramsAndFeaturesSubTab.SelectedIndex = Me.ProgramsAndFeaturesSubTab.TabPages.IndexOf(PF_SUBTAB_OTHER)
+                    Me.ListViewInstalledSoftware_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
+                    Me.ListViewJava_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
+                    Me.ListViewProcess_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
+                    Me.ListViewServices_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
+
+
+                    'Affichage de la version du programme
+                    Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+                    Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+
+                    Software_Hide = True
+                    Me.Cursor = Cursors.Default
+                    ShowProgramAndFeatures()
+
+                    'Case 4
+                    '    If loadInfoTab < 1 Then
+                    '        ShowInfoTab()
+                    '    End If
+                    '    loadInfoTab = loadInfoTab + 1
+                    '    'Case 5-8 go here
+                    'Case 9
+                    '    If loadServiceWindows < 10 Then
+                    '        RefreshServiceWindows()
+                    '    End If
+                    '    loadServiceWindows = loadServiceWindows + 1
                 Case 4
-                    If loadInfoTab < 1 Then
-                        ShowInfoTab()
-                    End If
-                    loadInfoTab = loadInfoTab + 1
-                    'Case 5-8 go here
+                    Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+                    Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+                    All = False
+                Case 5
+                    TimerBar_Adv_clean = 0
+                    TimerBar_Adv_clean_now = 0
+                    bError = False
+                    strComputer = UCase(ComputerName)
+
+                    'Affichage de la version du programme
+                    Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+                    Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+
+                    lbl_loading.Visible = False
+                Case 6
+                    RefreshServiceWindows()
+                Case 7
+                    txt_ComputerName_NEW.Text = ComputerName
+
+                    'Affichage de la version du programme
+                    Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+                    Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+
+                    'Va chercher les info de la cache du client
+                    Me.Cursor = Cursors.WaitCursor
+                    SCache()
+                    Me.Cursor = Cursors.Default
+
+                    'Vérifie la configuration du BranchCache
+                    Me.Cursor = Cursors.WaitCursor
+                    SBranchCache()
+                    Me.Cursor = Cursors.Default
+
+                    'Affiche les imformation du Network du client
+                    txt_IP_NEW.Text = IPAddress_Value
+                    txt_MacAddress_NEW.Text = MacAddress(ComputerName)
                 Case 9
-                    If loadServiceWindows < 10 Then
-                        RefreshServiceWindows()
-                    End If
-                    loadServiceWindows = loadServiceWindows + 1
+                    InitCommandWindow()
+
             End Select
 
         Catch ex As Exception
             Me.Cursor = Cursors.Default
         End Try
         Me.Cursor = Cursors.Default
+    End Sub
 
+
+
+    Private Sub SCache()
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim cache_size, cache_location
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\SoftMgmtAgent")
+        Dim Query As New SelectQuery("SELECT * FROM CacheConfig WHERE ConfigKey='Cache'")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+        Dim info As ManagementObject
+
+        cache_size = "0"
+        cache_location = "0"
+
+        Try
+            For Each info In search.Get()
+                cache_size = info("Size")
+                cache_location = info("Location")
+            Next
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        If cache_size <> 0 Then
+            txt_Cache_Size_NEW.Text = Format(cache_size / 1024, "00.00")
+            txt_cache_location_NEW.Text = cache_location
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub SBranchCache()
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim regKey As RegistryKey
+        Dim regSubKey As RegistryKey
+
+        pic_greenflag1_NEW.Visible = False
+        pic_greenflag2_NEW.Visible = False
+        pic_redflag1_NEW.Visible = False
+        pic_redflag2_NEW.Visible = False
+        cmd_Port_8009_NEW.Enabled = False
+
+        Try
+            regKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName)
+            regSubKey = regKey.OpenSubKey("Software\Microsoft\Windows NT\CurrentVersion\PeerDist\DownloadManager\Peers\Connection", True)
+
+            If regSubKey Is Nothing Then
+                'major problem, couldn't find the key
+                regKey.CreateSubKey("Software\Microsoft\Windows NT\CurrentVersion\PeerDist\DownloadManager\Peers\Connection\")
+                'open the newly created keypath
+                regSubKey = regKey.OpenSubKey("Software\Microsoft\Windows NT\CurrentVersion\PeerDist\DownloadManager\Peers\Connection", True)
+                regSubKey.SetValue("ConnectPort", 8009, RegistryValueKind.DWord)
+                regSubKey.SetValue("ListenPort", 8009, RegistryValueKind.DWord)
+
+                Me.txt_ConnectPort_NEW.Text = regSubKey.GetValue("ConnectPort")
+                Me.txt_ListenPort_NEW.Text = regSubKey.GetValue("ListenPort")
+                If Not Me.txt_ConnectPort_NEW.Text = "8009" Then
+                    Me.pic_redflag1_NEW.Visible = True
+                    Me.pic_greenflag1_NEW.Visible = False
+
+                Else
+                    Me.pic_redflag1_NEW.Visible = False
+                    Me.pic_greenflag1_NEW.Visible = True
+
+                End If
+
+                If Not Me.txt_ListenPort_NEW.Text = "8009" Then
+                    Me.pic_redflag2_NEW.Visible = True
+                    Me.pic_greenflag2_NEW.Visible = False
+
+                Else
+                    Me.pic_redflag2_NEW.Visible = False
+                    Me.pic_greenflag2_NEW.Visible = True
+
+                End If
+
+                If Not Me.txt_ConnectPort_NEW.Text = "8009" Or Not Me.txt_ListenPort_NEW.Text = "8009" Then cmd_Port_8009_NEW.Enabled = True Else cmd_Port_8009_NEW.Enabled = False
+            Else
+
+                Me.txt_ConnectPort_NEW.Text = regSubKey.GetValue("ConnectPort")
+                Me.txt_ListenPort_NEW.Text = regSubKey.GetValue("ListenPort")
+                If Not Me.txt_ConnectPort_NEW.Text = "8009" Then
+                    Me.pic_redflag1_NEW.Visible = True
+                    Me.pic_greenflag1_NEW.Visible = False
+                Else
+                    Me.pic_redflag1_NEW.Visible = False
+                    Me.pic_greenflag1_NEW.Visible = True
+                End If
+
+                If Not Me.txt_ListenPort_NEW.Text = "8009" Then
+                    Me.pic_redflag2_NEW.Visible = True
+                    Me.pic_greenflag2_NEW.Visible = False
+                Else
+                    Me.pic_redflag2_NEW.Visible = False
+                    Me.pic_greenflag2_NEW.Visible = True
+                End If
+
+                If Not Me.txt_ConnectPort_NEW.Text = "8009" Or Not Me.txt_ListenPort_NEW.Text = "8009" Then cmd_Port_8009_NEW.Enabled = True Else cmd_Port_8009_NEW.Enabled = False
+            End If
+
+            regSubKey.Close()
+            regKey.Close()
+
+        Catch ex As Exception
+
+        End Try
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Sub ProgramsAndFeaturesSubTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProgramsAndFeaturesSubTab.SelectedIndexChanged
+        Try
+            Select Case ProgramsAndFeaturesSubTab.SelectedIndex
+                Case 0 'TAB 1
+                    If loadInstalledSoftwareTab < 1 Then
+                        ShowInstalledSoftware()
+                    End If
+                    loadInstalledSoftwareTab = loadInstalledSoftwareTab + 1
+                Case 1
+                    If loadJavaTab < 1 Then
+                        ShowJava()
+                    End If
+                    loadJavaTab = loadJavaTab + 1
+                Case 2
+                    If loadProcessTab < 1 Then
+                        ShowProcess()
+                    End If
+                    loadProcessTab = loadProcessTab + 1
+                Case 3
+                    If loadServiceTab < 1 Then
+                        ShowService()
+                    End If
+                    loadServiceTab = loadServiceTab + 1
+                Case 4
+                    'do nothing
+            End Select
+
+        Catch ex As Exception
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
+    Private Sub ShowService()
+        onetime = 0
+        Me.Refresh()
+        If ListViewServices_NEW.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListViewServices_NEW.Items(0).Selected = True
+            ListViewServices_NEW.Select()
+            Label2.Visible = True
+            'Exit Select
+        End If
+        ListViewServices_NEW.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+        Label2.Visible = True
+
+        Dim SName, SEtat, SType, SServiceName As String
+        Dim SCount, count, countVal As Integer
+
+        Try
+            count = 0
+            SCount = 0
+
+            'Recherche l'utilisteur qui a partie le processus
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\CIMV2")
+            Dim Query As New SelectQuery("SELECT * FROM Win32_Service")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+            Dim info As ManagementObject
+
+            For Each info In search.Get()
+                SCount = SCount + 1
+            Next
+
+            Try
+                For Each info In search.Get()
+                    SName = info("Caption")
+                    SEtat = info("State")
+                    SType = info("StartMode")
+                    SServiceName = info("Name")
+
+
+                    'Ajout a la listview
+                    ListViewServices_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                    Dim item As New ListViewItem(SName)
+                    item.SubItems.Add(SEtat)
+                    item.SubItems.Add(SType)
+                    item.SubItems.Add(SServiceName)
+                    ListViewServices_NEW.Items.Add(item)
+
+
+                    count = count + 1
+
+                    countVal = ((count + 1) / SCount) * 100
+                    If countVal > 100 Or countVal < 0 Then countVal = 100
+                    ProgressBar.Value = countVal
+                Next
+            Catch ex As Exception
+                'Gestion de l'erreur
+            End Try
+
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        ProgressBar.Visible = False
+        onetime = 1
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 4
+        AddHandler Me.ListViewServices_NEW.ColumnClick, AddressOf ColumnClick
+        If ListViewServices_NEW.Items.Count > 0 Then
+            ListViewServices_NEW.Items(0).Selected = True
+            ListViewServices_NEW.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub ShowProcess()
+        onetime = 0
+        Me.Refresh()
+        If ListViewProcess_NEW.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListViewProcess_NEW.Items(0).Selected = True
+            ListViewProcess_NEW.Select()
+            Label2.Visible = True
+            'Exit Select
+        End If
+        ListViewProcess_NEW.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+        Label2.Visible = True
+
+        Dim PName, PLocation, PUser, PID As String
+        Dim PDate
+        Dim PCount, count, countVal As Integer
+
+        Try
+            'recherche tout les processus sur l'ordinateur a distance et les additionne pour avoir le total
+            PCount = Process.GetProcesses(ComputerName).Length
+            count = 0
+
+            'Recherche l'utilisteur qui a partie le processus
+            Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\CIMV2")
+            Dim Query As New SelectQuery("SELECT * FROM Win32_Process")
+            Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+            Dim info As ManagementObject
+
+            Try
+                For Each info In search.Get()
+                    PName = info("Caption")
+                    PLocation = info("CommandLine")
+                    PID = info("ProcessId")
+                    PDate = WMIDateConvert(info("CreationDate"))
+
+                    Try
+                        Dim infoUser(2) As String
+                        info.InvokeMethod("GetOwner", infoUser)
+                        PUser = infoUser(0)
+                    Catch ex As Exception
+                        PUser = ""
+                    End Try
+                    'Ajout a la listview
+                    ListViewProcess_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                    Dim item As New ListViewItem(PName)
+                    item.SubItems.Add(PLocation)
+                    item.SubItems.Add(PUser)
+                    item.SubItems.Add(PDate)
+                    item.SubItems.Add(PID)
+                    ListViewProcess_NEW.Items.Add(item)
+                    'Me.Refresh()
+
+                    count = count + 1
+
+                    countVal = ((count + 1) / PCount) * 100
+                    If countVal > 100 Or countVal < 0 Then countVal = 100
+                    ProgressBar.Value = countVal
+                Next
+            Catch ex As Exception
+                'Gestion de l'erreur
+            End Try
+
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        ProgressBar.Visible = False
+        onetime = 1
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 3
+        AddHandler Me.ListViewProcess_NEW.ColumnClick, AddressOf ColumnClick
+
+        'Active le autosize
+        ColumnHeader6.Width = -2
+        'ColumnHeader7.Width = -2
+        ColumnHeader8.Width = -2
+        ColumnHeader14.Width = -2
+        ColumnHeader9.Width = -2
+
+        If ListViewProcess_NEW.Items.Count > 0 Then
+            ListViewProcess_NEW.Items(0).Selected = True
+            ListViewProcess_NEW.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub ShowJava()
+        'chk_ShowAll.Visible = False
+        onetime = 0
+        Me.Refresh()
+        If ListViewJava_NEW.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListViewJava_NEW.Items(0).Selected = True
+            ListViewJava_NEW.Select()
+        End If
+        ListViewJava_NEW.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        'Valide que ce se script ne passe que une fois
+        If onetime = 1 Then Exit Sub
+
+        Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x86, False)
+        Dim SubKeyName() As String = Key.GetSubKeyNames()
+        Dim Index, count, countVal As Integer
+        Dim SubKey As RegistryKey
+
+        ProgressBar.Value = 1
+        count = Key.SubKeyCount
+        Me.Update()
+
+        For Index = 0 To Key.SubKeyCount - 1
+            SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x86 + "\" + SubKeyName(Index), False)
+            If Not SubKey.GetValue("Displayname", "") Is "" Then
+                If Not CType(SubKey.GetValue("SystemComponent", ""), String) = "1" Then
+                    If UCase(Microsoft.VisualBasic.Left(CType(SubKey.GetValue("Displayname", ""), String), 5)) = "JAVA " Then
+                        Dim dispName As String = CType(SubKey.GetValue("Displayname", ""), String)
+                        ListViewJava_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(dispName)
+                        'item.SubItems.Add(ver)
+                        ListViewJava_NEW.Items.Add(item)
+                        Me.Update()
+                    End If
+                End If
+            End If
+            countVal = ((Index + 1) / count) * 100
+            If countVal > 100 Or countVal < 0 Then countVal = 100
+            ProgressBar.Value = countVal
+        Next
+        ProgressBar.Visible = False
+        onetime = 1
+
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 2
+        AddHandler Me.ListViewJava_NEW.ColumnClick, AddressOf ColumnClick
+        If ListViewJava_NEW.Items.Count > 0 Then
+            ListViewJava_NEW.Items(0).Selected = True
+            ListViewJava_NEW.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+    Private Sub ShowInstalledSoftware()
+        'chk_ShowAll.Visible = True
+        onetime = 0
+        Me.Refresh()
+        If ListViewInstalledSoftware_NEW.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListViewInstalledSoftware_NEW.Items(0).Selected = True
+            ListViewInstalledSoftware_NEW.Select()
+            Label1.Visible = True
+            'Exit Select
+        End If
+        ListViewInstalledSoftware_NEW.Items.Clear()
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+
+        Try
+            'Valide que ce se script ne passe que une fois
+            If onetime = 1 Then Exit Sub
+
+            Dim Key_x86 As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x86, False)
+            Dim SubKeyName_x86() As String = Key_x86.GetSubKeyNames()
+            Dim SubKey_x86 As RegistryKey
+
+            Dim Key_x64 As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x64, False)
+            Dim SubKeyName_x64() As String = Key_x64.GetSubKeyNames()
+            Dim SubKey_x64 As RegistryKey
+
+            Dim Index_x86, Index_x64, count, countVal As Integer
+            Dim AppName, AppVer, AppDate, AppVendor As String
+
+            AppName = ""
+            AppVer = ""
+            AppDate = ""
+            AppVendor = ""
+            ProgressBar.Value = 1
+            count = Key_x86.SubKeyCount + Key_x64.SubKeyCount
+            Me.Update()
+
+            'Gestion de la branche 32 Bits
+            Try
+                For Index_x86 = 0 To Key_x86.SubKeyCount - 1
+                    SubKey_x86 = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x86 + "\" + SubKeyName_x86(Index_x86), False)
+
+                    If Not SubKey_x86.GetValue("DisplayName", "") Is "" Then
+                        If Software_Hide = True Then
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                AppName = CType(SubKey_x86.GetValue("DisplayName", ""), String)
+                                AppVer = CType(SubKey_x86.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x86.GetValue("Publisher", ""), String)
+                            End If
+                        Else
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                AppName = CType(SubKey_x86.GetValue("DisplayName", ""), String) + " *"
+                                AppVer = CType(SubKey_x86.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x86.GetValue("Publisher", ""), String)
+                            Else
+                                AppName = CType(SubKey_x86.GetValue("DisplayName", ""), String)
+                                AppVer = CType(SubKey_x86.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x86.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x86.GetValue("Publisher", ""), String)
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+
+                    ElseIf Not SubKey_x86.GetValue("ParentDisplayName", "") Is "" Then
+
+                        If Software_Hide = True Then
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                AppName = CType(SubKey_x86.GetValue("ParentDisplayName", ""), String)
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            End If
+                        Else
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                AppName = CType(SubKey_x86.GetValue("ParentDisplayName", ""), String) + " *"
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            Else
+                                AppName = CType(SubKey_x86.GetValue("ParentDisplayName", ""), String)
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+                    Else
+                        Dim AppName_temp As String = SubKeyName_x86(Index_x86).ToString
+                        If Software_Hide = True Then
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "")
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            End If
+                        Else
+                            If CType(SubKey_x86.GetValue("SystemComponent", ""), String) = "1" Then
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "") + " *"
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp + " *"
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            Else
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "")
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+
+                    End If
+                    countVal = ((Index_x86 + Index_x64 + 1) / count) * 100
+                    If countVal > 100 Or countVal < 0 Then countVal = 100
+                    ProgressBar.Value = countVal
+                Next
+                onetime = 1
+            Catch ex As Exception
+                'Gestion de l'erreur 32 Bits
+            End Try
+
+            'Gestion de la branche 64 Bits
+            Try
+                For Index_x64 = 0 To Key_x64.SubKeyCount - 1
+                    SubKey_x64 = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(REG_Install_Programs_x64 + "\" + SubKeyName_x64(Index_x64), False)
+
+                    If Not SubKey_x64.GetValue("DisplayName", "") Is "" Then
+                        If Software_Hide = True Then
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                AppName = CType(SubKey_x64.GetValue("DisplayName", ""), String)
+                                AppVer = CType(SubKey_x64.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x64.GetValue("Publisher", ""), String)
+                            End If
+                        Else
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                AppName = CType(SubKey_x64.GetValue("DisplayName", ""), String) + " *"
+                                AppVer = CType(SubKey_x64.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x64.GetValue("Publisher", ""), String)
+                            Else
+                                AppName = CType(SubKey_x64.GetValue("DisplayName", ""), String)
+                                AppVer = CType(SubKey_x64.GetValue("DisplayVersion", ""), String)
+                                If Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 1) = "2" Then AppDate = Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 1, 4) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 5, 2) + "/" + Mid(CType(SubKey_x64.GetValue("InstallDate", ""), String), 7, 2) Else AppDate = ""
+                                AppVendor = CType(SubKey_x64.GetValue("Publisher", ""), String)
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+
+                    ElseIf Not SubKey_x64.GetValue("ParentDisplayName", "") Is "" Then
+
+                        If Software_Hide = True Then
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                AppName = CType(SubKey_x64.GetValue("ParentDisplayName", ""), String)
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            End If
+                        Else
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                AppName = CType(SubKey_x64.GetValue("ParentDisplayName", ""), String) + " *"
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            Else
+                                AppName = CType(SubKey_x64.GetValue("ParentDisplayName", ""), String)
+                                AppVer = ""
+                                AppDate = ""
+                                AppVendor = ""
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+                    Else
+                        Dim AppName_temp As String = SubKeyName_x64(Index_x64).ToString
+                        If Software_Hide = True Then
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                ' ne pas afficher car la case afficher tout n'a pas été activée
+                            Else
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "")
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            End If
+                        Else
+                            If CType(SubKey_x64.GetValue("SystemComponent", ""), String) = "1" Then
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "") + " *"
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp + " *"
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            Else
+                                Dim T1 = Mid(AppName_temp, 1, InStr(1, AppName_temp, "."))
+                                If Not T1 = "" Then
+                                    AppName = "Microsoft Windows Update " + AppName_temp.Replace(T1, "")
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = "Microsoft Corporation"
+                                Else
+                                    AppName = AppName_temp
+                                    AppVer = ""
+                                    AppDate = ""
+                                    AppVendor = ""
+                                End If
+                            End If
+                        End If
+
+                        ListViewInstalledSoftware_NEW.Sorting = Windows.Forms.SortOrder.Ascending
+                        Dim item As New ListViewItem(AppName)
+                        item.SubItems.Add(AppVer)
+                        item.SubItems.Add(AppDate)
+                        item.SubItems.Add(AppVendor)
+                        item.Name = AppName
+                        'Validation des doublons
+                        If ListViewInstalledSoftware_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Doublons ne pas inscrire
+                        Else
+                            ListViewInstalledSoftware_NEW.Items.Add(item)
+                        End If
+                        Me.Update()
+
+                    End If
+                    countVal = ((Index_x86 + Index_x64 + 1) / count) * 100
+                    If countVal > 100 Or countVal < 0 Then countVal = 100
+                    ProgressBar.Value = countVal
+                Next
+                ProgressBar.Visible = False
+                onetime = 1
+            Catch ex As Exception
+                'Gestion de l'erreur 64 Bits
+            End Try
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 1
+        AddHandler Me.ListViewInstalledSoftware_NEW.ColumnClick, AddressOf ColumnClick
+        If ListViewInstalledSoftware_NEW.Items.Count > 0 Then
+            ListViewInstalledSoftware_NEW.Items(0).Selected = True
+            ListViewInstalledSoftware_NEW.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub ShowProgramAndFeatures()
+        'Throw New NotImplementedException()
+    End Sub
+
+    Sub ShowRunningWSUS_SCUP()
+        Me.Text = "SCCM PC Admin  " & ComputerName
+        Me.Cursor = Cursors.WaitCursor
+
+        'Active le tri par selection de colonne
+        Me.ListViewWSUS_SCUP_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Descending)
+
+        'Affichage de la version du programme
+        Dim Version = Assembly.GetExecutingAssembly().GetName().Version
+        Me.lbl_Version.Text = String.Format(Me.lbl_Version.Text, Version.Major, Version.Minor, Version.Build, Version.Revision)
+
+        onetime = 0
+        ProgressBar.Value = 0
+
+        chk_ApprovedPatch_NEW.Checked = True
+
+        'ListViewWSUS_SCUP.Items.Clear()
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub ListViewWSUS_SCUP_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles ListViewWSUS_SCUP_NEW.ColumnClick
+        ' Set the ListViewItemSorter property to a new ListViewItemComparer object.
+        Dim sortIt As SortOrder
+
+        If e.Column <> lastCol Then
+            ListViewWSUS_SCUP_NEW.Sorting = SortOrder.Descending
+            sortIt = SortOrder.Descending
+        End If
+
+        'ce souvin de la derniere colonne
+        lastCol = e.Column
+
+        If ListViewWSUS_SCUP_NEW.Sorting = SortOrder.Descending Then
+            ListViewWSUS_SCUP_NEW.Sorting = SortOrder.Ascending
+            sortIt = SortOrder.Ascending
+        Else
+            ListViewWSUS_SCUP_NEW.Sorting = SortOrder.Descending
+            sortIt = SortOrder.Descending
+        End If
+
+        Me.ListViewWSUS_SCUP_NEW.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+
+    End Sub
+
+    Private Sub Start_WSUS_Approved()
+        Me.Cursor = Cursors.WaitCursor
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\Policy\Machine\RequestedConfig")
+        Dim Query As New SelectQuery("SELECT * FROM CCM_UpdateCIAssignment")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+        Dim Index As Integer
+        Dim AssignedCIs(), i
+
+        i = 0
+        ID = 0
+        Index = 0
+
+        'rechercher dans les deployements les updates approvées et les mais en variable pour les consulté
+        'cette recherche permet de regarder que les patch approvée et relacher par SCCM
+        Dim info As ManagementObject
+        For Each info In search.Get()
+            AssignedCIs = info("AssignedCIs")
+            'calcule le nombre d'entrez et les recherches 1 a 1
+            Do Until i = AssignedCIs.Length
+                Dim str_temp, str_len, str_pos1
+                str_temp = Trim(AssignedCIs(i))
+                str_len = str_temp
+                str_pos1 = InStr(1, str_temp, "ID") + 3
+                str_WSUS_ID(ID) = Mid(str_temp, str_pos1, 36)
+                i = i + 1
+                ID = ID + 1
+            Loop
+            i = 0
+        Next
+
+        WSUS_Approved()
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub WSUS_Approved()
+
+        'Valide que se script ne passe que une fois
+        If onetime = 1 Then Exit Sub
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\SoftwareUpdates\UpdatesStore")
+        Dim Query As New SelectQuery("SELECT * FROM CCM_UpdateStatus")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+        Dim Index, count, count_miss, count_WSUS_Approved, countVal, max_ID, i As Integer
+        Dim Article, Bulletin, Status, AppName, GUI, UniqueID As String
+
+        Dim info As ManagementObject
+        Index = search.Get().Count
+        count = 0
+        count_miss = 0
+        count_WSUS_Approved = 0
+        max_ID = ID
+        i = 0
+
+        ' enum each entry
+        ProgressBar.Value = 1
+        Me.Update()
+
+        For Each info In search.Get()
+            UniqueID = info("UniqueId")
+            Do Until i = max_ID
+                If UniqueID = str_WSUS_ID(i) Then
+                    Article = info("Article")
+                    Bulletin = info("Bulletin")
+                    Status = info("Status")
+                    AppName = info("Title")
+                    GUI = info("UpdateClassification")
+                    If Not AppName Is "" Then
+                        ListViewWSUS_SCUP_NEW.Sorting = Windows.Forms.SortOrder.Descending
+                        Dim item As New ListViewItem(Article)
+                        item.SubItems.Add(Bulletin)
+                        item.SubItems.Add(Status)
+                        item.SubItems.Add(AppName)
+
+                        Select Case UCase(GUI)
+
+                            Case "5C9376AB-8CE6-464A-B136-22113DD69801"
+                                GUI = "Application"
+
+                            Case "434DE588-ED14-48F5-8EED-A15E09A991F6"
+                                GUI = "Connectors"
+
+                            Case "E6CF1350-C01B-414D-A61F-263D14D133B4"
+                                GUI = "CriticalUpdates"
+
+                            Case "E0789628-CE08-4437-BE74-2495B842F43B"
+                                GUI = "DefinitionUpdates"
+
+                            Case "E140075D-8433-45C3-AD87-E72345B36078"
+                                GUI = "DeveloperKits"
+
+                            Case "B54E7D24-7ADD-428F-8B75-90A396FA584F"
+                                GUI = "FeaturePacks"
+
+                            Case "9511D615-35B2-47BB-927F-F73D8E9260BB"
+                                GUI = "Guidance"
+
+                            Case "0FA1201D-4330-4FA8-8AE9-B877473B6441"
+                                GUI = "SecurityUpdates"
+
+                            Case "68C5B0A3-D1A6-4553-AE49-01D3A7827828"
+                                GUI = "ServicePacks"
+
+                            Case "B4832BD8-E735-4761-8DAF-37F882276DAB"
+                                GUI = "Tools"
+
+                            Case "28BC880E-0592-4CBF-8F95-C79B17911D5F"
+                                GUI = "UpdateRollups"
+
+                            Case "CD5FFD1E-E932-4E3A-BF74-18BF0B1BBD83"
+                                GUI = "Updates"
+
+                            Case Else
+                                GUI = "N/A"
+
+                        End Select
+
+                        item.SubItems.Add(GUI)
+                        item.Name = AppName
+                        count_WSUS_Approved = count_WSUS_Approved + 1
+                        Me.Update()
+
+                        'Validation des doublons
+                        If ListViewWSUS_SCUP_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                            'Ne fait rien 
+                        Else
+                            If Status = "Missing" Then
+                                'Mais la ligne en rouge si la valeur est manquante
+                                item.BackColor = Color.DarkRed
+                                item.ForeColor = Color.White
+                                count_miss = count_miss + 1
+                            End If
+                            ListViewWSUS_SCUP_NEW.Items.Add(item)
+                        End If
+                        lbl_missing_NEW.Text = count_miss.ToString
+                        lbl_patch_count_NEW.Text = count_WSUS_Approved.ToString
+
+                    End If
+                End If
+                i = i + 1
+            Loop
+            i = 0
+            count = count + 1
+            countVal = (count / Index) * 100
+            If countVal > 100 Or countVal < 0 Then countVal = 100
+            ProgressBar.Value = countVal
+            Me.Update()
+        Next
+        ProgressBar.Visible = False
+        onetime = 1
+        Me.Cursor = Cursors.Default
+
+        If ListViewWSUS_SCUP_NEW.Items.Count > 0 Then
+            ListViewWSUS_SCUP_NEW.Items(0).Selected = True
+            ListViewWSUS_SCUP_NEW.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub WSUS_ALL()
+        Me.Refresh()
+        'Valide que ce se script ne passe que une fois
+        If onetime = 1 Then Exit Sub
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\SoftwareUpdates\UpdatesStore")
+        Dim Query As New SelectQuery("SELECT * FROM CCM_UpdateStatus")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+        Dim Index, count, count2, count_miss, countVal As Integer
+        Dim Article, Bulletin, Status, AppName, GUI As String
+        count = 0
+        count2 = 0
+        count_miss = 0
+        Index = 0
+
+        Dim info As ManagementObject
+
+        'count the numebr of record
+        Index = search.Get().Count
+
+        ' enum each entry
+        ProgressBar.Value = 1
+        Me.Update()
+        For Each info In search.Get()
+            Article = info("Article")
+            Bulletin = info("Bulletin")
+            Status = info("Status")
+            AppName = info("Title")
+            GUI = info("UpdateClassification")
+            If Not AppName Is "" Then
+                ListViewWSUS_SCUP_NEW.Sorting = Windows.Forms.SortOrder.Descending
+                Dim item As New ListViewItem(Article)
+                item.SubItems.Add(Bulletin)
+                item.SubItems.Add(Status)
+                item.SubItems.Add(AppName)
+
+                Select Case UCase(GUI)
+
+                    Case "5C9376AB-8CE6-464A-B136-22113DD69801"
+                        GUI = "Application"
+
+                    Case "434DE588-ED14-48F5-8EED-A15E09A991F6"
+                        GUI = "Connectors"
+
+                    Case "E6CF1350-C01B-414D-A61F-263D14D133B4"
+                        GUI = "CriticalUpdates"
+
+                    Case "E0789628-CE08-4437-BE74-2495B842F43B"
+                        GUI = "DefinitionUpdates"
+
+                    Case "E140075D-8433-45C3-AD87-E72345B36078"
+                        GUI = "DeveloperKits"
+
+                    Case "B54E7D24-7ADD-428F-8B75-90A396FA584F"
+                        GUI = "FeaturePacks"
+
+                    Case "9511D615-35B2-47BB-927F-F73D8E9260BB"
+                        GUI = "Guidance"
+
+                    Case "0FA1201D-4330-4FA8-8AE9-B877473B6441"
+                        GUI = "SecurityUpdates"
+
+                    Case "68C5B0A3-D1A6-4553-AE49-01D3A7827828"
+                        GUI = "ServicePacks"
+
+                    Case "B4832BD8-E735-4761-8DAF-37F882276DAB"
+                        GUI = "Tools"
+
+                    Case "28BC880E-0592-4CBF-8F95-C79B17911D5F"
+                        GUI = "UpdateRollups"
+
+                    Case "CD5FFD1E-E932-4E3A-BF74-18BF0B1BBD83"
+                        GUI = "Updates"
+
+                    Case Else
+                        GUI = "N/A"
+
+                End Select
+
+                item.SubItems.Add(GUI)
+                item.Name = AppName
+
+                Me.Update()
+
+                'Validation des doublons
+                If ListViewWSUS_SCUP_NEW.Items.Find(item.Name, False).Count >= 1 Then
+                    'Doublons ne pas inscrire mais augmenter la progression de la barre
+                    count2 = count2 + 1
+                Else
+                    If Status = "Missing" Then
+                        'Mais la ligne en rouge si la valeur est manquante
+                        item.BackColor = Color.DarkRed
+                        item.ForeColor = Color.White
+                        count_miss = count_miss + 1
+                    End If
+                    ListViewWSUS_SCUP_NEW.Items.Add(item)
+                    count = count + 1
+                End If
+                lbl_missing_NEW.Text = count_miss.ToString
+                lbl_patch_count_NEW.Text = count.ToString
+
+                countVal = ((count + count2) / Index) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
+
+                Me.Update()
+            End If
+        Next
+        ProgressBar.Visible = False
+        onetime = 1
+
+        Me.Cursor = Cursors.Default
+        If ListViewWSUS_SCUP_NEW.Items.Count > 0 Then
+            ListViewWSUS_SCUP_NEW.Items(0).Selected = True
+            ListViewWSUS_SCUP_NEW.Select()
+        End If
+        Me.Refresh()
+    End Sub
+
+    Private Sub chk_ApprovedPatch_CheckedChanged(sender As Object, e As EventArgs) Handles chk_ApprovedPatch_NEW.CheckedChanged
+        onetime = 0
+        ProgressBar.Value = 0
+        ProgressBar.Visible = True
+        ListViewWSUS_SCUP_NEW.Items.Clear()
+
+        If chk_ApprovedPatch_NEW.CheckState = CheckState.Checked Then
+            chk_ApprovedPatch_NEW.Checked = True
+            Start_WSUS_Approved()
+        Else
+            chk_ApprovedPatch_NEW.Checked = False
+            WSUS_ALL()
+        End If
+
+    End Sub
+
+    Private Sub cmd_apps_refresh_Click(sender As Object, e As EventArgs) Handles cmd_apps_refresh_NEW.Click
+        Dim popupRefreshWSUS As Popup_Refresh_WSUS = New Popup_Refresh_WSUS
+        popupRefreshWSUS.ShowDialog(Me)
+    End Sub
+
+    Private Sub cmd_Refresh_Click(sender As Object, e As EventArgs) Handles cmd_Refresh_NEW.Click
+        onetime = 0
+        ProgressBar.Value = 0
+        ListView1.Items.Clear()
+
+        Me.Cursor = Cursors.WaitCursor
+        chk_ApprovedPatch_NEW.Checked = True
+        Start_WSUS_Approved()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -1674,7 +2852,7 @@ Public Class Main
             'La liste n'est pas vide donc bypass le Select
             ListView1.Items(0).Selected = True
             ListView1.Select()
-            Label1.Visible = True
+            lbl_UserLoggedIn_NEW.Visible = True
             'Exit Select
         End If
         ListView1.Items.Clear()
@@ -1766,7 +2944,7 @@ Public Class Main
         'Commande pour le sort de la colonne
         Tab_Select = 1
         AddHandler Me.ListView1.ColumnClick, AddressOf ColumnClick
-        Label1.Visible = True
+        lbl_UserLoggedIn_NEW.Visible = True
 
         If ListView1.Items.Count > 0 Then
             ListView1.Items(0).Selected = True
@@ -1793,7 +2971,7 @@ Public Class Main
                     ListView3.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 Case 4
-                    ListView4.Sorting = SortOrder.Descending
+                    ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                     'Case 5
                     '    ListView5.Sorting = SortOrder.Descending
@@ -1841,15 +3019,15 @@ Public Class Main
                 Me.ListView3.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
             Case 4
-                If ListView4.Sorting = SortOrder.Descending Then
-                    ListView4.Sorting = SortOrder.Ascending
+                If ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Descending Then
+                    ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Ascending
                     sortIt = SortOrder.Ascending
                 Else
-                    ListView4.Sorting = SortOrder.Descending
+                    ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 End If
 
-                Me.ListView4.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+                Me.ListView_ProgramsFeatures_NEW.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
                 'Case 5
                 '    If ListView5.Sorting = SortOrder.Descending Then
@@ -2135,15 +3313,15 @@ Public Class Main
         onetime = 0
         Me.Refresh()
 
-        If ListView4.Items.Count <> 0 Then
+        If ListView_ProgramsFeatures_NEW.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView4.Items(0).Selected = True
-            ListView4.Select()
-            Label1.Visible = True
+            ListView_ProgramsFeatures_NEW.Items(0).Selected = True
+            ListView_ProgramsFeatures_NEW.Select()
+            lbl_UserLoggedIn_NEW.Visible = True
             'Exit Select
         End If
 
-        ListView4.Items.Clear()
+        ListView_ProgramsFeatures_NEW.Items.Clear()
         ProgressBar.Value = 0
         ProgressBar.Visible = True
 
@@ -2182,7 +3360,7 @@ Public Class Main
 
                 If Not AppName Is "" Then
                     'ListView2.Sorting = Windows.Forms.SortOrder.Ascending
-                    Me.ListView4.Sorting = Windows.Forms.SortOrder.None
+                    Me.ListView_ProgramsFeatures_NEW.Sorting = Windows.Forms.SortOrder.None
                     Dim item As New ListViewItem(AppID)
                     item.SubItems.Add(AppName)
                     item.SubItems.Add(AppAdv)
@@ -2191,7 +3369,7 @@ Public Class Main
                         item.ForeColor = Color.DarkBlue
                     End If
 
-                    If Not Microsoft.VisualBasic.Left(info("PKG_Name"), 1) = "*" Then ListView4.Items.Add(item)
+                    If Not Microsoft.VisualBasic.Left(info("PKG_Name"), 1) = "*" Then ListView_ProgramsFeatures_NEW.Items.Add(item)
                     Me.Update()
                 End If
                 countVal = ((Index + 1) / count) * 100
@@ -2208,11 +3386,11 @@ Public Class Main
 
         'Commande pour le sort de la colonne
         Tab_Select = 4
-        AddHandler Me.ListView4.ColumnClick, AddressOf ColumnClick
-        Label1.Visible = True
-        If ListView4.Items.Count > 0 Then
-            ListView4.Items(0).Selected = True
-            ListView4.Select()
+        AddHandler Me.ListViewWSUS_SCUP_NEW.ColumnClick, AddressOf ColumnClick
+        lbl_UserLoggedIn_NEW.Visible = True
+        If ListView_ProgramsFeatures_NEW.Items.Count > 0 Then
+            ListView_ProgramsFeatures_NEW.Items(0).Selected = True
+            ListView_ProgramsFeatures_NEW.Select()
         End If
         Me.Refresh()
 
@@ -2289,8 +3467,12 @@ Public Class Main
         Me.Refresh()
     End Sub
 
-    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick, Tab_pkg_app.DoubleClick, ServiceWindowsListView.DoubleClick
+    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, ListView1.DoubleClick
         ShowExecutionHistoryPKGS()
+    End Sub
+
+    Private Sub ListExecutionHistoryAPPS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, ListView2.DoubleClick
+        ShowExecutionHistoryAPPS()
     End Sub
 
     Private Sub LoadMorePcInfo()
@@ -2313,7 +3495,7 @@ Public Class Main
         'txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
         'txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
         txt_Domain_NEW.Text = PC_Domain
-        txt_OSCaption.Text = OSName
+        txt_OSCaption_NEW.Text = OSName
         'txt_IP.Text = IPAddress_Value
 
         If m_strChassisTypes = "MOBILE_DEVICE" Then
@@ -2364,26 +3546,38 @@ Public Class Main
 
         Try
 
-            Dim Group_Val As String
+            Dim Group_Val As String = ""
+            Dim allMemberships As String = ""
             Using ctx As New PrincipalContext(ContextType.Domain)
                 Using p = Principal.FindByIdentity(ctx, ComputerName)
                     If Not p Is Nothing Then
                         Dim groups = p.GetGroups()
                         For Each group In groups
-                            Group_Val = group.DisplayName
+                            Group_Val = group.DisplayName & vbCrLf
                             If Not Group_Val = "" Then
                                 'ListView3.Sorting = Windows.Forms.SortOrder.Ascending
-                                Me.MembershipListView.Sorting = Windows.Forms.SortOrder.None
-                                Dim item As New ListViewItem(Group_Val)
-                                MembershipListView.Items.Add(item)
-                                Me.Update()
+                                'Me.MembershipListView.Sorting = Windows.Forms.SortOrder.None
+                                'Dim item As New ListViewItem(Group_Val)
+                                'MembershipListView.Items.Add(item)
+                                allMemberships = allMemberships & group.DisplayName & "##"
+                                txt_LogWindow.Text = txt_LogWindow.Text & group.DisplayName
+
                             End If
                             Me.Update()
                         Next
                     End If
                 End Using
             End Using
+            Dim arrayMemberships = allMemberships.Split("##")
+            Array.Sort(arrayMemberships)
+            For Each membership In arrayMemberships
+                If Not (membership.Equals("")) Then
+                    Me.MembershipListView.Text = Me.MembershipListView.Text & membership & vbCrLf
+                End If
 
+            Next
+
+            Me.Update()
         Catch ex As Exception
             'GEstion de l'erreur
         End Try
@@ -2418,14 +3612,1311 @@ Public Class Main
 
 
     Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem1.Click
-
+        Dim aboutForm As About = New About
+        aboutForm.ShowDialog()
     End Sub
 
     Private Sub Menu_Option_Click(sender As Object, e As EventArgs) Handles Menu_Option.Click
 
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txt_LogWindow.TextChanged
 
+    End Sub
+
+    Private Sub Lbl_CompName_NEW_Click(sender As Object, e As EventArgs) Handles lbl_PCName_NEW.Click
+
+    End Sub
+
+    Private Sub CompInfoGroupBox_Enter(sender As Object, e As EventArgs) Handles CompInfoGroupBox.Enter
+
+    End Sub
+
+    Private Sub Txt_img_install_Date_TextChanged(sender As Object, e As EventArgs) Handles txt_img_install_Date.TextChanged
+
+    End Sub
+
+
+    Private Sub FORCESECURITYUPDATEToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FORCESECURITYUPDATEToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub FORCEAPPLICATIONUPDATEToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FORCEAPPLICATIONUPDATEToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub REBOOTREMOTECOMPUTERToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles REBOOTREMOTECOMPUTERToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub REMOTEASSISTANCEToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles REMOTEASSISTANCEToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub EXPLORERToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EXPLORERToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub REMOTEDESKTOPToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles REMOTEDESKTOPToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ListViewServices_NEW_DoubleClick(sender As Object, e As EventArgs) Handles ListViewServices_NEW.DoubleClick
+        Dim PName, PServiceName, PStats
+
+        PName = ListViewServices_NEW.SelectedItems.Item(0).SubItems(0).Text
+        PServiceName = ListViewServices_NEW.SelectedItems.Item(0).SubItems(3).Text
+        PStats = ListViewServices_NEW.SelectedItems.Item(0).SubItems(1).Text
+
+        If PStats = "Running" Then
+            Dim Result As Integer = MsgBox(My.Resources.ConfirmStopService & PName, MsgBoxStyle.Question + MsgBoxStyle.YesNo, "SCCM PC Admin")
+            If Result = 6 Then
+                Service_to_OFF(PServiceName, True)
+                If Service_ON_OFF = "OFF" Then
+                    Me.ListViewServices_NEW.SelectedItems.Item(0).SubItems(1).Text = "Stopped"
+                End If
+                Me.Refresh()
+            Else
+                ' ne fait rien car le client a dit NON
+            End If
+
+        ElseIf PStats = "Stopped" Then
+            Dim Result As Integer = MsgBox(My.Resources.ConfirmStartService & PName, MsgBoxStyle.Question + MsgBoxStyle.YesNo, "SCCM PC Admin")
+            If Result = 6 Then
+                Service_to_ON(PServiceName, True)
+                If Service_ON_OFF = "ON" Then
+                    Me.ListViewServices_NEW.SelectedItems.Item(0).SubItems(1).Text = "Running"
+                End If
+                Me.Refresh()
+            Else
+                ' ne fait rien car le client a dit NON
+            End If
+
+        End If
+    End Sub
+
+    Private Sub ListViewProcess_NEW_DoubleClick(sender As Object, e As EventArgs) Handles ListViewProcess_NEW.DoubleClick
+        Dim PID, PName
+        PID = ListViewProcess_NEW.SelectedItems.Item(0).SubItems(4).Text
+        PName = ListViewProcess_NEW.SelectedItems.Item(0).SubItems(0).Text
+
+        Try
+            Dim Result As Integer = MsgBox(My.Resources.ConfirmStopProcess & PName, MsgBoxStyle.Question + MsgBoxStyle.YesNo, "SCCM PC Admin")
+            If Result = 6 Then
+
+                'Dim remoteById As Process = Process.GetProcessById(PID, ComputerName)
+                'remoteById.Kill()
+                ' envoye par commande dos car le process .Kill ne marche pas sur un poste remote...
+                Dim myCMDLine As String = "taskkill /s " & ComputerName & " /PID " & PID
+                Shell(myCMDLine, AppWinStyle.Hide)
+                Thread.Sleep(1000)
+                ListViewProcess_NEW.SelectedItems.Item(0).Remove()
+            Else
+                ' ne fait rien car le client a dit NON
+            End If
+
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+    End Sub
+    Private Sub GCProfileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GCProfileToolStripMenuItem.Click
+        Dim WebPage = ("http://gcprofilelog?wsname=" & ComputerName)
+        Process.Start(WebPage)
+    End Sub
+
+    Private Sub GCProfileInfoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GCProfileLogToolStripMenuItem.Click
+        Dim WebPage = "http://gcprofilelog/"
+        Process.Start(WebPage)
+    End Sub
+
+    Private Sub GCProfilePCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GCProfilePCToolStripMenuItem.Click
+        Dim WebPage = ("http://gcprofilelog?wsname=" & ComputerName)
+        Process.Start(WebPage)
+    End Sub
+
+    Private Sub GCProfileToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles GCProfileUserToolStripMenuItem1.Click
+        Dim WebPage = ("http://gcprofilelog?username=" & Trim(User))
+        Process.Start(WebPage)
+    End Sub
+    Private Sub InitCommandWindow()
+        Me.AcceptButton = btnCommandInput
+        MyProcess = New Process
+        With MyProcess.StartInfo
+            .FileName = "CMD.EXE"
+            .UseShellExecute = False
+            .CreateNoWindow = True
+            .RedirectStandardInput = True
+            .RedirectStandardOutput = True
+            .RedirectStandardError = True
+        End With
+        MyProcess.Start()
+
+        MyProcess.BeginErrorReadLine()
+        MyProcess.BeginOutputReadLine()
+        AppendOutputText("Process Started at: " & MyProcess.StartTime.ToString)
+    End Sub
+
+    Private Sub BtnCommandInput_Click(sender As Object, e As EventArgs) Handles btnCommandInput.Click
+        MyProcess.StandardInput.WriteLine(txtCommandInput.Text)
+        MyProcess.StandardInput.Flush()
+        txtCommandInput.Text = ""
+    End Sub
+
+
+    'Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    '    MyProcess.StandardInput.WriteLine("EXIT") 'send an EXIT command to the Command Prompt
+    '    MyProcess.StandardInput.Flush()
+    '    MyProcess.Close()
+    'End Sub
+
+    Private Sub MyProcess_ErrorDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles MyProcess.ErrorDataReceived
+        AppendOutputText(vbCrLf & "Error: " & e.Data)
+    End Sub
+
+    Private Sub MyProcess_OutputDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles MyProcess.OutputDataReceived
+        AppendOutputText(vbCrLf & e.Data)
+    End Sub
+
+
+    Private Sub AppendOutputText(ByVal text As String)
+        If txtCommandOutput.InvokeRequired Then
+            Dim myDelegate As New AppendOutputTextDelegate(AddressOf AppendOutputText)
+            Me.Invoke(myDelegate, text)
+        Else
+            txtCommandOutput.AppendText(text)
+        End If
+    End Sub
+
+    Private Sub BtnClearCommandWindow_Click(sender As Object, e As EventArgs) Handles btnClearCommandWindow.Click
+        txtCommandOutput.Text = ""
+    End Sub
+
+    Private Sub btnESSetupInfo_Click(sender As Object, e As EventArgs) Handles btnESSetupInfo.Click
+        MyProcess.StandardInput.WriteLine("C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe -noprofile -ExecutionPolicy Bypass -File ""C:\utils-outils\ES-Setup Info\ES-Setup Info.ps1"" ")
+        MyProcess.StandardInput.Flush()
+        txtCommandInput.Text = ""
+    End Sub
+
+    Private Sub BranchCache_Port_8009()
+        Cursor = Cursors.WaitCursor
+
+        Dim regKey As RegistryKey
+        Dim regSubKey As RegistryKey
+
+        'Arret du BrandCache
+        RemoteExec("cmd /c netsh BranchCache set service mode=DISABLED")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+        Thread.Sleep(2000)
+
+        'Arret du BrandCache
+        RemoteExec("cmd /c netsh BranchCache RESET")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+        Thread.Sleep(2000)
+
+        'Mise en place des valeur par default
+        Me.lbl_loading.Visible = True
+
+        Try
+            regKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName)
+            regSubKey = regKey.OpenSubKey("Software\Microsoft\Windows NT\CurrentVersion\PeerDist\DownloadManager\Peers\Connection", True)
+            regSubKey.SetValue("ConnectPort", 8009, RegistryValueKind.DWord)
+            regSubKey.SetValue("ListenPort", 8009, RegistryValueKind.DWord)
+            TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+            ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Catch ex As Exception
+            Cursor = Cursors.Default
+            Me.lbl_loading.Visible = False
+        End Try
+
+        Try
+            'Envoye de la comande pour le brandcache
+            RemoteExec("cmd /c netsh BranchCache set service mode=DISTRIBUTED")
+            TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+            ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+            Thread.Sleep(2000)
+
+        Catch ex As Exception
+            MsgBox(My.Resources.ErrorTaskSchedule & " BranchCache", MsgBoxStyle.Critical, "SCCM PC Admin")
+            Cursor = Cursors.Default
+            Me.lbl_loading.Visible = False
+        End Try
+
+        Cursor = Cursors.Default
+        Me.lbl_loading.Visible = False
+    End Sub
+
+    Private Sub DetectNow()
+
+        Dim strCommand
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        'Envoie la command pour forcer la mise a jour de windows update
+        'Send the command to force the update of windows update
+
+        'Resetauthorization Option ("https://technet.microsoft.com/fr-fr/library/cc708617(v=ws.10).aspx")
+        'WSUS uses a cookie on client computers to store various types of information, including computer group membership when client-side targeting is used. 
+        'By default this cookie expires an hour after WSUS creates it. If you are using client-side targeting and change group membership, 
+        'use this option in combination with detectnow to expire the cookie, initiate detection, and have WSUS update computer group membership. 
+
+        strCommand = "wuauclt.exe /resetauthorization /DetectNow"
+        RemoteExec(strCommand)
+
+        'Envoye les commandes pour les trigger de SCCM (15 sec de delais)
+
+        '{00000000-0000-0000-0000-000000000001} Hardware Inventory....
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000001}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000002} Software Inventory....
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000002}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000003} Discovery Inventory....
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000003}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000010} File Collection
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000010}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000021} Request Machine Assignments
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000021}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000022} Evaluate Machine Policies
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000022}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000121} Application manager policy action
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000121}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000031} Software Metering Generating Usage Report
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000031}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000108} Software Updates Assignments Evaluation Cycle
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000108}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000113} Scan by Update Source
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000113}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000040} Machine Policy Agent Cleanup
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000040}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000042} Policy Agent Validate Machine Policy / Assignment
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000042}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000114} Update Store Policy
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000114}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000111} Send Unsent State Message
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000111}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '{00000000-0000-0000-0000-000000000032} Source Update Message
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000032}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        'Hard Reset Policy
+        myCMDLine = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000113}" & Chr(34) & " /NOINTERACTIVE"
+        myCMDLine2 = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /Namespace:\\root\ccm path SMS_Client CALL ResetPolicy 1 /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Shell(myCMDLine2, AppWinStyle.Hide)
+        Thread.Sleep(1000)
+
+
+        'va a 100% de ce module
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 4
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+
+    End Sub
+
+    Private Sub Fix_80004015()
+
+        Cursor = Cursors.WaitCursor
+
+        Try
+            If Not IsObject(oWMI) Then WMIConnect()
+        Catch ex As Exception
+
+        Finally
+            TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+            ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+        End Try
+
+        Try
+            If strOS = Nothing Then strOS = Main.Instance.txt_OSCaption_NEW.Text
+            TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+            ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+            'Valide seulement pour Windows 7..... 
+            If InStr(strOS, "7") > 0 Then
+                'Fixing security descriptors for WUAUSERV and BITS - services security errors (80004015 errors)
+                Exec("sc.exe \\" & strComputer & " sdset wuauserv D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)")
+                TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+                ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+                Exec("sc.exe \\" & strComputer & " sdset bits D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)")
+                TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 25
+                ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+            End If
+        Catch ex As Exception
+            Cursor = Cursors.Default
+        End Try
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Re_registering_DLLs()
+        Cursor = Cursors.WaitCursor
+        On Error Resume Next
+        'Reregister DLLs silently on remote system
+        RemoteExec("RegSvr32.exe /s wuapi.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 5
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wuaueng.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wuaueng1.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wucltui.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wups.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wups2.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wuweb.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s qmgr.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s qmgrprxy.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s atl.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s urlmon.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s mshtml.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s shdocvw.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s browseui.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s jscript.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s vbscript.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s scrrun.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s msxml.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s msxml3.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s msxml6.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s actxprxy.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s softpub.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wintrust.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s dssenh.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s rsaenh.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s gpkcsp.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s sccbase.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s slbcsp.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s cryptdlg.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s oleaut32.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s ole32.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s shell32.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s initpki.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 3
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wucltux.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 2
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s muweb.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("RegSvr32.exe /s wuwebv.dll")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Thread.Sleep(1000)
+
+
+        On Error GoTo 0
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub Del_Cache()
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Service_to_OFF("CCMEXEC", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_OFF("BITS", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_OFF("wuauserv", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+
+        '****** Suprimmer les entrées au WMI pour la cache
+        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\ROOT\ccm\SoftMgmtAgent")
+        Dim Query As New SelectQuery("SELECT * FROM CacheInfoEx")
+        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+        Dim info As ManagementObject
+        Try
+            For Each info In search.Get()
+                info.Delete()
+            Next
+        Catch ex As Exception
+            'Gestion de l'erreur
+        End Try
+
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '****** Suprimmer les entrées au registre pour la cache
+        Dim Reg As RegistryKey
+        Dim Reg_Value As Object
+        Dim openKey As Boolean
+        Dim count_key As Integer
+        Reg = Nothing
+
+        Try
+            Reg = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_REG_x86 + "\Mobile Client\Software Distribution" + "\", True)
+            Reg_Value = Reg.GetValueNames
+            count_key = Reg.ValueCount
+            openKey = True
+
+            For Each key_name As String In Reg_Value
+                Try
+                    Reg.DeleteValue(key_name)
+                Catch ex As Exception
+                    'Bypass l'erreur
+                End Try
+                count_key = count_key - 1
+            Next
+        Catch ex As Exception
+            'Erreur
+        End Try
+
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        '******* Suprimmer les fichiers de la cahche
+        Dim strSDPath
+        strSDPath = "\\" & strComputer & "\admin$\ccmcache"
+        Try
+            Dim folder = fso.GetFolder(strSDPath)
+
+
+            For Each f In folder.Files
+                Try
+                    Name = f.name
+                    f.Delete()
+                Catch ex As Exception
+
+                End Try
+            Next
+
+            For Each f In folder.SubFolders
+                Try
+                    Name = f.name
+                    f.Delete()
+                Catch ex As Exception
+
+                End Try
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_ON("BITS", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_ON("wuauserv", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_ON("CCMEXEC", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("bitsadmin.exe /reset /allusers")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Thread.Sleep(1000)
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Del_Bits()
+        Cursor = Cursors.WaitCursor
+
+        On Error Resume Next
+        Dim strSDPath
+        strSDPath = "\\" & strComputer & "\C$\ProgramData\Application Data\Microsoft\Network\Downloader"
+
+        Service_to_OFF("bits", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_OFF("wuauserv", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        If fso.fileExists(strSDPath & "qmgr0.dat") Then
+            fso.Deletefile(strSDPath & "qmgr0.dat")
+        End If
+
+        If fso.fileExists(strSDPath & "qmgr1.dat") Then
+            fso.Deletefile(strSDPath & "qmgr2.dat")
+        End If
+
+        Service_to_ON("bits", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Service_to_ON("wuauserv", False)
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 6
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        RemoteExec("bitsadmin.exe /reset /allusers")
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 16
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        Thread.Sleep(1000)
+
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Del_WSUS_Download()
+        Cursor = Cursors.WaitCursor
+
+        On Error Resume Next
+        Dim strSDPath
+
+        Service_to_OFF("wuauserv", False)
+
+        strSDPath = "\\" & strComputer & "\admin$\SoftwareDistribution"
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 33
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        If fso.FolderExists(strSDPath & ".old") Then
+            fso.DeleteFolder(strSDPath & ".old")
+        End If
+
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 33
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+
+        If fso.FolderExists(strSDPath) Then
+            fso.MoveFolder(strSDPath, strSDPath & ".old")
+        End If
+        On Error GoTo 0
+        TimerBar_Adv_clean_now = TimerBar_Adv_clean_now + 34
+        ProgressBar1.Value = (TimerBar_Adv_clean_now / TimerBar_Adv_clean) * 100
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+
+        Button1.Enabled = False
+        ProgressBar1.Visible = True
+        ProgressBar1.Value = TimerBar_Adv_clean_now
+
+        'Vérification des option active
+        If Check1 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            DetectNow()
+            CheckBox1.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        If Check2 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            Fix_80004015()
+            CheckBox2.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        If Check3 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            Re_registering_DLLs()
+            CheckBox3.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        If Check4 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            Del_Cache()
+            Del_Bits()
+            CheckBox4.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        If Check5 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            Del_WSUS_Download()
+            CheckBox5.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        If Check6 = True Then
+            Me.Cursor = Cursors.WaitCursor
+            lbl_loading.Visible = True
+            BranchCache_Port_8009()
+            CheckBox6.Enabled = False
+            lbl_loading.Visible = False
+            Me.Cursor = Cursors.Default
+        End If
+
+        Me.Cursor = Cursors.WaitCursor
+        lbl_loading.Visible = False
+        Thread.Sleep(3000)
+        Services_Stats()
+        Me.Cursor = Cursors.Default
+        'Me.Close()
+    End Sub
+
+    Private Sub Services_Stats() 'Vérification de l'états des services
+
+        Dim isRunning As Boolean = False
+        'Service MPSSVC  = Service du Firewall
+        'Services.Service_Verification("MPSSVC")
+        Services.Service_VerificationCheckOnly("MPSSVC", isRunning)
+
+        'Varialble de retoure si erreur
+        If isRunning = False Then ' Err_MPSSVC_Acces = True Or Err_Services_Acces = True Then
+
+        Else
+            Main.Instance.Pic_ON_MPSSVC.Visible = True
+            Main.Instance.Pic_OFF_MPSSVC.Visible = False
+        End If
+
+        'Service RemoteRegistry  = Service du Registre à distance
+        Services.Service_VerificationCheckOnly("CCMEXEC", isRunning)
+        'Services.Service_Verification("CCMEXEC")
+
+        'Varialble de retoure si erreur
+        If isRunning = False Then '  Err_CCMEXEC_Acces = True Or Err_Services_Acces = True Then
+
+        Else
+            Main.Instance.Pic_ON_CCMEXEC.Visible = True
+            Main.Instance.Pic_OFF_CCMEXEC.Visible = False
+        End If
+
+        'Service BITS  = Service du Download de Windows
+        Services.Service_VerificationCheckOnly("BITS", isRunning)
+        'Services.Service_Verification("BITS")
+
+        'Varialble de retoure si erreur
+        If isRunning = False Then ' Err_BITS_Acces = True Or Err_Services_Acces = True Then
+
+        Else
+            Main.Instance.Pic_ON_BITS.Visible = True
+            Main.Instance.Pic_OFF_BITS.Visible = False
+        End If
+
+        'Service PeerDistSvc  = Service du cache de SCCM en mode partage
+        Services.Service_VerificationCheckOnly("PeerDistSvc", isRunning)
+        'Services.Service_Verification("PeerDistSvc")
+
+        'Varialble de retoure si erreur
+        If isRunning = False Then ' Err_PeerDistSvc_Acces = True Or Err_Services_Acces = True Then
+
+        Else
+            Main.Instance.Pic_ON_PeerDistSvc.Visible = True
+            Main.Instance.Pic_OFF_PeerDistSvc.Visible = False
+        End If
+
+        'Service wuauserv  = Service de Windows Update
+        Services.Service_VerificationCheckOnly("wuauserv", isRunning)
+        'Services.Service_Verification("wuauserv")
+
+        'Varialble de retoure si erreur
+        If isRunning = False Then ' Err_wuauserv_Acces = True Or Err_Services_Acces = True Then
+
+        Else
+            Main.Instance.Pic_ON_wuauserv.Visible = True
+            Main.Instance.Pic_OFF_wuauserv.Visible = False
+        End If
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.CheckState = CheckState.Checked Then Check1 = True
+        If CheckBox1.CheckState = CheckState.Unchecked Then Check1 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If CheckBox2.CheckState = CheckState.Checked Then Check2 = True
+        If CheckBox2.CheckState = CheckState.Unchecked Then Check2 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        If CheckBox3.CheckState = CheckState.Checked Then Check3 = True
+        If CheckBox3.CheckState = CheckState.Unchecked Then Check3 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    Private Sub CheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox4.CheckedChanged
+        If CheckBox4.CheckState = CheckState.Checked Then Check4 = True
+        If CheckBox4.CheckState = CheckState.Unchecked Then Check4 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    Private Sub CheckBox5_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox5.CheckedChanged
+        If CheckBox5.CheckState = CheckState.Checked Then Check5 = True
+        If CheckBox5.CheckState = CheckState.Unchecked Then Check5 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    Private Sub CheckBox6_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox6.CheckedChanged
+        If CheckBox6.CheckState = CheckState.Checked Then Check6 = True
+        If CheckBox6.CheckState = CheckState.Unchecked Then Check6 = False
+
+        TimerBar_Adv_clean = TimerBar_Adv_clean + 100 'Ajout de temp pour le calcule de la progression total
+    End Sub
+
+    ''''' SCCM ACTIONS TAB CLICK
+    Private Sub Button1_Click()
+        Button1.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000001}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck1.Visible = False
+        pic_done1.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button2_Click()
+        Button2.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000002}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck2.Visible = False
+        pic_done2.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button3_Click()
+        Button3.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000003}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck3.Visible = False
+        pic_done3.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button10_Click()
+        Button10.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000010}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck10.Visible = False
+        pic_done10.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button21_Click()
+        Button21.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000021}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck21.Visible = False
+        pic_done21.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button22_Click()
+        Button22.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000022}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck22.Visible = False
+        pic_done22.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button121_Click()
+        Button121.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000121}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck121.Visible = False
+        pic_done121.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button31_Click()
+        Button31.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000031}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck31.Visible = False
+        pic_done31.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button108_Click()
+        Button108.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000108}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck108.Visible = False
+        pic_done108.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button113_Click()
+        Button113.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000113}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck113.Visible = False
+        pic_done113.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button40_Click()
+        Button40.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000040}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck40.Visible = False
+        pic_done40.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button42_Click()
+        Button42.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000042}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck42.Visible = False
+        pic_done42.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button114_Click()
+        Button114.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000114}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck114.Visible = False
+        pic_done114.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button111_Click()
+        Button111.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000111}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck111.Visible = False
+        pic_done111.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button32_Click()
+        Button32.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000032}" & Chr(34) & " /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        pic_uncheck32.Visible = False
+        pic_done32.Visible = True
+        If All = False Then
+            Thread.Sleep(2000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub Button0_Click()
+        Button0.Enabled = False
+        Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000113}" & Chr(34) & " /NOINTERACTIVE"
+        Dim myCMDLine2 As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /Namespace:\\root\ccm path SMS_Client CALL ResetPolicy 1 /NOINTERACTIVE"
+        Shell(myCMDLine, AppWinStyle.Hide)
+        Shell(myCMDLine2, AppWinStyle.Hide)
+        pic_uncheck0.Visible = False
+        pic_done0.Visible = True
+        If All = False Then
+            Thread.Sleep(4000)
+            Me.Refresh()
+            lbl_warnnig.Visible = True
+        End If
+    End Sub
+
+    Private Sub CMD_ALL_Click()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.Enabled = False
+        lbl_warnnig.Visible = True
+        All = True
+        'Mais tou les button a OFF
+
+        CMD_ALL.Enabled = False
+
+        Button121.Enabled = False
+        Button3.Enabled = False
+        Button10.Enabled = False
+        Button1.Enabled = False
+        Button21.Enabled = False
+        Button2.Enabled = False
+        Button31.Enabled = False
+        Button108.Enabled = False
+        Button113.Enabled = False
+        Button22.Enabled = False
+        Button40.Enabled = False
+        Button42.Enabled = False
+        Button114.Enabled = False
+        Button111.Enabled = False
+        Button32.Enabled = False
+        Button0.Enabled = False
+
+        ' Action les button un apres l'autres
+
+        Button121_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button3_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button10_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button1_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button21_Click()
+        Thread.Sleep(2000)
+        Me.Refresh()
+
+        Button2_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button31_Click()
+
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button108_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button113_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button22_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button40_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button42_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button114_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button111_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button32_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Button0_Click()
+        Me.Refresh()
+        Thread.Sleep(2000)
+
+        Me.Enabled = True
+
+        Me.Cursor = Cursors.Default
+        Thread.Sleep(2000)
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Button1_Click()
+    End Sub
+
+    Private Sub Button121_Click(sender As Object, e As EventArgs) Handles Button121.Click
+        Button121_Click()
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Button3_Click()
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Button10_Click()
+    End Sub
+
+    Private Sub Button21_Click(sender As Object, e As EventArgs) Handles Button21.Click
+        Button21_Click()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Button2_Click()
+    End Sub
+
+    Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
+        Button31_Click()
+    End Sub
+
+    Private Sub Button108_Click(sender As Object, e As EventArgs) Handles Button108.Click
+        Button108_Click()
+    End Sub
+
+    Private Sub Button113_Click(sender As Object, e As EventArgs) Handles Button113.Click
+        Button113_Click()
+    End Sub
+
+    Private Sub Button22_Click(sender As Object, e As EventArgs) Handles Button22.Click
+        Button22_Click()
+    End Sub
+
+    Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
+        Button40_Click()
+    End Sub
+
+    Private Sub Button42_Click(sender As Object, e As EventArgs) Handles Button42.Click
+        Button42_Click()
+    End Sub
+
+    Private Sub Button114_Click(sender As Object, e As EventArgs) Handles Button114.Click
+        Button114_Click()
+    End Sub
+
+    Private Sub Button111_Click(sender As Object, e As EventArgs) Handles Button111.Click
+        Button111_Click()
+    End Sub
+
+    Private Sub Button32_Click(sender As Object, e As EventArgs) Handles Button32.Click
+        Button32_Click()
+    End Sub
+
+    Private Sub Button0_Click(sender As Object, e As EventArgs) Handles Button0.Click
+        Button0_Click()
+    End Sub
+
+    Private Sub CMD_ALL_Click(sender As Object, e As EventArgs) Handles CMD_ALL.Click
+        CMD_ALL_Click()
     End Sub
 End Class

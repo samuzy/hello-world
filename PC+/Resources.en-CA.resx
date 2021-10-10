@@ -141,6 +141,9 @@
   <data name="cmb_Combo_Tools_Item6" xml:space="preserve">
     <value>Computer Management</value>
   </data>
+  <data name="CMToolStripMenuItem.Text" xml:space="preserve">
+    <value>Computer Management</value>
+  </data>
   <data name="cmb_Combo_Tools_Item7" xml:space="preserve">
     <value>Services</value>
   </data>
