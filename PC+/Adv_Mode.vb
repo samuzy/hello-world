@@ -163,7 +163,7 @@ Public Class Adv_Mode
         End Try
     End Sub
 
-    Private Sub cmd_WSUS_Download_Click(sender As Object, e As EventArgs) Handles cmd_WSUS_Download.Click
+    Private Sub cmd_WSUS_Download_Click(sender As Object, e As EventArgs) Handles cmd_WSUS_Download_NEW.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\SoftwareDistribution\Download")
         Catch ex As Exception

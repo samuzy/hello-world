@@ -1269,6 +1269,9 @@
   <data name="WarningReinstallClient" xml:space="preserve">
     <value>WARNING_REINSTALL_CLIENT</value>
   </data>
+  <data name="WarningRunSoftwareCache" xml:space="preserve">
+    <value>WARNING_SOFTWARE_CACHE</value>
+  </data>
   <data name="WarningVPNSlowRequests" xml:space="preserve">
     <value>WARNING_VPN_SLOW_REQUESTS</value>
   </data>
@@ -1760,6 +1763,9 @@
   </data>
   <data name="Message_file_ini_missing" xml:space="preserve">
     <value>MESSAGE_FILES_INI_MISSING</value>
+  </data>
+  <data name="Message_long_wait_time" xml:space="preserve">
+    <value>MESSAGE_LONG_WAIT_TIME</value>
   </data>
   <data name="Message_Domain_Missing" xml:space="preserve">
     <value>MESSAGE_DOMAIN_MISSING</value>

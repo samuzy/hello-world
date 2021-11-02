@@ -54,6 +54,7 @@ Partial Class Adv_Mode_Collection
         Me.lstv_Collection.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
         Me.lstv_Collection.FullRowSelect = True
         Me.lstv_Collection.GridLines = True
+        Me.lstv_Collection.HideSelection = False
         resources.ApplyResources(Me.lstv_Collection, "lstv_Collection")
         Me.lstv_Collection.Name = "lstv_Collection"
         Me.lstv_Collection.UseCompatibleStateImageBehavior = False

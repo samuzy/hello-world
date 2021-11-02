@@ -30,7 +30,6 @@ Partial Class Main
         Me.ServiceWindowsListView = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.pic_remote = New System.Windows.Forms.PictureBox()
         Me.pic_Assitance = New System.Windows.Forms.PictureBox()
         Me.txt_SiteCode_result_NEW = New System.Windows.Forms.TextBox()
@@ -60,8 +59,10 @@ Partial Class Main
         Me.ColumnHeader43 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader44 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.PF_SUBTAB_OTHER = New System.Windows.Forms.TabPage()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label1lblProgFeatActivateTabMsg = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.cmd_registry_pol_MEW = New System.Windows.Forms.Button()
+        Me.cmd_GPO_NEW = New System.Windows.Forms.Button()
         Me.cmd_Check_NEW = New System.Windows.Forms.Button()
         Me.lbl_loading = New System.Windows.Forms.Label()
         Me.lbl_Version = New System.Windows.Forms.Label()
@@ -144,7 +145,7 @@ Partial Class Main
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblRegedit1 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblWindowsFirewallMPSSVC = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cmd_Add_SW = New System.Windows.Forms.Button()
@@ -188,13 +189,84 @@ Partial Class Main
         Me.UserGuideToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainTab = New System.Windows.Forms.TabControl()
         Me.COMPUTER_INFORMATION_TAB = New System.Windows.Forms.TabPage()
+        Me.AdvancedModeTab = New System.Windows.Forms.TabControl()
+        Me.AdvancedModeTab1 = New System.Windows.Forms.TabPage()
+        Me.btnAddMaintWindow_NEW = New System.Windows.Forms.Button()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.lblHour = New System.Windows.Forms.Label()
+        Me.lblWindowDesiredLength_NEW = New System.Windows.Forms.Label()
+        Me.ddlDesiredLength = New System.Windows.Forms.ComboBox()
+        Me.lblChange15Minutes_NEW = New System.Windows.Forms.Label()
+        Me.cmd_Rebuilding_WMI_NEW = New System.Windows.Forms.Button()
+        Me.cmd_BITS_Location_NEW = New System.Windows.Forms.Button()
+        Me.cmd_Re_Registering_NEW = New System.Windows.Forms.Button()
+        Me.cmd_Client_Logs_NEW = New System.Windows.Forms.Button()
+        Me.cmd_DataStore_NEW = New System.Windows.Forms.Button()
+        Me.cmd_Del_WMI_NEW = New System.Windows.Forms.Button()
+        Me.cmd_WSUS_Download_NEW = New System.Windows.Forms.Button()
+        Me.AdvancedModeTab2 = New System.Windows.Forms.TabPage()
+        Me.groupBoxAdvMode2_2 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox14 = New System.Windows.Forms.CheckBox()
+        Me.lbl_CCMVALHOUR_Warning = New System.Windows.Forms.Label()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.ComboBox6 = New System.Windows.Forms.ComboBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.TextBox14 = New System.Windows.Forms.TextBox()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.ComboBox7 = New System.Windows.Forms.ComboBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.TextBox13 = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.ComboBox5 = New System.Windows.Forms.ComboBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.TextBox12 = New System.Windows.Forms.TextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.ComboBox4 = New System.Windows.Forms.ComboBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.TextBox10 = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.CheckBox13 = New System.Windows.Forms.CheckBox()
+        Me.groupBoxAdvMode2_3 = New System.Windows.Forms.GroupBox()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.groupBoxAdvMode2_4 = New System.Windows.Forms.GroupBox()
+        Me.txt_Description = New System.Windows.Forms.TextBox()
+        Me.groupBoxAdvMode2_1 = New System.Windows.Forms.GroupBox()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.CheckBox8 = New System.Windows.Forms.CheckBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.CheckBox7 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox9 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox10 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox11 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox12 = New System.Windows.Forms.CheckBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.SCCM_PK_APPS_TAB = New System.Windows.Forms.TabPage()
         Me.Tab_pkg_app = New System.Windows.Forms.TabControl()
         Me.START = New System.Windows.Forms.TabPage()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.pic_arrow = New System.Windows.Forms.PictureBox()
         Me.EXEC_HIST_APPS = New System.Windows.Forms.TabPage()
-        Me.ListView2 = New System.Windows.Forms.ListView()
+        Me.listvw_ExecHistApps = New System.Windows.Forms.ListView()
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -203,7 +275,7 @@ Partial Class Main
         Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.EXEC_HIST_PKG_TAB = New System.Windows.Forms.TabPage()
-        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.lstvw_ExecHistPkgs = New System.Windows.Forms.ListView()
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -220,10 +292,10 @@ Partial Class Main
         Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SoftwareCacheLocation_Tab = New System.Windows.Forms.TabPage()
+        Me.btnESSetupInfo = New System.Windows.Forms.Button()
         Me.ListView5 = New System.Windows.Forms.ListView()
-        Me.ColumnHeader22 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader24 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SCCM_WSUS_SCUP_TAB = New System.Windows.Forms.TabPage()
         Me.cmd_Refresh_NEW = New System.Windows.Forms.Button()
         Me.cmd_apps_refresh_NEW = New System.Windows.Forms.Button()
@@ -233,7 +305,6 @@ Partial Class Main
         Me.lbl_PatchCount_NEW = New System.Windows.Forms.Label()
         Me.lbl_patch_count_NEW = New System.Windows.Forms.Label()
         Me.chk_ApprovedPatch_NEW = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.ListViewWSUS_SCUP_NEW = New System.Windows.Forms.ListView()
         Me.ColumnHeader26 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader27 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -309,11 +380,17 @@ Partial Class Main
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB = New System.Windows.Forms.TabPage()
+        Me.RUN_COMMAND_TAB = New System.Windows.Forms.TabPage()
+        Me.cmd_Reinstall_client_NEW = New System.Windows.Forms.Button()
+        Me.btnClearCommandWindow = New System.Windows.Forms.Button()
+        Me.txtCommandOutput = New System.Windows.Forms.TextBox()
+        Me.btnCommandInput = New System.Windows.Forms.Button()
+        Me.txtCommandInput = New System.Windows.Forms.TextBox()
         Me.ADVANCE_MODE_TAB_1 = New System.Windows.Forms.TabPage()
         Me.Gr666 = New System.Windows.Forms.GroupBox()
         Me.cmd_load_Logs5_NEW = New System.Windows.Forms.Button()
         Me.lblWinUpdAgentWin10Serv_NEW = New System.Windows.Forms.Label()
-        Me.cmb_Logs5 = New System.Windows.Forms.ComboBox()
+        Me.cmb_Logs5_NEW = New System.Windows.Forms.ComboBox()
         Me.cmd_load_Logs4_NEW = New System.Windows.Forms.Button()
         Me.lblOSAndSoftwareUpdate_NEW = New System.Windows.Forms.Label()
         Me.cmb_Logs4_NEW = New System.Windows.Forms.ComboBox()
@@ -349,22 +426,16 @@ Partial Class Main
         Me.txt_ComputerName_NEW = New System.Windows.Forms.TextBox()
         Me.lblCacheSize_NEW = New System.Windows.Forms.Label()
         Me.lbl_abr_size = New System.Windows.Forms.Label()
-        Me.ADVANCE_MODE_TAB_2 = New System.Windows.Forms.TabPage()
-        Me.RUN_COMMAND_TAB = New System.Windows.Forms.TabPage()
-        Me.btnESSetupInfo = New System.Windows.Forms.Button()
-        Me.btnClearCommandWindow = New System.Windows.Forms.Button()
-        Me.txtCommandOutput = New System.Windows.Forms.TextBox()
-        Me.btnCommandInput = New System.Windows.Forms.Button()
-        Me.txtCommandInput = New System.Windows.Forms.TextBox()
+        Me.ADVANCE_MODE_TAB_4 = New System.Windows.Forms.TabPage()
+        Me.lstv_Collection = New System.Windows.Forms.ListView()
+        Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader45 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ProgressBar = New System.Windows.Forms.ProgressBar()
-        Me.SecondaryTab = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.txt_LogWindow = New System.Windows.Forms.TextBox()
         Me.GroupBoxLogWindow_NEW = New System.Windows.Forms.GroupBox()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip3 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.pic_Explorer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_Reboot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBoxMaintenanceWindow_NEW.SuspendLayout()
@@ -401,6 +472,15 @@ Partial Class Main
         Me.MenuStrip2.SuspendLayout()
         Me.MainTab.SuspendLayout()
         Me.COMPUTER_INFORMATION_TAB.SuspendLayout()
+        Me.AdvancedModeTab.SuspendLayout()
+        Me.AdvancedModeTab1.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.AdvancedModeTab2.SuspendLayout()
+        Me.groupBoxAdvMode2_2.SuspendLayout()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.groupBoxAdvMode2_3.SuspendLayout()
+        Me.groupBoxAdvMode2_4.SuspendLayout()
+        Me.groupBoxAdvMode2_1.SuspendLayout()
         Me.SCCM_PK_APPS_TAB.SuspendLayout()
         Me.Tab_pkg_app.SuspendLayout()
         Me.START.SuspendLayout()
@@ -451,6 +531,7 @@ Partial Class Main
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.SuspendLayout()
+        Me.RUN_COMMAND_TAB.SuspendLayout()
         Me.ADVANCE_MODE_TAB_1.SuspendLayout()
         Me.Gr666.SuspendLayout()
         Me.groupBoxAdvancedMode_NEW.SuspendLayout()
@@ -458,9 +539,7 @@ Partial Class Main
         CType(Me.pic_greenflag2_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_redflag1_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_greenflag1_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RUN_COMMAND_TAB.SuspendLayout()
-        Me.SecondaryTab.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
+        Me.ADVANCE_MODE_TAB_4.SuspendLayout()
         Me.GroupBoxLogWindow_NEW.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -498,7 +577,7 @@ Partial Class Main
         'ServiceWindowsListView
         '
         Me.ServiceWindowsListView.BackColor = System.Drawing.Color.AliceBlue
-        Me.ServiceWindowsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.ServiceWindowsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
         Me.ServiceWindowsListView.Cursor = System.Windows.Forms.Cursors.Hand
         resources.ApplyResources(Me.ServiceWindowsListView, "ServiceWindowsListView")
         Me.ServiceWindowsListView.ForeColor = System.Drawing.Color.MidnightBlue
@@ -519,11 +598,6 @@ Partial Class Main
         '
         Me.ColumnHeader2.Tag = "ColumnHeader2"
         resources.ApplyResources(Me.ColumnHeader2, "ColumnHeader2")
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Tag = "ColumnHeader3"
-        resources.ApplyResources(Me.ColumnHeader3, "ColumnHeader3")
         '
         'pic_remote
         '
@@ -715,22 +789,38 @@ Partial Class Main
         '
         'PF_SUBTAB_OTHER
         '
-        Me.PF_SUBTAB_OTHER.Controls.Add(Me.Label1)
+        Me.PF_SUBTAB_OTHER.Controls.Add(Me.Label1lblProgFeatActivateTabMsg)
         Me.PF_SUBTAB_OTHER.Controls.Add(Me.PictureBox1)
         resources.ApplyResources(Me.PF_SUBTAB_OTHER, "PF_SUBTAB_OTHER")
         Me.PF_SUBTAB_OTHER.Name = "PF_SUBTAB_OTHER"
         Me.PF_SUBTAB_OTHER.UseVisualStyleBackColor = True
         '
-        'Label1
+        'Label1lblProgFeatActivateTabMsg
         '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
+        resources.ApplyResources(Me.Label1lblProgFeatActivateTabMsg, "Label1lblProgFeatActivateTabMsg")
+        Me.Label1lblProgFeatActivateTabMsg.Name = "Label1lblProgFeatActivateTabMsg"
         '
         'PictureBox1
         '
         resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
+        '
+        'cmd_registry_pol_MEW
+        '
+        resources.ApplyResources(Me.cmd_registry_pol_MEW, "cmd_registry_pol_MEW")
+        Me.cmd_registry_pol_MEW.Name = "cmd_registry_pol_MEW"
+        Me.ToolTip1.SetToolTip(Me.cmd_registry_pol_MEW, resources.GetString("cmd_registry_pol_MEW.ToolTip"))
+        Me.TT.SetToolTip(Me.cmd_registry_pol_MEW, resources.GetString("cmd_registry_pol_MEW.ToolTip1"))
+        Me.cmd_registry_pol_MEW.UseVisualStyleBackColor = True
+        '
+        'cmd_GPO_NEW
+        '
+        resources.ApplyResources(Me.cmd_GPO_NEW, "cmd_GPO_NEW")
+        Me.cmd_GPO_NEW.Name = "cmd_GPO_NEW"
+        Me.ToolTip1.SetToolTip(Me.cmd_GPO_NEW, resources.GetString("cmd_GPO_NEW.ToolTip"))
+        Me.TT.SetToolTip(Me.cmd_GPO_NEW, resources.GetString("cmd_GPO_NEW.ToolTip1"))
+        Me.cmd_GPO_NEW.UseVisualStyleBackColor = True
         '
         'cmd_Check_NEW
         '
@@ -1318,10 +1408,10 @@ Partial Class Main
         resources.ApplyResources(Me.lblRegedit1, "lblRegedit1")
         Me.lblRegedit1.Name = "lblRegedit1"
         '
-        'Label5
+        'lblWindowsFirewallMPSSVC
         '
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Name = "Label5"
+        resources.ApplyResources(Me.lblWindowsFirewallMPSSVC, "lblWindowsFirewallMPSSVC")
+        Me.lblWindowsFirewallMPSSVC.Name = "lblWindowsFirewallMPSSVC"
         '
         'Label6
         '
@@ -1397,8 +1487,8 @@ Partial Class Main
         '
         'MenuStrip2
         '
-        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ToolsStripMenuItem, Me.HelpToolStripMenuItem})
         resources.ApplyResources(Me.MenuStrip2, "MenuStrip2")
+        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ToolsStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip2.Name = "MenuStrip2"
         '
         'FileToolStripMenuItem
@@ -1551,19 +1641,512 @@ Partial Class Main
         Me.MainTab.Controls.Add(Me.SCCM_ACTIONS_TAB)
         Me.MainTab.Controls.Add(Me.REPAIR_CLEANING_TAB)
         Me.MainTab.Controls.Add(Me.DISPLAY_MAINTENANCE_WINDOWS_TAB)
-        Me.MainTab.Controls.Add(Me.ADVANCE_MODE_TAB_1)
-        Me.MainTab.Controls.Add(Me.ADVANCE_MODE_TAB_2)
         Me.MainTab.Controls.Add(Me.RUN_COMMAND_TAB)
+        Me.MainTab.Controls.Add(Me.ADVANCE_MODE_TAB_1)
+        Me.MainTab.Controls.Add(Me.ADVANCE_MODE_TAB_4)
         resources.ApplyResources(Me.MainTab, "MainTab")
         Me.MainTab.Name = "MainTab"
         Me.MainTab.SelectedIndex = 0
         '
         'COMPUTER_INFORMATION_TAB
         '
+        Me.COMPUTER_INFORMATION_TAB.Controls.Add(Me.AdvancedModeTab)
         Me.COMPUTER_INFORMATION_TAB.Controls.Add(Me.Panel1)
         resources.ApplyResources(Me.COMPUTER_INFORMATION_TAB, "COMPUTER_INFORMATION_TAB")
         Me.COMPUTER_INFORMATION_TAB.Name = "COMPUTER_INFORMATION_TAB"
         Me.COMPUTER_INFORMATION_TAB.UseVisualStyleBackColor = True
+        '
+        'AdvancedModeTab
+        '
+        Me.AdvancedModeTab.Controls.Add(Me.AdvancedModeTab1)
+        Me.AdvancedModeTab.Controls.Add(Me.AdvancedModeTab2)
+        resources.ApplyResources(Me.AdvancedModeTab, "AdvancedModeTab")
+        Me.AdvancedModeTab.Name = "AdvancedModeTab"
+        Me.AdvancedModeTab.SelectedIndex = 0
+        '
+        'AdvancedModeTab1
+        '
+        Me.AdvancedModeTab1.Controls.Add(Me.btnAddMaintWindow_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_registry_pol_MEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.Panel3)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_GPO_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Rebuilding_WMI_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_BITS_Location_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Re_Registering_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Client_Logs_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_DataStore_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Del_WMI_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_WSUS_Download_NEW)
+        resources.ApplyResources(Me.AdvancedModeTab1, "AdvancedModeTab1")
+        Me.AdvancedModeTab1.Name = "AdvancedModeTab1"
+        Me.AdvancedModeTab1.UseVisualStyleBackColor = True
+        '
+        'btnAddMaintWindow_NEW
+        '
+        resources.ApplyResources(Me.btnAddMaintWindow_NEW, "btnAddMaintWindow_NEW")
+        Me.btnAddMaintWindow_NEW.Name = "btnAddMaintWindow_NEW"
+        Me.btnAddMaintWindow_NEW.UseVisualStyleBackColor = True
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.White
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.lblHour)
+        Me.Panel3.Controls.Add(Me.lblWindowDesiredLength_NEW)
+        Me.Panel3.Controls.Add(Me.ddlDesiredLength)
+        Me.Panel3.Controls.Add(Me.lblChange15Minutes_NEW)
+        resources.ApplyResources(Me.Panel3, "Panel3")
+        Me.Panel3.Name = "Panel3"
+        '
+        'lblHour
+        '
+        resources.ApplyResources(Me.lblHour, "lblHour")
+        Me.lblHour.Name = "lblHour"
+        '
+        'lblWindowDesiredLength_NEW
+        '
+        resources.ApplyResources(Me.lblWindowDesiredLength_NEW, "lblWindowDesiredLength_NEW")
+        Me.lblWindowDesiredLength_NEW.Name = "lblWindowDesiredLength_NEW"
+        '
+        'ddlDesiredLength
+        '
+        Me.ddlDesiredLength.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ddlDesiredLength, "ddlDesiredLength")
+        Me.ddlDesiredLength.FormattingEnabled = True
+        Me.ddlDesiredLength.Items.AddRange(New Object() {resources.GetString("ddlDesiredLength.Items"), resources.GetString("ddlDesiredLength.Items1"), resources.GetString("ddlDesiredLength.Items2"), resources.GetString("ddlDesiredLength.Items3"), resources.GetString("ddlDesiredLength.Items4"), resources.GetString("ddlDesiredLength.Items5"), resources.GetString("ddlDesiredLength.Items6"), resources.GetString("ddlDesiredLength.Items7")})
+        Me.ddlDesiredLength.Name = "ddlDesiredLength"
+        '
+        'lblChange15Minutes_NEW
+        '
+        resources.ApplyResources(Me.lblChange15Minutes_NEW, "lblChange15Minutes_NEW")
+        Me.lblChange15Minutes_NEW.Name = "lblChange15Minutes_NEW"
+        '
+        'cmd_Rebuilding_WMI_NEW
+        '
+        resources.ApplyResources(Me.cmd_Rebuilding_WMI_NEW, "cmd_Rebuilding_WMI_NEW")
+        Me.cmd_Rebuilding_WMI_NEW.Name = "cmd_Rebuilding_WMI_NEW"
+        Me.cmd_Rebuilding_WMI_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_BITS_Location_NEW
+        '
+        resources.ApplyResources(Me.cmd_BITS_Location_NEW, "cmd_BITS_Location_NEW")
+        Me.cmd_BITS_Location_NEW.Name = "cmd_BITS_Location_NEW"
+        Me.cmd_BITS_Location_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_Re_Registering_NEW
+        '
+        resources.ApplyResources(Me.cmd_Re_Registering_NEW, "cmd_Re_Registering_NEW")
+        Me.cmd_Re_Registering_NEW.Name = "cmd_Re_Registering_NEW"
+        Me.cmd_Re_Registering_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_Client_Logs_NEW
+        '
+        resources.ApplyResources(Me.cmd_Client_Logs_NEW, "cmd_Client_Logs_NEW")
+        Me.cmd_Client_Logs_NEW.Name = "cmd_Client_Logs_NEW"
+        Me.cmd_Client_Logs_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_DataStore_NEW
+        '
+        resources.ApplyResources(Me.cmd_DataStore_NEW, "cmd_DataStore_NEW")
+        Me.cmd_DataStore_NEW.Name = "cmd_DataStore_NEW"
+        Me.cmd_DataStore_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_Del_WMI_NEW
+        '
+        resources.ApplyResources(Me.cmd_Del_WMI_NEW, "cmd_Del_WMI_NEW")
+        Me.cmd_Del_WMI_NEW.Name = "cmd_Del_WMI_NEW"
+        Me.cmd_Del_WMI_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_WSUS_Download_NEW
+        '
+        resources.ApplyResources(Me.cmd_WSUS_Download_NEW, "cmd_WSUS_Download_NEW")
+        Me.cmd_WSUS_Download_NEW.Name = "cmd_WSUS_Download_NEW"
+        Me.cmd_WSUS_Download_NEW.UseVisualStyleBackColor = True
+        '
+        'AdvancedModeTab2
+        '
+        Me.AdvancedModeTab2.Controls.Add(Me.groupBoxAdvMode2_2)
+        Me.AdvancedModeTab2.Controls.Add(Me.groupBoxAdvMode2_3)
+        Me.AdvancedModeTab2.Controls.Add(Me.groupBoxAdvMode2_4)
+        Me.AdvancedModeTab2.Controls.Add(Me.groupBoxAdvMode2_1)
+        resources.ApplyResources(Me.AdvancedModeTab2, "AdvancedModeTab2")
+        Me.AdvancedModeTab2.Name = "AdvancedModeTab2"
+        Me.AdvancedModeTab2.UseVisualStyleBackColor = True
+        '
+        'groupBoxAdvMode2_2
+        '
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.CheckBox14)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.lbl_CCMVALHOUR_Warning)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.PictureBox5)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox15)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.ComboBox6)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label18)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label31)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox14)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox7)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label19)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label32)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.ComboBox7)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label20)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox13)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label21)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.ComboBox5)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label22)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox12)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label23)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox11)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label24)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.ComboBox4)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label25)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox10)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label26)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox9)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label27)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox8)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label28)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.TextBox6)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label29)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.ComboBox3)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.Label30)
+        Me.groupBoxAdvMode2_2.Controls.Add(Me.CheckBox13)
+        resources.ApplyResources(Me.groupBoxAdvMode2_2, "groupBoxAdvMode2_2")
+        Me.groupBoxAdvMode2_2.Name = "groupBoxAdvMode2_2"
+        Me.groupBoxAdvMode2_2.TabStop = False
+        '
+        'CheckBox14
+        '
+        resources.ApplyResources(Me.CheckBox14, "CheckBox14")
+        Me.CheckBox14.Name = "CheckBox14"
+        Me.CheckBox14.UseVisualStyleBackColor = True
+        '
+        'lbl_CCMVALHOUR_Warning
+        '
+        resources.ApplyResources(Me.lbl_CCMVALHOUR_Warning, "lbl_CCMVALHOUR_Warning")
+        Me.lbl_CCMVALHOUR_Warning.ForeColor = System.Drawing.Color.DarkRed
+        Me.lbl_CCMVALHOUR_Warning.Name = "lbl_CCMVALHOUR_Warning"
+        '
+        'PictureBox5
+        '
+        resources.ApplyResources(Me.PictureBox5, "PictureBox5")
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.TabStop = False
+        '
+        'TextBox15
+        '
+        Me.TextBox15.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox15, "TextBox15")
+        Me.TextBox15.Name = "TextBox15"
+        '
+        'ComboBox6
+        '
+        Me.ComboBox6.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox6, "ComboBox6")
+        Me.ComboBox6.FormattingEnabled = True
+        Me.ComboBox6.Items.AddRange(New Object() {resources.GetString("ComboBox6.Items"), resources.GetString("ComboBox6.Items1"), resources.GetString("ComboBox6.Items2")})
+        Me.ComboBox6.Name = "ComboBox6"
+        '
+        'Label18
+        '
+        resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.Name = "Label18"
+        '
+        'Label31
+        '
+        resources.ApplyResources(Me.Label31, "Label31")
+        Me.Label31.Name = "Label31"
+        '
+        'TextBox14
+        '
+        Me.TextBox14.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox14, "TextBox14")
+        Me.TextBox14.Name = "TextBox14"
+        '
+        'TextBox7
+        '
+        Me.TextBox7.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox7, "TextBox7")
+        Me.TextBox7.Name = "TextBox7"
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
+        '
+        'Label32
+        '
+        resources.ApplyResources(Me.Label32, "Label32")
+        Me.Label32.Name = "Label32"
+        '
+        'ComboBox7
+        '
+        Me.ComboBox7.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox7, "ComboBox7")
+        Me.ComboBox7.FormattingEnabled = True
+        Me.ComboBox7.Items.AddRange(New Object() {resources.GetString("ComboBox7.Items"), resources.GetString("ComboBox7.Items1"), resources.GetString("ComboBox7.Items2")})
+        Me.ComboBox7.Name = "ComboBox7"
+        '
+        'Label20
+        '
+        resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.Name = "Label20"
+        '
+        'TextBox13
+        '
+        Me.TextBox13.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox13, "TextBox13")
+        Me.TextBox13.Name = "TextBox13"
+        '
+        'Label21
+        '
+        resources.ApplyResources(Me.Label21, "Label21")
+        Me.Label21.Name = "Label21"
+        '
+        'ComboBox5
+        '
+        Me.ComboBox5.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox5, "ComboBox5")
+        Me.ComboBox5.FormattingEnabled = True
+        Me.ComboBox5.Items.AddRange(New Object() {resources.GetString("ComboBox5.Items"), resources.GetString("ComboBox5.Items1"), resources.GetString("ComboBox5.Items2")})
+        Me.ComboBox5.Name = "ComboBox5"
+        '
+        'Label22
+        '
+        resources.ApplyResources(Me.Label22, "Label22")
+        Me.Label22.Name = "Label22"
+        '
+        'TextBox12
+        '
+        Me.TextBox12.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox12, "TextBox12")
+        Me.TextBox12.Name = "TextBox12"
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
+        '
+        'TextBox11
+        '
+        Me.TextBox11.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox11, "TextBox11")
+        Me.TextBox11.Name = "TextBox11"
+        '
+        'Label24
+        '
+        resources.ApplyResources(Me.Label24, "Label24")
+        Me.Label24.Name = "Label24"
+        '
+        'ComboBox4
+        '
+        Me.ComboBox4.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox4, "ComboBox4")
+        Me.ComboBox4.FormattingEnabled = True
+        Me.ComboBox4.Items.AddRange(New Object() {resources.GetString("ComboBox4.Items"), resources.GetString("ComboBox4.Items1"), resources.GetString("ComboBox4.Items2"), resources.GetString("ComboBox4.Items3"), resources.GetString("ComboBox4.Items4")})
+        Me.ComboBox4.Name = "ComboBox4"
+        '
+        'Label25
+        '
+        resources.ApplyResources(Me.Label25, "Label25")
+        Me.Label25.Name = "Label25"
+        '
+        'TextBox10
+        '
+        Me.TextBox10.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox10, "TextBox10")
+        Me.TextBox10.Name = "TextBox10"
+        '
+        'Label26
+        '
+        resources.ApplyResources(Me.Label26, "Label26")
+        Me.Label26.Name = "Label26"
+        '
+        'TextBox9
+        '
+        Me.TextBox9.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox9, "TextBox9")
+        Me.TextBox9.Name = "TextBox9"
+        '
+        'Label27
+        '
+        resources.ApplyResources(Me.Label27, "Label27")
+        Me.Label27.Name = "Label27"
+        '
+        'TextBox8
+        '
+        Me.TextBox8.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox8, "TextBox8")
+        Me.TextBox8.Name = "TextBox8"
+        '
+        'Label28
+        '
+        resources.ApplyResources(Me.Label28, "Label28")
+        Me.Label28.Name = "Label28"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox6, "TextBox6")
+        Me.TextBox6.Name = "TextBox6"
+        '
+        'Label29
+        '
+        resources.ApplyResources(Me.Label29, "Label29")
+        Me.Label29.Name = "Label29"
+        '
+        'ComboBox3
+        '
+        Me.ComboBox3.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
+        Me.ComboBox3.FormattingEnabled = True
+        Me.ComboBox3.Items.AddRange(New Object() {resources.GetString("ComboBox3.Items"), resources.GetString("ComboBox3.Items1"), resources.GetString("ComboBox3.Items2")})
+        Me.ComboBox3.Name = "ComboBox3"
+        '
+        'Label30
+        '
+        resources.ApplyResources(Me.Label30, "Label30")
+        Me.Label30.Name = "Label30"
+        '
+        'CheckBox13
+        '
+        resources.ApplyResources(Me.CheckBox13, "CheckBox13")
+        Me.CheckBox13.Name = "CheckBox13"
+        Me.CheckBox13.UseVisualStyleBackColor = True
+        '
+        'groupBoxAdvMode2_3
+        '
+        Me.groupBoxAdvMode2_3.Controls.Add(Me.TextBox3)
+        Me.groupBoxAdvMode2_3.Controls.Add(Me.Label17)
+        resources.ApplyResources(Me.groupBoxAdvMode2_3, "groupBoxAdvMode2_3")
+        Me.groupBoxAdvMode2_3.Name = "groupBoxAdvMode2_3"
+        Me.groupBoxAdvMode2_3.TabStop = False
+        '
+        'TextBox3
+        '
+        Me.TextBox3.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox3, "TextBox3")
+        Me.TextBox3.Name = "TextBox3"
+        '
+        'Label17
+        '
+        resources.ApplyResources(Me.Label17, "Label17")
+        Me.Label17.Name = "Label17"
+        '
+        'groupBoxAdvMode2_4
+        '
+        Me.groupBoxAdvMode2_4.Controls.Add(Me.txt_Description)
+        resources.ApplyResources(Me.groupBoxAdvMode2_4, "groupBoxAdvMode2_4")
+        Me.groupBoxAdvMode2_4.Name = "groupBoxAdvMode2_4"
+        Me.groupBoxAdvMode2_4.TabStop = False
+        '
+        'txt_Description
+        '
+        Me.txt_Description.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.txt_Description, "txt_Description")
+        Me.txt_Description.Name = "txt_Description"
+        '
+        'groupBoxAdvMode2_1
+        '
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.ComboBox2)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.Label13)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox8)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.TextBox2)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.Label14)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.ComboBox1)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox7)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox9)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox10)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox11)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.CheckBox12)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.Label15)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.TextBox1)
+        Me.groupBoxAdvMode2_1.Controls.Add(Me.Label16)
+        resources.ApplyResources(Me.groupBoxAdvMode2_1, "groupBoxAdvMode2_1")
+        Me.groupBoxAdvMode2_1.Name = "groupBoxAdvMode2_1"
+        Me.groupBoxAdvMode2_1.TabStop = False
+        '
+        'ComboBox2
+        '
+        Me.ComboBox2.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Items.AddRange(New Object() {resources.GetString("ComboBox2.Items"), resources.GetString("ComboBox2.Items1"), resources.GetString("ComboBox2.Items2"), resources.GetString("ComboBox2.Items3"), resources.GetString("ComboBox2.Items4"), resources.GetString("ComboBox2.Items5"), resources.GetString("ComboBox2.Items6"), resources.GetString("ComboBox2.Items7"), resources.GetString("ComboBox2.Items8"), resources.GetString("ComboBox2.Items9"), resources.GetString("ComboBox2.Items10"), resources.GetString("ComboBox2.Items11")})
+        Me.ComboBox2.Name = "ComboBox2"
+        '
+        'Label13
+        '
+        resources.ApplyResources(Me.Label13, "Label13")
+        Me.Label13.Name = "Label13"
+        '
+        'CheckBox8
+        '
+        resources.ApplyResources(Me.CheckBox8, "CheckBox8")
+        Me.CheckBox8.Name = "CheckBox8"
+        Me.CheckBox8.UseVisualStyleBackColor = True
+        '
+        'TextBox2
+        '
+        Me.TextBox2.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox2, "TextBox2")
+        Me.TextBox2.Name = "TextBox2"
+        '
+        'Label14
+        '
+        resources.ApplyResources(Me.Label14, "Label14")
+        Me.Label14.Name = "Label14"
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4")})
+        Me.ComboBox1.Name = "ComboBox1"
+        '
+        'CheckBox7
+        '
+        resources.ApplyResources(Me.CheckBox7, "CheckBox7")
+        Me.CheckBox7.Name = "CheckBox7"
+        Me.CheckBox7.UseVisualStyleBackColor = True
+        '
+        'CheckBox9
+        '
+        resources.ApplyResources(Me.CheckBox9, "CheckBox9")
+        Me.CheckBox9.Name = "CheckBox9"
+        Me.CheckBox9.UseVisualStyleBackColor = True
+        '
+        'CheckBox10
+        '
+        resources.ApplyResources(Me.CheckBox10, "CheckBox10")
+        Me.CheckBox10.Name = "CheckBox10"
+        Me.CheckBox10.UseVisualStyleBackColor = True
+        '
+        'CheckBox11
+        '
+        resources.ApplyResources(Me.CheckBox11, "CheckBox11")
+        Me.CheckBox11.Name = "CheckBox11"
+        Me.CheckBox11.UseVisualStyleBackColor = True
+        '
+        'CheckBox12
+        '
+        resources.ApplyResources(Me.CheckBox12, "CheckBox12")
+        Me.CheckBox12.Name = "CheckBox12"
+        Me.CheckBox12.UseVisualStyleBackColor = False
+        '
+        'Label15
+        '
+        resources.ApplyResources(Me.Label15, "Label15")
+        Me.Label15.Name = "Label15"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
+        '
+        'Label16
+        '
+        resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.Name = "Label16"
         '
         'SCCM_PK_APPS_TAB
         '
@@ -1605,23 +2188,23 @@ Partial Class Main
         '
         'EXEC_HIST_APPS
         '
-        Me.EXEC_HIST_APPS.Controls.Add(Me.ListView2)
+        Me.EXEC_HIST_APPS.Controls.Add(Me.listvw_ExecHistApps)
         resources.ApplyResources(Me.EXEC_HIST_APPS, "EXEC_HIST_APPS")
         Me.EXEC_HIST_APPS.Name = "EXEC_HIST_APPS"
         Me.EXEC_HIST_APPS.UseVisualStyleBackColor = True
         '
-        'ListView2
+        'listvw_ExecHistApps
         '
-        Me.ListView2.AutoArrange = False
-        Me.ListView2.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21})
-        resources.ApplyResources(Me.ListView2, "ListView2")
-        Me.ListView2.FullRowSelect = True
-        Me.ListView2.GridLines = True
-        Me.ListView2.HideSelection = False
-        Me.ListView2.MultiSelect = False
-        Me.ListView2.Name = "ListView2"
-        Me.ListView2.UseCompatibleStateImageBehavior = False
-        Me.ListView2.View = System.Windows.Forms.View.Details
+        Me.listvw_ExecHistApps.AutoArrange = False
+        Me.listvw_ExecHistApps.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader17, Me.ColumnHeader18, Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21})
+        resources.ApplyResources(Me.listvw_ExecHistApps, "listvw_ExecHistApps")
+        Me.listvw_ExecHistApps.FullRowSelect = True
+        Me.listvw_ExecHistApps.GridLines = True
+        Me.listvw_ExecHistApps.HideSelection = False
+        Me.listvw_ExecHistApps.MultiSelect = False
+        Me.listvw_ExecHistApps.Name = "listvw_ExecHistApps"
+        Me.listvw_ExecHistApps.UseCompatibleStateImageBehavior = False
+        Me.listvw_ExecHistApps.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader5
         '
@@ -1653,22 +2236,22 @@ Partial Class Main
         '
         'EXEC_HIST_PKG_TAB
         '
-        Me.EXEC_HIST_PKG_TAB.Controls.Add(Me.ListView1)
+        Me.EXEC_HIST_PKG_TAB.Controls.Add(Me.lstvw_ExecHistPkgs)
         resources.ApplyResources(Me.EXEC_HIST_PKG_TAB, "EXEC_HIST_PKG_TAB")
         Me.EXEC_HIST_PKG_TAB.Name = "EXEC_HIST_PKG_TAB"
         Me.EXEC_HIST_PKG_TAB.UseVisualStyleBackColor = True
         '
-        'ListView1
+        'lstvw_ExecHistPkgs
         '
-        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader4, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9})
-        resources.ApplyResources(Me.ListView1, "ListView1")
-        Me.ListView1.FullRowSelect = True
-        Me.ListView1.GridLines = True
-        Me.ListView1.HideSelection = False
-        Me.ListView1.MultiSelect = False
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.Details
+        Me.lstvw_ExecHistPkgs.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader4, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9})
+        resources.ApplyResources(Me.lstvw_ExecHistPkgs, "lstvw_ExecHistPkgs")
+        Me.lstvw_ExecHistPkgs.FullRowSelect = True
+        Me.lstvw_ExecHistPkgs.GridLines = True
+        Me.lstvw_ExecHistPkgs.HideSelection = False
+        Me.lstvw_ExecHistPkgs.MultiSelect = False
+        Me.lstvw_ExecHistPkgs.Name = "lstvw_ExecHistPkgs"
+        Me.lstvw_ExecHistPkgs.UseCompatibleStateImageBehavior = False
+        Me.lstvw_ExecHistPkgs.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader4
         '
@@ -1754,34 +2337,36 @@ Partial Class Main
         '
         'SoftwareCacheLocation_Tab
         '
+        Me.SoftwareCacheLocation_Tab.Controls.Add(Me.btnESSetupInfo)
         Me.SoftwareCacheLocation_Tab.Controls.Add(Me.ListView5)
         resources.ApplyResources(Me.SoftwareCacheLocation_Tab, "SoftwareCacheLocation_Tab")
         Me.SoftwareCacheLocation_Tab.Name = "SoftwareCacheLocation_Tab"
         Me.SoftwareCacheLocation_Tab.UseVisualStyleBackColor = True
         '
+        'btnESSetupInfo
+        '
+        resources.ApplyResources(Me.btnESSetupInfo, "btnESSetupInfo")
+        Me.btnESSetupInfo.Name = "btnESSetupInfo"
+        Me.btnESSetupInfo.UseVisualStyleBackColor = True
+        '
         'ListView5
         '
-        Me.ListView5.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader24})
-        resources.ApplyResources(Me.ListView5, "ListView5")
+        Me.ListView5.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader24, Me.ColumnHeader23})
         Me.ListView5.FullRowSelect = True
         Me.ListView5.GridLines = True
         Me.ListView5.HideSelection = False
-        Me.ListView5.MultiSelect = False
+        resources.ApplyResources(Me.ListView5, "ListView5")
         Me.ListView5.Name = "ListView5"
         Me.ListView5.UseCompatibleStateImageBehavior = False
         Me.ListView5.View = System.Windows.Forms.View.Details
         '
-        'ColumnHeader22
+        'ColumnHeader24
         '
-        resources.ApplyResources(Me.ColumnHeader22, "ColumnHeader22")
+        resources.ApplyResources(Me.ColumnHeader24, "ColumnHeader24")
         '
         'ColumnHeader23
         '
         resources.ApplyResources(Me.ColumnHeader23, "ColumnHeader23")
-        '
-        'ColumnHeader24
-        '
-        resources.ApplyResources(Me.ColumnHeader24, "ColumnHeader24")
         '
         'SCCM_WSUS_SCUP_TAB
         '
@@ -1793,7 +2378,6 @@ Partial Class Main
         Me.SCCM_WSUS_SCUP_TAB.Controls.Add(Me.lbl_PatchCount_NEW)
         Me.SCCM_WSUS_SCUP_TAB.Controls.Add(Me.lbl_patch_count_NEW)
         Me.SCCM_WSUS_SCUP_TAB.Controls.Add(Me.chk_ApprovedPatch_NEW)
-        Me.SCCM_WSUS_SCUP_TAB.Controls.Add(Me.Label4)
         Me.SCCM_WSUS_SCUP_TAB.Controls.Add(Me.ListViewWSUS_SCUP_NEW)
         resources.ApplyResources(Me.SCCM_WSUS_SCUP_TAB, "SCCM_WSUS_SCUP_TAB")
         Me.SCCM_WSUS_SCUP_TAB.Name = "SCCM_WSUS_SCUP_TAB"
@@ -1841,11 +2425,6 @@ Partial Class Main
         resources.ApplyResources(Me.chk_ApprovedPatch_NEW, "chk_ApprovedPatch_NEW")
         Me.chk_ApprovedPatch_NEW.Name = "chk_ApprovedPatch_NEW"
         Me.chk_ApprovedPatch_NEW.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
         '
         'ListViewWSUS_SCUP_NEW
         '
@@ -2363,6 +2942,48 @@ Partial Class Main
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.Name = "DISPLAY_MAINTENANCE_WINDOWS_TAB"
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.UseVisualStyleBackColor = True
         '
+        'RUN_COMMAND_TAB
+        '
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.cmd_Reinstall_client_NEW)
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.btnClearCommandWindow)
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandOutput)
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.btnCommandInput)
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandInput)
+        resources.ApplyResources(Me.RUN_COMMAND_TAB, "RUN_COMMAND_TAB")
+        Me.RUN_COMMAND_TAB.Name = "RUN_COMMAND_TAB"
+        Me.RUN_COMMAND_TAB.UseVisualStyleBackColor = True
+        '
+        'cmd_Reinstall_client_NEW
+        '
+        resources.ApplyResources(Me.cmd_Reinstall_client_NEW, "cmd_Reinstall_client_NEW")
+        Me.cmd_Reinstall_client_NEW.Name = "cmd_Reinstall_client_NEW"
+        Me.cmd_Reinstall_client_NEW.UseVisualStyleBackColor = True
+        '
+        'btnClearCommandWindow
+        '
+        resources.ApplyResources(Me.btnClearCommandWindow, "btnClearCommandWindow")
+        Me.btnClearCommandWindow.Name = "btnClearCommandWindow"
+        Me.btnClearCommandWindow.UseVisualStyleBackColor = True
+        '
+        'txtCommandOutput
+        '
+        Me.txtCommandOutput.BackColor = System.Drawing.Color.Black
+        Me.txtCommandOutput.ForeColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.txtCommandOutput, "txtCommandOutput")
+        Me.txtCommandOutput.Name = "txtCommandOutput"
+        Me.txtCommandOutput.ReadOnly = True
+        '
+        'btnCommandInput
+        '
+        resources.ApplyResources(Me.btnCommandInput, "btnCommandInput")
+        Me.btnCommandInput.Name = "btnCommandInput"
+        Me.btnCommandInput.UseVisualStyleBackColor = True
+        '
+        'txtCommandInput
+        '
+        resources.ApplyResources(Me.txtCommandInput, "txtCommandInput")
+        Me.txtCommandInput.Name = "txtCommandInput"
+        '
         'ADVANCE_MODE_TAB_1
         '
         Me.ADVANCE_MODE_TAB_1.Controls.Add(Me.Gr666)
@@ -2375,7 +2996,7 @@ Partial Class Main
         '
         Me.Gr666.Controls.Add(Me.cmd_load_Logs5_NEW)
         Me.Gr666.Controls.Add(Me.lblWinUpdAgentWin10Serv_NEW)
-        Me.Gr666.Controls.Add(Me.cmb_Logs5)
+        Me.Gr666.Controls.Add(Me.cmb_Logs5_NEW)
         Me.Gr666.Controls.Add(Me.cmd_load_Logs4_NEW)
         Me.Gr666.Controls.Add(Me.lblOSAndSoftwareUpdate_NEW)
         Me.Gr666.Controls.Add(Me.cmb_Logs4_NEW)
@@ -2405,13 +3026,13 @@ Partial Class Main
         resources.ApplyResources(Me.lblWinUpdAgentWin10Serv_NEW, "lblWinUpdAgentWin10Serv_NEW")
         Me.lblWinUpdAgentWin10Serv_NEW.Name = "lblWinUpdAgentWin10Serv_NEW"
         '
-        'cmb_Logs5
+        'cmb_Logs5_NEW
         '
-        Me.cmb_Logs5.BackColor = System.Drawing.Color.AliceBlue
-        resources.ApplyResources(Me.cmb_Logs5, "cmb_Logs5")
-        Me.cmb_Logs5.FormattingEnabled = True
-        Me.cmb_Logs5.Items.AddRange(New Object() {resources.GetString("cmb_Logs5.Items"), resources.GetString("cmb_Logs5.Items1"), resources.GetString("cmb_Logs5.Items2"), resources.GetString("cmb_Logs5.Items3"), resources.GetString("cmb_Logs5.Items4"), resources.GetString("cmb_Logs5.Items5"), resources.GetString("cmb_Logs5.Items6"), resources.GetString("cmb_Logs5.Items7"), resources.GetString("cmb_Logs5.Items8"), resources.GetString("cmb_Logs5.Items9"), resources.GetString("cmb_Logs5.Items10"), resources.GetString("cmb_Logs5.Items11"), resources.GetString("cmb_Logs5.Items12"), resources.GetString("cmb_Logs5.Items13"), resources.GetString("cmb_Logs5.Items14")})
-        Me.cmb_Logs5.Name = "cmb_Logs5"
+        Me.cmb_Logs5_NEW.BackColor = System.Drawing.Color.AliceBlue
+        resources.ApplyResources(Me.cmb_Logs5_NEW, "cmb_Logs5_NEW")
+        Me.cmb_Logs5_NEW.FormattingEnabled = True
+        Me.cmb_Logs5_NEW.Items.AddRange(New Object() {resources.GetString("cmb_Logs5_NEW.Items"), resources.GetString("cmb_Logs5_NEW.Items1"), resources.GetString("cmb_Logs5_NEW.Items2"), resources.GetString("cmb_Logs5_NEW.Items3"), resources.GetString("cmb_Logs5_NEW.Items4"), resources.GetString("cmb_Logs5_NEW.Items5"), resources.GetString("cmb_Logs5_NEW.Items6"), resources.GetString("cmb_Logs5_NEW.Items7"), resources.GetString("cmb_Logs5_NEW.Items8"), resources.GetString("cmb_Logs5_NEW.Items9"), resources.GetString("cmb_Logs5_NEW.Items10"), resources.GetString("cmb_Logs5_NEW.Items11"), resources.GetString("cmb_Logs5_NEW.Items12"), resources.GetString("cmb_Logs5_NEW.Items13"), resources.GetString("cmb_Logs5_NEW.Items14")})
+        Me.cmb_Logs5_NEW.Name = "cmb_Logs5_NEW"
         '
         'cmd_load_Logs4_NEW
         '
@@ -2659,84 +3280,36 @@ Partial Class Main
         resources.ApplyResources(Me.lbl_abr_size, "lbl_abr_size")
         Me.lbl_abr_size.Name = "lbl_abr_size"
         '
-        'ADVANCE_MODE_TAB_2
+        'ADVANCE_MODE_TAB_4
         '
-        resources.ApplyResources(Me.ADVANCE_MODE_TAB_2, "ADVANCE_MODE_TAB_2")
-        Me.ADVANCE_MODE_TAB_2.Name = "ADVANCE_MODE_TAB_2"
-        Me.ADVANCE_MODE_TAB_2.UseVisualStyleBackColor = True
+        Me.ADVANCE_MODE_TAB_4.Controls.Add(Me.lstv_Collection)
+        resources.ApplyResources(Me.ADVANCE_MODE_TAB_4, "ADVANCE_MODE_TAB_4")
+        Me.ADVANCE_MODE_TAB_4.Name = "ADVANCE_MODE_TAB_4"
+        Me.ADVANCE_MODE_TAB_4.UseVisualStyleBackColor = True
         '
-        'RUN_COMMAND_TAB
+        'lstv_Collection
         '
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.btnESSetupInfo)
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.btnClearCommandWindow)
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandOutput)
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.btnCommandInput)
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandInput)
-        resources.ApplyResources(Me.RUN_COMMAND_TAB, "RUN_COMMAND_TAB")
-        Me.RUN_COMMAND_TAB.Name = "RUN_COMMAND_TAB"
-        Me.RUN_COMMAND_TAB.UseVisualStyleBackColor = True
+        Me.lstv_Collection.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader25, Me.ColumnHeader45})
+        Me.lstv_Collection.FullRowSelect = True
+        Me.lstv_Collection.GridLines = True
+        Me.lstv_Collection.HideSelection = False
+        resources.ApplyResources(Me.lstv_Collection, "lstv_Collection")
+        Me.lstv_Collection.Name = "lstv_Collection"
+        Me.lstv_Collection.UseCompatibleStateImageBehavior = False
+        Me.lstv_Collection.View = System.Windows.Forms.View.Details
         '
-        'btnESSetupInfo
+        'ColumnHeader25
         '
-        resources.ApplyResources(Me.btnESSetupInfo, "btnESSetupInfo")
-        Me.btnESSetupInfo.Name = "btnESSetupInfo"
-        Me.btnESSetupInfo.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.ColumnHeader25, "ColumnHeader25")
         '
-        'btnClearCommandWindow
+        'ColumnHeader45
         '
-        resources.ApplyResources(Me.btnClearCommandWindow, "btnClearCommandWindow")
-        Me.btnClearCommandWindow.Name = "btnClearCommandWindow"
-        Me.btnClearCommandWindow.UseVisualStyleBackColor = True
-        '
-        'txtCommandOutput
-        '
-        Me.txtCommandOutput.BackColor = System.Drawing.Color.Black
-        Me.txtCommandOutput.ForeColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.txtCommandOutput, "txtCommandOutput")
-        Me.txtCommandOutput.Name = "txtCommandOutput"
-        Me.txtCommandOutput.ReadOnly = True
-        '
-        'btnCommandInput
-        '
-        resources.ApplyResources(Me.btnCommandInput, "btnCommandInput")
-        Me.btnCommandInput.Name = "btnCommandInput"
-        Me.btnCommandInput.UseVisualStyleBackColor = True
-        '
-        'txtCommandInput
-        '
-        resources.ApplyResources(Me.txtCommandInput, "txtCommandInput")
-        Me.txtCommandInput.Name = "txtCommandInput"
+        resources.ApplyResources(Me.ColumnHeader45, "ColumnHeader45")
         '
         'ProgressBar
         '
         resources.ApplyResources(Me.ProgressBar, "ProgressBar")
         Me.ProgressBar.Name = "ProgressBar"
-        '
-        'SecondaryTab
-        '
-        Me.SecondaryTab.Controls.Add(Me.TabPage1)
-        Me.SecondaryTab.Controls.Add(Me.TabPage2)
-        resources.ApplyResources(Me.SecondaryTab, "SecondaryTab")
-        Me.SecondaryTab.Name = "SecondaryTab"
-        Me.SecondaryTab.SelectedIndex = 0
-        '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.Label12)
-        resources.ApplyResources(Me.TabPage1, "TabPage1")
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'Label12
-        '
-        resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.Name = "Label12"
-        '
-        'TabPage2
-        '
-        resources.ApplyResources(Me.TabPage2, "TabPage2")
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'txt_LogWindow
         '
@@ -2766,6 +3339,14 @@ Partial Class Main
         Me.ToolTip2.ReshowDelay = 5
         Me.ToolTip2.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         '
+        'ToolTip3
+        '
+        Me.ToolTip3.AutoPopDelay = 5000
+        Me.ToolTip3.InitialDelay = 500
+        Me.ToolTip3.IsBalloon = True
+        Me.ToolTip3.ReshowDelay = 5
+        Me.ToolTip3.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        '
         'Main
         '
         Me.AcceptButton = Me.cmd_Check_NEW
@@ -2775,10 +3356,7 @@ Partial Class Main
         Me.Controls.Add(Me.pic_Assitance)
         Me.Controls.Add(Me.lbl_Version)
         Me.Controls.Add(Me.GroupBoxLogWindow_NEW)
-        Me.Controls.Add(Me.btnCenterConsole2)
         Me.Controls.Add(Me.cmd_multi_user)
-        Me.Controls.Add(Me.btnCenterConsole)
-        Me.Controls.Add(Me.SecondaryTab)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.MainTab)
         Me.Controls.Add(Me.cmdSoftware)
@@ -2799,7 +3377,7 @@ Partial Class Main
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.Pic_OFF_wuauserv)
         Me.Controls.Add(Me.lblRegedit1)
-        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.lblWindowsFirewallMPSSVC)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label8)
@@ -2816,6 +3394,8 @@ Partial Class Main
         Me.Controls.Add(Me.Pic_OFF_BITS)
         Me.Controls.Add(Me.Pic_OFF_PeerDistSvc)
         Me.Controls.Add(Me.MenuStrip2)
+        Me.Controls.Add(Me.btnCenterConsole)
+        Me.Controls.Add(Me.btnCenterConsole2)
         Me.Cursor = System.Windows.Forms.Cursors.Default
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.MainMenuStrip = Me.MenuStrip2
@@ -2862,6 +3442,19 @@ Partial Class Main
         Me.MenuStrip2.PerformLayout()
         Me.MainTab.ResumeLayout(False)
         Me.COMPUTER_INFORMATION_TAB.ResumeLayout(False)
+        Me.AdvancedModeTab.ResumeLayout(False)
+        Me.AdvancedModeTab1.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
+        Me.AdvancedModeTab2.ResumeLayout(False)
+        Me.groupBoxAdvMode2_2.ResumeLayout(False)
+        Me.groupBoxAdvMode2_2.PerformLayout()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.groupBoxAdvMode2_3.ResumeLayout(False)
+        Me.groupBoxAdvMode2_3.PerformLayout()
+        Me.groupBoxAdvMode2_4.ResumeLayout(False)
+        Me.groupBoxAdvMode2_4.PerformLayout()
+        Me.groupBoxAdvMode2_1.ResumeLayout(False)
+        Me.groupBoxAdvMode2_1.PerformLayout()
         Me.SCCM_PK_APPS_TAB.ResumeLayout(False)
         Me.Tab_pkg_app.ResumeLayout(False)
         Me.START.ResumeLayout(False)
@@ -2913,6 +3506,8 @@ Partial Class Main
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.ResumeLayout(False)
+        Me.RUN_COMMAND_TAB.ResumeLayout(False)
+        Me.RUN_COMMAND_TAB.PerformLayout()
         Me.ADVANCE_MODE_TAB_1.ResumeLayout(False)
         Me.Gr666.ResumeLayout(False)
         Me.Gr666.PerformLayout()
@@ -2922,10 +3517,7 @@ Partial Class Main
         CType(Me.pic_greenflag2_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_redflag1_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_greenflag1_NEW, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RUN_COMMAND_TAB.ResumeLayout(False)
-        Me.RUN_COMMAND_TAB.PerformLayout()
-        Me.SecondaryTab.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
+        Me.ADVANCE_MODE_TAB_4.ResumeLayout(False)
         Me.GroupBoxLogWindow_NEW.ResumeLayout(False)
         Me.GroupBoxLogWindow_NEW.PerformLayout()
         Me.ResumeLayout(False)
@@ -2959,7 +3551,7 @@ Partial Class Main
     Friend WithEvents Pic_OFF_PeerDistSvc As System.Windows.Forms.PictureBox
     Friend WithEvents lblRegedit1 As System.Windows.Forms.Label
     Friend WithEvents Pic_ON_PeerDistSvc As System.Windows.Forms.PictureBox
-    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents lblWindowsFirewallMPSSVC As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Pic_OFF_BITS As System.Windows.Forms.PictureBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
@@ -2998,7 +3590,6 @@ Partial Class Main
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents cmd_Add_SW As System.Windows.Forms.Button
-    Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
     Friend WithEvents pic_Ok As System.Windows.Forms.PictureBox
     Friend WithEvents txt_img_install_Date As System.Windows.Forms.TextBox
     Friend WithEvents lblOsInstallDate As System.Windows.Forms.Label
@@ -3041,7 +3632,7 @@ Partial Class Main
     Friend WithEvents ColumnHeader11 As ColumnHeader
     Friend WithEvents ColumnHeader12 As ColumnHeader
     Friend WithEvents ColumnHeader13 As ColumnHeader
-    Friend WithEvents ListView2 As ListView
+    Friend WithEvents listvw_ExecHistApps As ListView
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents ColumnHeader17 As ColumnHeader
@@ -3049,7 +3640,7 @@ Partial Class Main
     Friend WithEvents ColumnHeader19 As ColumnHeader
     Friend WithEvents ColumnHeader20 As ColumnHeader
     Friend WithEvents ColumnHeader21 As ColumnHeader
-    Friend WithEvents ListView1 As ListView
+    Friend WithEvents lstvw_ExecHistPkgs As ListView
     Friend WithEvents ColumnHeader4 As ColumnHeader
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader
@@ -3062,12 +3653,8 @@ Partial Class Main
     Friend WithEvents ProgressBar As ProgressBar
     Friend WithEvents SoftwareCacheLocation_Tab As TabPage
     Friend WithEvents ListView5 As ListView
-    Friend WithEvents ColumnHeader22 As ColumnHeader
     Friend WithEvents ColumnHeader23 As ColumnHeader
     Friend WithEvents ColumnHeader24 As ColumnHeader
-    Friend WithEvents SecondaryTab As TabControl
-    Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents TabPage2 As TabPage
     Friend WithEvents lbl_Domain_NEW As Label
     Friend WithEvents txt_Domain_NEW As TextBox
     Friend WithEvents lblSiteCode_NEW As Label
@@ -3142,7 +3729,7 @@ Partial Class Main
     Friend WithEvents ColumnHeader43 As ColumnHeader
     Friend WithEvents ColumnHeader44 As ColumnHeader
     Friend WithEvents PF_SUBTAB_OTHER As TabPage
-    Friend WithEvents Label1 As Label
+    Friend WithEvents Label1lblProgFeatActivateTabMsg As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents FORCESECURITYUPDATEToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FORCEAPPLICATIONUPDATEToolStripMenuItem As ToolStripMenuItem
@@ -3155,7 +3742,7 @@ Partial Class Main
     Friend WithEvents Gr666 As GroupBox
     Friend WithEvents cmd_load_Logs5_NEW As Button
     Friend WithEvents lblWinUpdAgentWin10Serv_NEW As Label
-    Friend WithEvents cmb_Logs5 As ComboBox
+    Friend WithEvents cmb_Logs5_NEW As ComboBox
     Friend WithEvents cmd_load_Logs4_NEW As Button
     Friend WithEvents lblOSAndSoftwareUpdate_NEW As Label
     Friend WithEvents cmb_Logs4_NEW As ComboBox
@@ -3198,13 +3785,11 @@ Partial Class Main
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents REINSTALLSCCMCLIENTToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ADVANCE_MODE_TAB_2 As TabPage
     Friend WithEvents RUN_COMMAND_TAB As TabPage
     Friend WithEvents txtCommandOutput As TextBox
     Friend WithEvents btnCommandInput As Button
     Friend WithEvents txtCommandInput As TextBox
     Friend WithEvents btnClearCommandWindow As Button
-    Friend WithEvents btnESSetupInfo As Button
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents Panel2 As Panel
     Friend WithEvents CheckBox6 As CheckBox
@@ -3272,6 +3857,85 @@ Partial Class Main
     Friend WithEvents pic_uncheck31 As PictureBox
     Friend WithEvents pic_uncheck108 As PictureBox
     Friend WithEvents pic_uncheck113 As PictureBox
-    Friend WithEvents Label12 As Label
     Friend WithEvents ToolTip2 As ToolTip
+    Friend WithEvents ToolTip3 As ToolTip
+    Friend WithEvents ADVANCE_MODE_TAB_4 As TabPage
+    Friend WithEvents lstv_Collection As ListView
+    Friend WithEvents ColumnHeader25 As ColumnHeader
+    Friend WithEvents ColumnHeader45 As ColumnHeader
+    Friend WithEvents btnESSetupInfo As Button
+    Friend WithEvents cmd_Reinstall_client_NEW As Button
+    Friend WithEvents AdvancedModeTab As TabControl
+    Friend WithEvents AdvancedModeTab1 As TabPage
+    Friend WithEvents btnAddMaintWindow_NEW As Button
+    Friend WithEvents cmd_registry_pol_MEW As Button
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents lblHour As Label
+    Friend WithEvents lblWindowDesiredLength_NEW As Label
+    Friend WithEvents ddlDesiredLength As ComboBox
+    Friend WithEvents lblChange15Minutes_NEW As Label
+    Friend WithEvents cmd_GPO_NEW As Button
+    Friend WithEvents cmd_Rebuilding_WMI_NEW As Button
+    Friend WithEvents cmd_BITS_Location_NEW As Button
+    Friend WithEvents cmd_Re_Registering_NEW As Button
+    Friend WithEvents cmd_Client_Logs_NEW As Button
+    Friend WithEvents cmd_DataStore_NEW As Button
+    Friend WithEvents cmd_Del_WMI_NEW As Button
+    Friend WithEvents cmd_WSUS_Download_NEW As Button
+    Friend WithEvents AdvancedModeTab2 As TabPage
+    Friend WithEvents groupBoxAdvMode2_2 As GroupBox
+    Friend WithEvents CheckBox14 As CheckBox
+    Friend WithEvents lbl_CCMVALHOUR_Warning As Label
+    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents ComboBox6 As ComboBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label31 As Label
+    Friend WithEvents TextBox14 As TextBox
+    Friend WithEvents TextBox7 As TextBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents Label32 As Label
+    Friend WithEvents ComboBox7 As ComboBox
+    Friend WithEvents Label20 As Label
+    Friend WithEvents TextBox13 As TextBox
+    Friend WithEvents Label21 As Label
+    Friend WithEvents ComboBox5 As ComboBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents TextBox12 As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents ComboBox4 As ComboBox
+    Friend WithEvents Label25 As Label
+    Friend WithEvents TextBox10 As TextBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents Label27 As Label
+    Friend WithEvents TextBox8 As TextBox
+    Friend WithEvents Label28 As Label
+    Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents Label30 As Label
+    Friend WithEvents CheckBox13 As CheckBox
+    Friend WithEvents groupBoxAdvMode2_3 As GroupBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents groupBoxAdvMode2_4 As GroupBox
+    Friend WithEvents txt_Description As TextBox
+    Friend WithEvents groupBoxAdvMode2_1 As GroupBox
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents Label13 As Label
+    Friend WithEvents CheckBox8 As CheckBox
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents CheckBox7 As CheckBox
+    Friend WithEvents CheckBox9 As CheckBox
+    Friend WithEvents CheckBox10 As CheckBox
+    Friend WithEvents CheckBox11 As CheckBox
+    Friend WithEvents CheckBox12 As CheckBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label16 As Label
 End Class

@@ -253,7 +253,10 @@
     <value>GPUpdate</value>
   </data>
   <data name="WarningReinstallClient" xml:space="preserve">
-    <value>Attention ! Vous êtes sur le point d'envoyer une commande pour réinstaller le client SCCM de l’ordinateur à distance.</value>
+    <value>Attention ! Vous êtes sur le point d'envoyer une commande pour réinstaller le client SCCM de l’ordinateur à distance, which may take some time</value>
+  </data>
+  <data name="WarningRunSoftwareCache" xml:space="preserve">
+    <value>Warning! You are about to send a command to get software cache information on the remote computer, which may take some time</value>
   </data>
   <data name="WarningVPNSlowRequests" xml:space="preserve">
     <value> Une connexion à distance RPV a été détectée, les requêtes avec le périphérique client peuvent être plus lentes que d'habitude.</value>
@@ -659,6 +662,9 @@
   </data>
   <data name="Message_file_ini_missing" xml:space="preserve">
     <value>Le fichier SCCMPCADMIN.INI est manquant.</value>
+  </data>
+  <data name="Message_long_wait_time" xml:space="preserve">
+    <value>[FR]You are about to re-install the SCCM client, this may take a while.</value>
   </data>
   <data name="Message_Domain_Missing" xml:space="preserve">
     <value>L'ordinateur doit être joint a un domain avant de réinstaller le client SCCM.</value>

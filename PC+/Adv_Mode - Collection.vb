@@ -89,4 +89,8 @@ Public Class Adv_Mode_Collection
         End Try
 
     End Sub
+
+    Private Sub Lstv_Collection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstv_Collection.SelectedIndexChanged
+
+    End Sub
 End Class

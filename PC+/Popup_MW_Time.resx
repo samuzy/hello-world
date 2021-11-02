@@ -159,7 +159,7 @@
     <value>2, 7</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>528, 32</value>
+    <value>528, 33</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -216,7 +216,7 @@
     <value>195, 60</value>
   </data>
   <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 33</value>
+    <value>53, 28</value>
   </data>
   <data name="ComboBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3542,6 +3542,6 @@
     <value>Popup_MW_Time</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>PC_.LocalizedForm, SCCMPCAdmin, Version=2.6.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>PC_.LocalizedForm, SCCMPCAdmin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

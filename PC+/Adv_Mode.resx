@@ -564,8 +564,1265 @@
   <data name="&gt;&gt;cmd_Re_Registering.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <metadata name="txt_ListenPort.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="txt_ConnectPort.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="GroupBox2.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag2.Name" xml:space="preserve">
+    <value>pic_redflag2</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag2.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag2.Name" xml:space="preserve">
+    <value>pic_greenflag2</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag2.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cmd_Port_8009.Name" xml:space="preserve">
+    <value>cmd_Port_8009</value>
+  </data>
+  <data name="&gt;&gt;cmd_Port_8009.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_Port_8009.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;cmd_Port_8009.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txt_ListenPort.Name" xml:space="preserve">
+    <value>txt_ListenPort</value>
+  </data>
+  <data name="&gt;&gt;txt_ListenPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ListenPort.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;txt_ListenPort.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txt_ConnectPort.Name" xml:space="preserve">
+    <value>txt_ConnectPort</value>
+  </data>
+  <data name="&gt;&gt;txt_ConnectPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ConnectPort.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;txt_ConnectPort.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
+  </data>
+  <data name="&gt;&gt;Label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label8.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label7.Name" xml:space="preserve">
+    <value>Label7</value>
+  </data>
+  <data name="&gt;&gt;Label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag1.Name" xml:space="preserve">
+    <value>pic_redflag1</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag1.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;pic_redflag1.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag1.Name" xml:space="preserve">
+    <value>pic_greenflag1</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag1.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;pic_greenflag1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="GroupBox2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>792, 6</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 135</value>
+  </data>
+  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>BRANCHCACHE_INFORMATION</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <metadata name="txt_cache_location.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="txt_ComputerName.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="GroupBox1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="&gt;&gt;txt_Mac.Name" xml:space="preserve">
+    <value>txt_Mac</value>
+  </data>
+  <data name="&gt;&gt;txt_Mac.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Mac.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_Mac.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txt_cache_location.Name" xml:space="preserve">
+    <value>txt_cache_location</value>
+  </data>
+  <data name="&gt;&gt;txt_cache_location.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_cache_location.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_cache_location.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;txt_IP.Name" xml:space="preserve">
+    <value>txt_IP</value>
+  </data>
+  <data name="&gt;&gt;txt_IP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_IP.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_IP.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txt_Cache_Size.Name" xml:space="preserve">
+    <value>txt_Cache_Size</value>
+  </data>
+  <data name="&gt;&gt;txt_Cache_Size.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Cache_Size.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_Cache_Size.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txt_ComputerName.Name" xml:space="preserve">
+    <value>txt_ComputerName</value>
+  </data>
+  <data name="&gt;&gt;txt_ComputerName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ComputerName.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_ComputerName.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;lbl_abr_size.Name" xml:space="preserve">
+    <value>lbl_abr_size</value>
+  </data>
+  <data name="&gt;&gt;lbl_abr_size.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_abr_size.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;lbl_abr_size.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="GroupBox1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 399</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>715, 135</value>
+  </data>
+  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>INFORMATION</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cmd_Del_WMI.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_Del_WMI.Location" type="System.Drawing.Point, System.Drawing">
+    <value>774, 192</value>
+  </data>
+  <data name="cmd_Del_WMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>366, 29</value>
+  </data>
+  <data name="cmd_Del_WMI.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="cmd_Del_WMI.Text" xml:space="preserve">
+    <value>DELETE_WMI_NAMESPACE</value>
+  </data>
+  <data name="&gt;&gt;cmd_Del_WMI.Name" xml:space="preserve">
+    <value>cmd_Del_WMI</value>
+  </data>
+  <data name="&gt;&gt;cmd_Del_WMI.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_Del_WMI.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;cmd_Del_WMI.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cmd_WSUS_Download_NEW.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_WSUS_Download_NEW.Location" type="System.Drawing.Point, System.Drawing">
+    <value>774, 331</value>
+  </data>
+  <data name="cmd_WSUS_Download_NEW.Size" type="System.Drawing.Size, System.Drawing">
+    <value>364, 29</value>
+  </data>
+  <data name="cmd_WSUS_Download_NEW.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="cmd_WSUS_Download_NEW.Text" xml:space="preserve">
+    <value>WSUS_DOWNLOAD_LOCATION</value>
+  </data>
+  <data name="&gt;&gt;cmd_WSUS_Download_NEW.Name" xml:space="preserve">
+    <value>cmd_WSUS_Download_NEW</value>
+  </data>
+  <data name="&gt;&gt;cmd_WSUS_Download_NEW.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_WSUS_Download_NEW.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;cmd_WSUS_Download_NEW.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="cmd_DataStore.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_DataStore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>971, 366</value>
+  </data>
+  <data name="cmd_DataStore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 29</value>
+  </data>
+  <data name="cmd_DataStore.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="cmd_DataStore.Text" xml:space="preserve">
+    <value>DATASTORE_LOCATION</value>
+  </data>
+  <data name="&gt;&gt;cmd_DataStore.Name" xml:space="preserve">
+    <value>cmd_DataStore</value>
+  </data>
+  <data name="&gt;&gt;cmd_DataStore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_DataStore.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;cmd_DataStore.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="cmd_Client_Logs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_Client_Logs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>774, 401</value>
+  </data>
+  <data name="cmd_Client_Logs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 29</value>
+  </data>
+  <data name="cmd_Client_Logs.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="cmd_Client_Logs.Text" xml:space="preserve">
+    <value>CLIENT_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_Client_Logs.Name" xml:space="preserve">
+    <value>cmd_Client_Logs</value>
+  </data>
+  <data name="&gt;&gt;cmd_Client_Logs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_Client_Logs.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;cmd_Client_Logs.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="cmd_BITS_Location.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_BITS_Location.Location" type="System.Drawing.Point, System.Drawing">
+    <value>774, 366</value>
+  </data>
+  <data name="cmd_BITS_Location.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 29</value>
+  </data>
+  <data name="cmd_BITS_Location.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="cmd_BITS_Location.Text" xml:space="preserve">
+    <value>BITS_LOCATION</value>
+  </data>
+  <data name="&gt;&gt;cmd_BITS_Location.Name" xml:space="preserve">
+    <value>cmd_BITS_Location</value>
+  </data>
+  <data name="&gt;&gt;cmd_BITS_Location.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_BITS_Location.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;cmd_BITS_Location.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 12</value>
+  </data>
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1167, 543</value>
+  </data>
+  <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Panel1.Name" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmd_load_Logs5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_load_Logs5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmd_load_Logs5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 238</value>
+  </data>
+  <data name="cmd_load_Logs5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 29</value>
+  </data>
+  <data name="cmd_load_Logs5.TabIndex" type="System.Int32, mscorlib">
+    <value>77</value>
+  </data>
+  <data name="cmd_load_Logs5.Text" xml:space="preserve">
+    <value>SEE_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs5.Name" xml:space="preserve">
+    <value>cmd_load_Logs5</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs5.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 221</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 13</value>
+  </data>
+  <data name="Label11.TabIndex" type="System.Int32, mscorlib">
+    <value>76</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>WIN_UPD_AGENT &amp;&amp; WIN 10 SERV</value>
+  </data>
+  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
+    <value>Label11</value>
+  </data>
+  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cmb_Logs5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cmb_Logs5.Items" xml:space="preserve">
+    <value>Ccmperf.log</value>
+  </data>
+  <data name="cmb_Logs5.Items1" xml:space="preserve">
+    <value>CcmRepair.log</value>
+  </data>
+  <data name="cmb_Logs5.Items2" xml:space="preserve">
+    <value>PolicyEvaluator.log</value>
+  </data>
+  <data name="cmb_Logs5.Items3" xml:space="preserve">
+    <value>RebootCoordinator.log</value>
+  </data>
+  <data name="cmb_Logs5.Items4" xml:space="preserve">
+    <value>ScanAgent.log</value>
+  </data>
+  <data name="cmb_Logs5.Items5" xml:space="preserve">
+    <value>SdmAgent.log</value>
+  </data>
+  <data name="cmb_Logs5.Items6" xml:space="preserve">
+    <value>ServiceWindowManager.log</value>
+  </data>
+  <data name="cmb_Logs5.Items7" xml:space="preserve">
+    <value>Setupact.log</value>
+  </data>
+  <data name="cmb_Logs5.Items8" xml:space="preserve">
+    <value>SmsWusHandler.log</value>
+  </data>
+  <data name="cmb_Logs5.Items9" xml:space="preserve">
+    <value>StateMessage.log</value>
+  </data>
+  <data name="cmb_Logs5.Items10" xml:space="preserve">
+    <value>UpdatesDeployment.log</value>
+  </data>
+  <data name="cmb_Logs5.Items11" xml:space="preserve">
+    <value>UpdatesHandler.log</value>
+  </data>
+  <data name="cmb_Logs5.Items12" xml:space="preserve">
+    <value>UpdatesStore.log</value>
+  </data>
+  <data name="cmb_Logs5.Items13" xml:space="preserve">
+    <value>WindowsUpdate.log</value>
+  </data>
+  <data name="cmb_Logs5.Items14" xml:space="preserve">
+    <value>WUAHandler.log</value>
+  </data>
+  <data name="cmb_Logs5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 240</value>
+  </data>
+  <data name="cmb_Logs5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 24</value>
+  </data>
+  <data name="cmb_Logs5.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs5.Name" xml:space="preserve">
+    <value>cmb_Logs5</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs5.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs5.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cmd_load_Logs4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_load_Logs4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmd_load_Logs4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>430, 186</value>
+  </data>
+  <data name="cmd_load_Logs4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 29</value>
+  </data>
+  <data name="cmd_load_Logs4.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
+  <data name="cmd_load_Logs4.Text" xml:space="preserve">
+    <value>SEE_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs4.Name" xml:space="preserve">
+    <value>cmd_load_Logs4</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs4.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs4.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 169</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 13</value>
+  </data>
+  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>OS &amp;&amp; SOFTWARE_UPD</value>
+  </data>
+  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
+    <value>Label10</value>
+  </data>
+  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cmb_Logs4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cmb_Logs4.Items" xml:space="preserve">
+    <value>CAS.log</value>
+  </data>
+  <data name="cmb_Logs4.Items1" xml:space="preserve">
+    <value>Ccmperf.log</value>
+  </data>
+  <data name="cmb_Logs4.Items2" xml:space="preserve">
+    <value>Ccmsetup.log</value>
+  </data>
+  <data name="cmb_Logs4.Items3" xml:space="preserve">
+    <value>Loadstate.log</value>
+  </data>
+  <data name="cmb_Logs4.Items4" xml:space="preserve">
+    <value>PolicyEvaluator.log</value>
+  </data>
+  <data name="cmb_Logs4.Items5" xml:space="preserve">
+    <value>RebootCoordinator.log</value>
+  </data>
+  <data name="cmb_Logs4.Items6" xml:space="preserve">
+    <value>ScanAgent.log</value>
+  </data>
+  <data name="cmb_Logs4.Items7" xml:space="preserve">
+    <value>Scanstate.log</value>
+  </data>
+  <data name="cmb_Logs4.Items8" xml:space="preserve">
+    <value>SdmAgent.log</value>
+  </data>
+  <data name="cmb_Logs4.Items9" xml:space="preserve">
+    <value>ServiceWindowManager.log</value>
+  </data>
+  <data name="cmb_Logs4.Items10" xml:space="preserve">
+    <value>Setupact.log</value>
+  </data>
+  <data name="cmb_Logs4.Items11" xml:space="preserve">
+    <value>Setupapi.log</value>
+  </data>
+  <data name="cmb_Logs4.Items12" xml:space="preserve">
+    <value>Setuperr.log</value>
+  </data>
+  <data name="cmb_Logs4.Items13" xml:space="preserve">
+    <value>Smpisapi.log</value>
+  </data>
+  <data name="cmb_Logs4.Items14" xml:space="preserve">
+    <value>Smsts.log</value>
+  </data>
+  <data name="cmb_Logs4.Items15" xml:space="preserve">
+    <value>SmsWusHandler.log</value>
+  </data>
+  <data name="cmb_Logs4.Items16" xml:space="preserve">
+    <value>StateMessage.log</value>
+  </data>
+  <data name="cmb_Logs4.Items17" xml:space="preserve">
+    <value>TSAgent.log</value>
+  </data>
+  <data name="cmb_Logs4.Items18" xml:space="preserve">
+    <value>UpdatesDeployment.log</value>
+  </data>
+  <data name="cmb_Logs4.Items19" xml:space="preserve">
+    <value>UpdatesHandler.log</value>
+  </data>
+  <data name="cmb_Logs4.Items20" xml:space="preserve">
+    <value>UpdatesStore.log</value>
+  </data>
+  <data name="cmb_Logs4.Items21" xml:space="preserve">
+    <value>WUAHandler.log</value>
+  </data>
+  <data name="cmb_Logs4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 188</value>
+  </data>
+  <data name="cmb_Logs4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 24</value>
+  </data>
+  <data name="cmb_Logs4.TabIndex" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs4.Name" xml:space="preserve">
+    <value>cmb_Logs4</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs4.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="cmd_load_Logs3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_load_Logs3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmd_load_Logs3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 134</value>
+  </data>
+  <data name="cmd_load_Logs3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 29</value>
+  </data>
+  <data name="cmd_load_Logs3.TabIndex" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="cmd_load_Logs3.Text" xml:space="preserve">
+    <value>SEE_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs3.Name" xml:space="preserve">
+    <value>cmd_load_Logs3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs3.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs3.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 117</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 13</value>
+  </data>
+  <data name="Label9.TabIndex" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>APP_MANAGEMENT</value>
+  </data>
+  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
+    <value>Label9</value>
+  </data>
+  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="cmb_Logs3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cmb_Logs3.Items" xml:space="preserve">
+    <value>AppDiscovery.log</value>
+  </data>
+  <data name="cmb_Logs3.Items1" xml:space="preserve">
+    <value>AppEnforce.log</value>
+  </data>
+  <data name="cmb_Logs3.Items2" xml:space="preserve">
+    <value>AppIntentEval.log</value>
+  </data>
+  <data name="cmb_Logs3.Items3" xml:space="preserve">
+    <value>CCMSDKProvider.log</value>
+  </data>
+  <data name="cmb_Logs3.Items4" xml:space="preserve">
+    <value>ConfigMgrSoftwareCatalog.log</value>
+  </data>
+  <data name="cmb_Logs3.Items5" xml:space="preserve">
+    <value>Execmgr.log</value>
+  </data>
+  <data name="cmb_Logs3.Items6" xml:space="preserve">
+    <value>SoftwareCatalogUpdateEndpoint.log</value>
+  </data>
+  <data name="cmb_Logs3.Items7" xml:space="preserve">
+    <value>SoftwareCenterSystemTasks.log</value>
+  </data>
+  <data name="cmb_Logs3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 136</value>
+  </data>
+  <data name="cmb_Logs3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 24</value>
+  </data>
+  <data name="cmb_Logs3.TabIndex" type="System.Int32, mscorlib">
+    <value>69</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs3.Name" xml:space="preserve">
+    <value>cmb_Logs3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs3.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs3.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="cmd_load_Logs2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_load_Logs2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cmd_load_Logs2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 82</value>
+  </data>
+  <data name="cmd_load_Logs2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 29</value>
+  </data>
+  <data name="cmd_load_Logs2.TabIndex" type="System.Int32, mscorlib">
+    <value>68</value>
+  </data>
+  <data name="cmd_load_Logs2.Text" xml:space="preserve">
+    <value>SEE_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs2.Name" xml:space="preserve">
+    <value>cmd_load_Logs2</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs2.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs2.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 67</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 13</value>
+  </data>
+  <data name="Label5.TabIndex" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>CLIENT_INSTALL</value>
+  </data>
+  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
+    <value>Label5</value>
+  </data>
+  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="cmb_Logs2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cmb_Logs2.Items" xml:space="preserve">
+    <value>Ccmsetup.log</value>
+  </data>
+  <data name="cmb_Logs2.Items1" xml:space="preserve">
+    <value>Ccmsetup-ccmeval.log</value>
+  </data>
+  <data name="cmb_Logs2.Items2" xml:space="preserve">
+    <value>CcmRepair.log</value>
+  </data>
+  <data name="cmb_Logs2.Items3" xml:space="preserve">
+    <value>Client.msi.log</value>
+  </data>
+  <data name="cmb_Logs2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 84</value>
+  </data>
+  <data name="cmb_Logs2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 24</value>
+  </data>
+  <data name="cmb_Logs2.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs2.Name" xml:space="preserve">
+    <value>cmb_Logs2</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs2.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs2.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="txt_Description.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="txt_Description.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 293</value>
+  </data>
+  <data name="txt_Description.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txt_Description.Size" type="System.Drawing.Size, System.Drawing">
+    <value>693, 90</value>
+  </data>
+  <data name="txt_Description.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txt_Description.Name" xml:space="preserve">
+    <value>txt_Description</value>
+  </data>
+  <data name="&gt;&gt;txt_Description.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Description.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;txt_Description.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="cmd_load_Logs1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="cmd_load_Logs1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 36</value>
+  </data>
+  <data name="cmd_load_Logs1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 29</value>
+  </data>
+  <data name="cmd_load_Logs1.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="cmd_load_Logs1.Text" xml:space="preserve">
+    <value>SEE_LOGS</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs1.Name" xml:space="preserve">
+    <value>cmd_load_Logs1</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs1.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmd_load_Logs1.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="lbl_description.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_description.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 274</value>
+  </data>
+  <data name="lbl_description.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 13</value>
+  </data>
+  <data name="lbl_description.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lbl_description.Text" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="&gt;&gt;lbl_description.Name" xml:space="preserve">
+    <value>lbl_description</value>
+  </data>
+  <data name="&gt;&gt;lbl_description.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_description.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;lbl_description.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="lbl_logs.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_logs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="lbl_logs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="lbl_logs.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lbl_logs.Text" xml:space="preserve">
+    <value>CLIENT_OPE</value>
+  </data>
+  <data name="&gt;&gt;lbl_logs.Name" xml:space="preserve">
+    <value>lbl_logs</value>
+  </data>
+  <data name="&gt;&gt;lbl_logs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_logs.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;lbl_logs.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cmb_Logs1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cmb_Logs1.Items" xml:space="preserve">
+    <value>AssetAdvisor.log</value>
+  </data>
+  <data name="cmb_Logs1.Items1" xml:space="preserve">
+    <value>BgbHttpProxy.log</value>
+  </data>
+  <data name="cmb_Logs1.Items2" xml:space="preserve">
+    <value>CAS.log</value>
+  </data>
+  <data name="cmb_Logs1.Items3" xml:space="preserve">
+    <value>Ccm32BitLauncher.log</value>
+  </data>
+  <data name="cmb_Logs1.Items4" xml:space="preserve">
+    <value>CcmEval.log</value>
+  </data>
+  <data name="cmb_Logs1.Items5" xml:space="preserve">
+    <value>CcmEvalTask.log</value>
+  </data>
+  <data name="cmb_Logs1.Items6" xml:space="preserve">
+    <value>CcmExec.log</value>
+  </data>
+  <data name="cmb_Logs1.Items7" xml:space="preserve">
+    <value>CcmMessaging.log</value>
+  </data>
+  <data name="cmb_Logs1.Items8" xml:space="preserve">
+    <value>CCMNotificationAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items9" xml:space="preserve">
+    <value>Ccmperf.log</value>
+  </data>
+  <data name="cmb_Logs1.Items10" xml:space="preserve">
+    <value>CcmRestart.log</value>
+  </data>
+  <data name="cmb_Logs1.Items11" xml:space="preserve">
+    <value>CCMSDKProvider.log</value>
+  </data>
+  <data name="cmb_Logs1.Items12" xml:space="preserve">
+    <value>CertificateMaintenance.log</value>
+  </data>
+  <data name="cmb_Logs1.Items13" xml:space="preserve">
+    <value>CIAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items14" xml:space="preserve">
+    <value>CIDownloader.log</value>
+  </data>
+  <data name="cmb_Logs1.Items15" xml:space="preserve">
+    <value>CITaskManager.log</value>
+  </data>
+  <data name="cmb_Logs1.Items16" xml:space="preserve">
+    <value>CITaskMgr.log</value>
+  </data>
+  <data name="cmb_Logs1.Items17" xml:space="preserve">
+    <value>ClientAuth.log</value>
+  </data>
+  <data name="cmb_Logs1.Items18" xml:space="preserve">
+    <value>ClientIDManagerStartup.log</value>
+  </data>
+  <data name="cmb_Logs1.Items19" xml:space="preserve">
+    <value>ClientLocation.log</value>
+  </data>
+  <data name="cmb_Logs1.Items20" xml:space="preserve">
+    <value>CMHttpsReadiness.log</value>
+  </data>
+  <data name="cmb_Logs1.Items21" xml:space="preserve">
+    <value>CmRcService.log</value>
+  </data>
+  <data name="cmb_Logs1.Items22" xml:space="preserve">
+    <value>ContentTransferManager.log</value>
+  </data>
+  <data name="cmb_Logs1.Items23" xml:space="preserve">
+    <value>DataTransferService.log</value>
+  </data>
+  <data name="cmb_Logs1.Items24" xml:space="preserve">
+    <value>DCMAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items25" xml:space="preserve">
+    <value>DCMReporting.log</value>
+  </data>
+  <data name="cmb_Logs1.Items26" xml:space="preserve">
+    <value>DcmWmiProvider.log</value>
+  </data>
+  <data name="cmb_Logs1.Items27" xml:space="preserve">
+    <value>EndpointProtectionAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items28" xml:space="preserve">
+    <value>Execmgr.log</value>
+  </data>
+  <data name="cmb_Logs1.Items29" xml:space="preserve">
+    <value>ExpressionSolver.log</value>
+  </data>
+  <data name="cmb_Logs1.Items30" xml:space="preserve">
+    <value>ExternalEventAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items31" xml:space="preserve">
+    <value>FileBITS.log</value>
+  </data>
+  <data name="cmb_Logs1.Items32" xml:space="preserve">
+    <value>FileSystemFile.log</value>
+  </data>
+  <data name="cmb_Logs1.Items33" xml:space="preserve">
+    <value>FSPStateMessage.log</value>
+  </data>
+  <data name="cmb_Logs1.Items34" xml:space="preserve">
+    <value>InternetProxy.log</value>
+  </data>
+  <data name="cmb_Logs1.Items35" xml:space="preserve">
+    <value>InventoryAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items36" xml:space="preserve">
+    <value>LocationCache.log</value>
+  </data>
+  <data name="cmb_Logs1.Items37" xml:space="preserve">
+    <value>LocationServices.log</value>
+  </data>
+  <data name="cmb_Logs1.Items38" xml:space="preserve">
+    <value>MaintenanceCoordinator.log</value>
+  </data>
+  <data name="cmb_Logs1.Items39" xml:space="preserve">
+    <value>Mifprovider.log</value>
+  </data>
+  <data name="cmb_Logs1.Items40" xml:space="preserve">
+    <value>Mtrmgr.log</value>
+  </data>
+  <data name="cmb_Logs1.Items41" xml:space="preserve">
+    <value>PolicyAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items42" xml:space="preserve">
+    <value>PolicyAgentProvider.log</value>
+  </data>
+  <data name="cmb_Logs1.Items43" xml:space="preserve">
+    <value>PolicyEvaluator.log</value>
+  </data>
+  <data name="cmb_Logs1.Items44" xml:space="preserve">
+    <value>PolicyPlatformClient.log</value>
+  </data>
+  <data name="cmb_Logs1.Items45" xml:space="preserve">
+    <value>PolicySdk.log</value>
+  </data>
+  <data name="cmb_Logs1.Items46" xml:space="preserve">
+    <value>Pwrmgmt.log</value>
+  </data>
+  <data name="cmb_Logs1.Items47" xml:space="preserve">
+    <value>PwrProvider.log</value>
+  </data>
+  <data name="cmb_Logs1.Items48" xml:space="preserve">
+    <value>Scheduler.log</value>
+  </data>
+  <data name="cmb_Logs1.Items49" xml:space="preserve">
+    <value>SetupPolicyEvaluator.log</value>
+  </data>
+  <data name="cmb_Logs1.Items50" xml:space="preserve">
+    <value>Smscliui.log</value>
+  </data>
+  <data name="cmb_Logs1.Items51" xml:space="preserve">
+    <value>SrcUpdateMgr.log</value>
+  </data>
+  <data name="cmb_Logs1.Items52" xml:space="preserve">
+    <value>StatusAgent.log</value>
+  </data>
+  <data name="cmb_Logs1.Items53" xml:space="preserve">
+    <value>SWMTRReportGen.log</value>
+  </data>
+  <data name="cmb_Logs1.Items54" xml:space="preserve">
+    <value>UserAffinity.log</value>
+  </data>
+  <data name="cmb_Logs1.Items55" xml:space="preserve">
+    <value>VirtualApp.log</value>
+  </data>
+  <data name="cmb_Logs1.Items56" xml:space="preserve">
+    <value>Wakeprxy-install.log</value>
+  </data>
+  <data name="cmb_Logs1.Items57" xml:space="preserve">
+    <value>Wakeprxy-uninstall.log</value>
+  </data>
+  <data name="cmb_Logs1.Items58" xml:space="preserve">
+    <value>Wedmtrace.log</value>
+  </data>
+  <data name="cmb_Logs1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 38</value>
+  </data>
+  <data name="cmb_Logs1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 24</value>
+  </data>
+  <data name="cmb_Logs1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs1.Name" xml:space="preserve">
+    <value>cmb_Logs1</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs1.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cmb_Logs1.ZOrder" xml:space="preserve">
+    <value>16</value>
   </data>
   <data name="pic_redflag2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1690,1149 +2947,6 @@
   </data>
   <data name="&gt;&gt;pic_greenflag1.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="GroupBox2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>792, 6</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 135</value>
-  </data>
-  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>64</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>BRANCHCACHE_INFORMATION</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <metadata name="txt_cache_location.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="txt_ComputerName.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="GroupBox1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="&gt;&gt;txt_Mac.Name" xml:space="preserve">
-    <value>txt_Mac</value>
-  </data>
-  <data name="&gt;&gt;txt_Mac.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Mac.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;txt_Mac.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;txt_cache_location.Name" xml:space="preserve">
-    <value>txt_cache_location</value>
-  </data>
-  <data name="&gt;&gt;txt_cache_location.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_cache_location.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;txt_cache_location.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
-    <value>Label6</value>
-  </data>
-  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
-    <value>Label4</value>
-  </data>
-  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
-    <value>Label2</value>
-  </data>
-  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
-    <value>Label3</value>
-  </data>
-  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;txt_IP.Name" xml:space="preserve">
-    <value>txt_IP</value>
-  </data>
-  <data name="&gt;&gt;txt_IP.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_IP.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;txt_IP.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;txt_Cache_Size.Name" xml:space="preserve">
-    <value>txt_Cache_Size</value>
-  </data>
-  <data name="&gt;&gt;txt_Cache_Size.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Cache_Size.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;txt_Cache_Size.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;txt_ComputerName.Name" xml:space="preserve">
-    <value>txt_ComputerName</value>
-  </data>
-  <data name="&gt;&gt;txt_ComputerName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_ComputerName.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;txt_ComputerName.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
-    <value>Label1</value>
-  </data>
-  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;lbl_abr_size.Name" xml:space="preserve">
-    <value>lbl_abr_size</value>
-  </data>
-  <data name="&gt;&gt;lbl_abr_size.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_abr_size.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;lbl_abr_size.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="GroupBox1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
-  </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 399</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>715, 135</value>
-  </data>
-  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>INFORMATION</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="cmd_Del_WMI.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_Del_WMI.Location" type="System.Drawing.Point, System.Drawing">
-    <value>774, 192</value>
-  </data>
-  <data name="cmd_Del_WMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>366, 29</value>
-  </data>
-  <data name="cmd_Del_WMI.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="cmd_Del_WMI.Text" xml:space="preserve">
-    <value>DELETE_WMI_NAMESPACE</value>
-  </data>
-  <data name="&gt;&gt;cmd_Del_WMI.Name" xml:space="preserve">
-    <value>cmd_Del_WMI</value>
-  </data>
-  <data name="&gt;&gt;cmd_Del_WMI.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_Del_WMI.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;cmd_Del_WMI.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="cmd_WSUS_Download.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_WSUS_Download.Location" type="System.Drawing.Point, System.Drawing">
-    <value>774, 331</value>
-  </data>
-  <data name="cmd_WSUS_Download.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 29</value>
-  </data>
-  <data name="cmd_WSUS_Download.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="cmd_WSUS_Download.Text" xml:space="preserve">
-    <value>WSUS_DOWNLOAD_LOCATION</value>
-  </data>
-  <data name="&gt;&gt;cmd_WSUS_Download.Name" xml:space="preserve">
-    <value>cmd_WSUS_Download</value>
-  </data>
-  <data name="&gt;&gt;cmd_WSUS_Download.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_WSUS_Download.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;cmd_WSUS_Download.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="cmd_DataStore.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_DataStore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>971, 366</value>
-  </data>
-  <data name="cmd_DataStore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 29</value>
-  </data>
-  <data name="cmd_DataStore.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
-  </data>
-  <data name="cmd_DataStore.Text" xml:space="preserve">
-    <value>DATASTORE_LOCATION</value>
-  </data>
-  <data name="&gt;&gt;cmd_DataStore.Name" xml:space="preserve">
-    <value>cmd_DataStore</value>
-  </data>
-  <data name="&gt;&gt;cmd_DataStore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_DataStore.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;cmd_DataStore.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="cmd_Client_Logs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_Client_Logs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>774, 401</value>
-  </data>
-  <data name="cmd_Client_Logs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 29</value>
-  </data>
-  <data name="cmd_Client_Logs.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="cmd_Client_Logs.Text" xml:space="preserve">
-    <value>CLIENT_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_Client_Logs.Name" xml:space="preserve">
-    <value>cmd_Client_Logs</value>
-  </data>
-  <data name="&gt;&gt;cmd_Client_Logs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_Client_Logs.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;cmd_Client_Logs.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="cmd_BITS_Location.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_BITS_Location.Location" type="System.Drawing.Point, System.Drawing">
-    <value>774, 366</value>
-  </data>
-  <data name="cmd_BITS_Location.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 29</value>
-  </data>
-  <data name="cmd_BITS_Location.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="cmd_BITS_Location.Text" xml:space="preserve">
-    <value>BITS_LOCATION</value>
-  </data>
-  <data name="&gt;&gt;cmd_BITS_Location.Name" xml:space="preserve">
-    <value>cmd_BITS_Location</value>
-  </data>
-  <data name="&gt;&gt;cmd_BITS_Location.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_BITS_Location.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;cmd_BITS_Location.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 12</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1167, 543</value>
-  </data>
-  <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Panel1.Name" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="cmd_load_Logs5.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_load_Logs5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmd_load_Logs5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 238</value>
-  </data>
-  <data name="cmd_load_Logs5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 29</value>
-  </data>
-  <data name="cmd_load_Logs5.TabIndex" type="System.Int32, mscorlib">
-    <value>77</value>
-  </data>
-  <data name="cmd_load_Logs5.Text" xml:space="preserve">
-    <value>SEE_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs5.Name" xml:space="preserve">
-    <value>cmd_load_Logs5</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs5.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs5.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 221</value>
-  </data>
-  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 13</value>
-  </data>
-  <data name="Label11.TabIndex" type="System.Int32, mscorlib">
-    <value>76</value>
-  </data>
-  <data name="Label11.Text" xml:space="preserve">
-    <value>WIN_UPD_AGENT &amp;&amp; WIN 10 SERV</value>
-  </data>
-  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
-    <value>Label11</value>
-  </data>
-  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="cmb_Logs5.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="cmb_Logs5.Items" xml:space="preserve">
-    <value>Ccmperf.log</value>
-  </data>
-  <data name="cmb_Logs5.Items1" xml:space="preserve">
-    <value>CcmRepair.log</value>
-  </data>
-  <data name="cmb_Logs5.Items2" xml:space="preserve">
-    <value>PolicyEvaluator.log</value>
-  </data>
-  <data name="cmb_Logs5.Items3" xml:space="preserve">
-    <value>RebootCoordinator.log</value>
-  </data>
-  <data name="cmb_Logs5.Items4" xml:space="preserve">
-    <value>ScanAgent.log</value>
-  </data>
-  <data name="cmb_Logs5.Items5" xml:space="preserve">
-    <value>SdmAgent.log</value>
-  </data>
-  <data name="cmb_Logs5.Items6" xml:space="preserve">
-    <value>ServiceWindowManager.log</value>
-  </data>
-  <data name="cmb_Logs5.Items7" xml:space="preserve">
-    <value>Setupact.log</value>
-  </data>
-  <data name="cmb_Logs5.Items8" xml:space="preserve">
-    <value>SmsWusHandler.log</value>
-  </data>
-  <data name="cmb_Logs5.Items9" xml:space="preserve">
-    <value>StateMessage.log</value>
-  </data>
-  <data name="cmb_Logs5.Items10" xml:space="preserve">
-    <value>UpdatesDeployment.log</value>
-  </data>
-  <data name="cmb_Logs5.Items11" xml:space="preserve">
-    <value>UpdatesHandler.log</value>
-  </data>
-  <data name="cmb_Logs5.Items12" xml:space="preserve">
-    <value>UpdatesStore.log</value>
-  </data>
-  <data name="cmb_Logs5.Items13" xml:space="preserve">
-    <value>WindowsUpdate.log</value>
-  </data>
-  <data name="cmb_Logs5.Items14" xml:space="preserve">
-    <value>WUAHandler.log</value>
-  </data>
-  <data name="cmb_Logs5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 240</value>
-  </data>
-  <data name="cmb_Logs5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 24</value>
-  </data>
-  <data name="cmb_Logs5.TabIndex" type="System.Int32, mscorlib">
-    <value>75</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs5.Name" xml:space="preserve">
-    <value>cmb_Logs5</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs5.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs5.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="cmd_load_Logs4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_load_Logs4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmd_load_Logs4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>430, 186</value>
-  </data>
-  <data name="cmd_load_Logs4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 29</value>
-  </data>
-  <data name="cmd_load_Logs4.TabIndex" type="System.Int32, mscorlib">
-    <value>74</value>
-  </data>
-  <data name="cmd_load_Logs4.Text" xml:space="preserve">
-    <value>SEE_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs4.Name" xml:space="preserve">
-    <value>cmd_load_Logs4</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs4.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="Label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 169</value>
-  </data>
-  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 13</value>
-  </data>
-  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
-    <value>73</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>OS &amp;&amp; SOFTWARE_UPD</value>
-  </data>
-  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
-    <value>Label10</value>
-  </data>
-  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="cmb_Logs4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="cmb_Logs4.Items" xml:space="preserve">
-    <value>CAS.log</value>
-  </data>
-  <data name="cmb_Logs4.Items1" xml:space="preserve">
-    <value>Ccmperf.log</value>
-  </data>
-  <data name="cmb_Logs4.Items2" xml:space="preserve">
-    <value>Ccmsetup.log</value>
-  </data>
-  <data name="cmb_Logs4.Items3" xml:space="preserve">
-    <value>Loadstate.log</value>
-  </data>
-  <data name="cmb_Logs4.Items4" xml:space="preserve">
-    <value>PolicyEvaluator.log</value>
-  </data>
-  <data name="cmb_Logs4.Items5" xml:space="preserve">
-    <value>RebootCoordinator.log</value>
-  </data>
-  <data name="cmb_Logs4.Items6" xml:space="preserve">
-    <value>ScanAgent.log</value>
-  </data>
-  <data name="cmb_Logs4.Items7" xml:space="preserve">
-    <value>Scanstate.log</value>
-  </data>
-  <data name="cmb_Logs4.Items8" xml:space="preserve">
-    <value>SdmAgent.log</value>
-  </data>
-  <data name="cmb_Logs4.Items9" xml:space="preserve">
-    <value>ServiceWindowManager.log</value>
-  </data>
-  <data name="cmb_Logs4.Items10" xml:space="preserve">
-    <value>Setupact.log</value>
-  </data>
-  <data name="cmb_Logs4.Items11" xml:space="preserve">
-    <value>Setupapi.log</value>
-  </data>
-  <data name="cmb_Logs4.Items12" xml:space="preserve">
-    <value>Setuperr.log</value>
-  </data>
-  <data name="cmb_Logs4.Items13" xml:space="preserve">
-    <value>Smpisapi.log</value>
-  </data>
-  <data name="cmb_Logs4.Items14" xml:space="preserve">
-    <value>Smsts.log</value>
-  </data>
-  <data name="cmb_Logs4.Items15" xml:space="preserve">
-    <value>SmsWusHandler.log</value>
-  </data>
-  <data name="cmb_Logs4.Items16" xml:space="preserve">
-    <value>StateMessage.log</value>
-  </data>
-  <data name="cmb_Logs4.Items17" xml:space="preserve">
-    <value>TSAgent.log</value>
-  </data>
-  <data name="cmb_Logs4.Items18" xml:space="preserve">
-    <value>UpdatesDeployment.log</value>
-  </data>
-  <data name="cmb_Logs4.Items19" xml:space="preserve">
-    <value>UpdatesHandler.log</value>
-  </data>
-  <data name="cmb_Logs4.Items20" xml:space="preserve">
-    <value>UpdatesStore.log</value>
-  </data>
-  <data name="cmb_Logs4.Items21" xml:space="preserve">
-    <value>WUAHandler.log</value>
-  </data>
-  <data name="cmb_Logs4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 188</value>
-  </data>
-  <data name="cmb_Logs4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 24</value>
-  </data>
-  <data name="cmb_Logs4.TabIndex" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs4.Name" xml:space="preserve">
-    <value>cmb_Logs4</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs4.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs4.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="cmd_load_Logs3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_load_Logs3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmd_load_Logs3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 134</value>
-  </data>
-  <data name="cmd_load_Logs3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 29</value>
-  </data>
-  <data name="cmd_load_Logs3.TabIndex" type="System.Int32, mscorlib">
-    <value>71</value>
-  </data>
-  <data name="cmd_load_Logs3.Text" xml:space="preserve">
-    <value>SEE_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs3.Name" xml:space="preserve">
-    <value>cmd_load_Logs3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs3.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs3.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="Label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 117</value>
-  </data>
-  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 13</value>
-  </data>
-  <data name="Label9.TabIndex" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="Label9.Text" xml:space="preserve">
-    <value>APP_MANAGEMENT</value>
-  </data>
-  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
-    <value>Label9</value>
-  </data>
-  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="cmb_Logs3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="cmb_Logs3.Items" xml:space="preserve">
-    <value>AppDiscovery.log</value>
-  </data>
-  <data name="cmb_Logs3.Items1" xml:space="preserve">
-    <value>AppEnforce.log</value>
-  </data>
-  <data name="cmb_Logs3.Items2" xml:space="preserve">
-    <value>AppIntentEval.log</value>
-  </data>
-  <data name="cmb_Logs3.Items3" xml:space="preserve">
-    <value>CCMSDKProvider.log</value>
-  </data>
-  <data name="cmb_Logs3.Items4" xml:space="preserve">
-    <value>ConfigMgrSoftwareCatalog.log</value>
-  </data>
-  <data name="cmb_Logs3.Items5" xml:space="preserve">
-    <value>Execmgr.log</value>
-  </data>
-  <data name="cmb_Logs3.Items6" xml:space="preserve">
-    <value>SoftwareCatalogUpdateEndpoint.log</value>
-  </data>
-  <data name="cmb_Logs3.Items7" xml:space="preserve">
-    <value>SoftwareCenterSystemTasks.log</value>
-  </data>
-  <data name="cmb_Logs3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 136</value>
-  </data>
-  <data name="cmb_Logs3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 24</value>
-  </data>
-  <data name="cmb_Logs3.TabIndex" type="System.Int32, mscorlib">
-    <value>69</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs3.Name" xml:space="preserve">
-    <value>cmb_Logs3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs3.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs3.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="cmd_load_Logs2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_load_Logs2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="cmd_load_Logs2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 82</value>
-  </data>
-  <data name="cmd_load_Logs2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 29</value>
-  </data>
-  <data name="cmd_load_Logs2.TabIndex" type="System.Int32, mscorlib">
-    <value>68</value>
-  </data>
-  <data name="cmd_load_Logs2.Text" xml:space="preserve">
-    <value>SEE_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs2.Name" xml:space="preserve">
-    <value>cmd_load_Logs2</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs2.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs2.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 67</value>
-  </data>
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 13</value>
-  </data>
-  <data name="Label5.TabIndex" type="System.Int32, mscorlib">
-    <value>67</value>
-  </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>CLIENT_INSTALL</value>
-  </data>
-  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
-    <value>Label5</value>
-  </data>
-  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="cmb_Logs2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="cmb_Logs2.Items" xml:space="preserve">
-    <value>Ccmsetup.log</value>
-  </data>
-  <data name="cmb_Logs2.Items1" xml:space="preserve">
-    <value>Ccmsetup-ccmeval.log</value>
-  </data>
-  <data name="cmb_Logs2.Items2" xml:space="preserve">
-    <value>CcmRepair.log</value>
-  </data>
-  <data name="cmb_Logs2.Items3" xml:space="preserve">
-    <value>Client.msi.log</value>
-  </data>
-  <data name="cmb_Logs2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 84</value>
-  </data>
-  <data name="cmb_Logs2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 24</value>
-  </data>
-  <data name="cmb_Logs2.TabIndex" type="System.Int32, mscorlib">
-    <value>66</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs2.Name" xml:space="preserve">
-    <value>cmb_Logs2</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs2.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs2.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="txt_Description.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="txt_Description.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 293</value>
-  </data>
-  <data name="txt_Description.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_Description.Size" type="System.Drawing.Size, System.Drawing">
-    <value>693, 90</value>
-  </data>
-  <data name="txt_Description.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;txt_Description.Name" xml:space="preserve">
-    <value>txt_Description</value>
-  </data>
-  <data name="&gt;&gt;txt_Description.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Description.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;txt_Description.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="cmd_load_Logs1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
-  </data>
-  <data name="cmd_load_Logs1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 36</value>
-  </data>
-  <data name="cmd_load_Logs1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 29</value>
-  </data>
-  <data name="cmd_load_Logs1.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
-  </data>
-  <data name="cmd_load_Logs1.Text" xml:space="preserve">
-    <value>SEE_LOGS</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs1.Name" xml:space="preserve">
-    <value>cmd_load_Logs1</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs1.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmd_load_Logs1.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="lbl_description.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbl_description.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 274</value>
-  </data>
-  <data name="lbl_description.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 13</value>
-  </data>
-  <data name="lbl_description.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbl_description.Text" xml:space="preserve">
-    <value>DESCRIPTION</value>
-  </data>
-  <data name="&gt;&gt;lbl_description.Name" xml:space="preserve">
-    <value>lbl_description</value>
-  </data>
-  <data name="&gt;&gt;lbl_description.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_description.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;lbl_description.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="lbl_logs.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbl_logs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
-  </data>
-  <data name="lbl_logs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 13</value>
-  </data>
-  <data name="lbl_logs.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lbl_logs.Text" xml:space="preserve">
-    <value>CLIENT_OPE</value>
-  </data>
-  <data name="&gt;&gt;lbl_logs.Name" xml:space="preserve">
-    <value>lbl_logs</value>
-  </data>
-  <data name="&gt;&gt;lbl_logs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_logs.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;lbl_logs.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="cmb_Logs1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="cmb_Logs1.Items" xml:space="preserve">
-    <value>AssetAdvisor.log</value>
-  </data>
-  <data name="cmb_Logs1.Items1" xml:space="preserve">
-    <value>BgbHttpProxy.log</value>
-  </data>
-  <data name="cmb_Logs1.Items2" xml:space="preserve">
-    <value>CAS.log</value>
-  </data>
-  <data name="cmb_Logs1.Items3" xml:space="preserve">
-    <value>Ccm32BitLauncher.log</value>
-  </data>
-  <data name="cmb_Logs1.Items4" xml:space="preserve">
-    <value>CcmEval.log</value>
-  </data>
-  <data name="cmb_Logs1.Items5" xml:space="preserve">
-    <value>CcmEvalTask.log</value>
-  </data>
-  <data name="cmb_Logs1.Items6" xml:space="preserve">
-    <value>CcmExec.log</value>
-  </data>
-  <data name="cmb_Logs1.Items7" xml:space="preserve">
-    <value>CcmMessaging.log</value>
-  </data>
-  <data name="cmb_Logs1.Items8" xml:space="preserve">
-    <value>CCMNotificationAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items9" xml:space="preserve">
-    <value>Ccmperf.log</value>
-  </data>
-  <data name="cmb_Logs1.Items10" xml:space="preserve">
-    <value>CcmRestart.log</value>
-  </data>
-  <data name="cmb_Logs1.Items11" xml:space="preserve">
-    <value>CCMSDKProvider.log</value>
-  </data>
-  <data name="cmb_Logs1.Items12" xml:space="preserve">
-    <value>CertificateMaintenance.log</value>
-  </data>
-  <data name="cmb_Logs1.Items13" xml:space="preserve">
-    <value>CIAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items14" xml:space="preserve">
-    <value>CIDownloader.log</value>
-  </data>
-  <data name="cmb_Logs1.Items15" xml:space="preserve">
-    <value>CITaskManager.log</value>
-  </data>
-  <data name="cmb_Logs1.Items16" xml:space="preserve">
-    <value>CITaskMgr.log</value>
-  </data>
-  <data name="cmb_Logs1.Items17" xml:space="preserve">
-    <value>ClientAuth.log</value>
-  </data>
-  <data name="cmb_Logs1.Items18" xml:space="preserve">
-    <value>ClientIDManagerStartup.log</value>
-  </data>
-  <data name="cmb_Logs1.Items19" xml:space="preserve">
-    <value>ClientLocation.log</value>
-  </data>
-  <data name="cmb_Logs1.Items20" xml:space="preserve">
-    <value>CMHttpsReadiness.log</value>
-  </data>
-  <data name="cmb_Logs1.Items21" xml:space="preserve">
-    <value>CmRcService.log</value>
-  </data>
-  <data name="cmb_Logs1.Items22" xml:space="preserve">
-    <value>ContentTransferManager.log</value>
-  </data>
-  <data name="cmb_Logs1.Items23" xml:space="preserve">
-    <value>DataTransferService.log</value>
-  </data>
-  <data name="cmb_Logs1.Items24" xml:space="preserve">
-    <value>DCMAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items25" xml:space="preserve">
-    <value>DCMReporting.log</value>
-  </data>
-  <data name="cmb_Logs1.Items26" xml:space="preserve">
-    <value>DcmWmiProvider.log</value>
-  </data>
-  <data name="cmb_Logs1.Items27" xml:space="preserve">
-    <value>EndpointProtectionAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items28" xml:space="preserve">
-    <value>Execmgr.log</value>
-  </data>
-  <data name="cmb_Logs1.Items29" xml:space="preserve">
-    <value>ExpressionSolver.log</value>
-  </data>
-  <data name="cmb_Logs1.Items30" xml:space="preserve">
-    <value>ExternalEventAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items31" xml:space="preserve">
-    <value>FileBITS.log</value>
-  </data>
-  <data name="cmb_Logs1.Items32" xml:space="preserve">
-    <value>FileSystemFile.log</value>
-  </data>
-  <data name="cmb_Logs1.Items33" xml:space="preserve">
-    <value>FSPStateMessage.log</value>
-  </data>
-  <data name="cmb_Logs1.Items34" xml:space="preserve">
-    <value>InternetProxy.log</value>
-  </data>
-  <data name="cmb_Logs1.Items35" xml:space="preserve">
-    <value>InventoryAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items36" xml:space="preserve">
-    <value>LocationCache.log</value>
-  </data>
-  <data name="cmb_Logs1.Items37" xml:space="preserve">
-    <value>LocationServices.log</value>
-  </data>
-  <data name="cmb_Logs1.Items38" xml:space="preserve">
-    <value>MaintenanceCoordinator.log</value>
-  </data>
-  <data name="cmb_Logs1.Items39" xml:space="preserve">
-    <value>Mifprovider.log</value>
-  </data>
-  <data name="cmb_Logs1.Items40" xml:space="preserve">
-    <value>Mtrmgr.log</value>
-  </data>
-  <data name="cmb_Logs1.Items41" xml:space="preserve">
-    <value>PolicyAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items42" xml:space="preserve">
-    <value>PolicyAgentProvider.log</value>
-  </data>
-  <data name="cmb_Logs1.Items43" xml:space="preserve">
-    <value>PolicyEvaluator.log</value>
-  </data>
-  <data name="cmb_Logs1.Items44" xml:space="preserve">
-    <value>PolicyPlatformClient.log</value>
-  </data>
-  <data name="cmb_Logs1.Items45" xml:space="preserve">
-    <value>PolicySdk.log</value>
-  </data>
-  <data name="cmb_Logs1.Items46" xml:space="preserve">
-    <value>Pwrmgmt.log</value>
-  </data>
-  <data name="cmb_Logs1.Items47" xml:space="preserve">
-    <value>PwrProvider.log</value>
-  </data>
-  <data name="cmb_Logs1.Items48" xml:space="preserve">
-    <value>Scheduler.log</value>
-  </data>
-  <data name="cmb_Logs1.Items49" xml:space="preserve">
-    <value>SetupPolicyEvaluator.log</value>
-  </data>
-  <data name="cmb_Logs1.Items50" xml:space="preserve">
-    <value>Smscliui.log</value>
-  </data>
-  <data name="cmb_Logs1.Items51" xml:space="preserve">
-    <value>SrcUpdateMgr.log</value>
-  </data>
-  <data name="cmb_Logs1.Items52" xml:space="preserve">
-    <value>StatusAgent.log</value>
-  </data>
-  <data name="cmb_Logs1.Items53" xml:space="preserve">
-    <value>SWMTRReportGen.log</value>
-  </data>
-  <data name="cmb_Logs1.Items54" xml:space="preserve">
-    <value>UserAffinity.log</value>
-  </data>
-  <data name="cmb_Logs1.Items55" xml:space="preserve">
-    <value>VirtualApp.log</value>
-  </data>
-  <data name="cmb_Logs1.Items56" xml:space="preserve">
-    <value>Wakeprxy-install.log</value>
-  </data>
-  <data name="cmb_Logs1.Items57" xml:space="preserve">
-    <value>Wakeprxy-uninstall.log</value>
-  </data>
-  <data name="cmb_Logs1.Items58" xml:space="preserve">
-    <value>Wedmtrace.log</value>
-  </data>
-  <data name="cmb_Logs1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 38</value>
-  </data>
-  <data name="cmb_Logs1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 24</value>
-  </data>
-  <data name="cmb_Logs1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs1.Name" xml:space="preserve">
-    <value>cmb_Logs1</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs1.Parent" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;cmb_Logs1.ZOrder" xml:space="preserve">
-    <value>16</value>
   </data>
   <data name="txt_Mac.Font" type="System.Drawing.Font, System.Drawing">
     <value>Times New Roman, 10pt, style=Bold</value>
@@ -6385,6 +6499,6 @@
     <value>Adv_Mode</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>PC_.LocalizedForm, SCCMPCAdmin, Version=2.6.0.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>PC_.LocalizedForm, SCCMPCAdmin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

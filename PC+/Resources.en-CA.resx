@@ -256,7 +256,10 @@
     <value>GP update</value>
   </data>
   <data name="WarningReinstallClient" xml:space="preserve">
-    <value>Warning! You are about to send a command to reinstall the SCCM client on the remote computer</value>
+    <value>Warning! You are about to send a command to reinstall the SCCM client on the remote computer, which may take some time</value>
+  </data>
+  <data name="WarningRunSoftwareCache" xml:space="preserve">
+    <value>Warning! You are about to send a command to get software cache information on the remote computer, which may take some time</value>
   </data>
   <data name="WarningVPNSlowRequests" xml:space="preserve">
     <value> A VPN connection was detected, interaction with the client device may be slower than usual</value>
@@ -663,6 +666,10 @@
   <data name="Message_file_ini_missing" xml:space="preserve">
     <value>The SCCMPCADMIN.INI file is missing.</value>
   </data>
+  <data name="Message_long_wait_time" xml:space="preserve">
+    <value>You are about to re-install the SCCM client, this may take a while.</value>
+  </data>
+  
   <data name="Message_Domain_Missing" xml:space="preserve">
     <value>The computer must be joined to a domain before reinstalling the SCCM client.</value>
   </data>

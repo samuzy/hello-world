@@ -60,20 +60,56 @@ Public Class LocalizedForm
 
     Private Sub ApplyControlResources(control As Control)
         ' TODO: Temporary fix for disappearing image, investigate
-        If Not TypeOf control Is PictureBox Then
-            resManager.ApplyResources(control, control.Name, CurrentCulture)
-        End If
+        Console.WriteLine("applying resource control is " & control.Name)
+        Try
+            If Not TypeOf control Is PictureBox Then
+                resManager.ApplyResources(control, control.Name, CurrentCulture)
+                'Console.WriteLine("aplying resource")
+            End If
 
-        For Each subControl In control.Controls
-            ApplyControlResources(subControl)
-        Next
-
-        If TypeOf control Is ListView Then
-            Dim listViewControl As ListView = CType(control, ListView)
-            For Each header As ColumnHeader In listViewControl.Columns
-                ' Hack: designer doesn't set name, known VS issue. Remember to set tags on ListView columns
-                resManager.ApplyResources(header, header.Tag, CurrentCulture)
+            For Each subControl In control.Controls
+                ApplyControlResources(subControl)
             Next
-        End If
+
+            If TypeOf control Is ListView Then
+                Dim listViewControl As ListView = CType(control, ListView)
+                For Each header As ColumnHeader In listViewControl.Columns
+                    Console.WriteLine("applying Resource to base control " & control.Name & " header is : " & header.ToString & " " & header.Tag & vbCrLf)
+
+                    ' Hack: designer doesn't set name, known VS issue. Remember to set tags on ListView columns
+                    resManager.ApplyResources(header, header.Tag, CurrentCulture)
+                Next
+            End If
+        Catch ex As Exception
+            Console.WriteLine("an error occured " & ex.Message & " and control is " & control.Name)
+        End Try
+
     End Sub
+
+    'Private Sub ApplyControlResources(control As Control)
+    '    ' TODO: Temporary fix for disappearing image, investigate
+    '    'Console.WriteLine("ABOUT TO APPLY RESOURCES " & vbCrLf)
+    '    Try
+    '        If Not TypeOf control Is PictureBox Then
+    '            resManager.ApplyResources(control, control.Name, CurrentCulture)
+    '        End If
+
+    '        For Each subControl In control.Controls
+    '            Console.WriteLine(subControl)
+    '            ApplyControlResources(subControl)
+    '        Next
+
+    '        If TypeOf control Is ListView Then
+    '            Dim listViewControl As ListView = CType(control, ListView)
+    '            For Each header As ColumnHeader In listViewControl.Columns
+    '                Console.WriteLine(header)
+    '                ' Hack: designer doesn't set name, known VS issue. Remember to set tags on ListView columns
+    '                resManager.ApplyResources(header, header.Tag, CurrentCulture)
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        Console.WriteLine(ex.Message)
+    '    End Try
+
+    'End Sub
 End Class

@@ -30,6 +30,7 @@ Module Modules
     Public INI_READ_ERROR As Boolean
     Public INI_SQL_Server As String
     Public INI_SQL_Database As String
+    Public INI_REINSTALLPATH As String
 
     'Variable CMTrace.exe
     Public CMTrace As String = "C:\Utils-outils\SCCMPCAdmin\CMTrace.exe" 'cette commande ne marche pas quand on pass avec un RunAs DOS = Path.GetDirectoryName(Application.ExecutablePath) & "CMTrace.exe"
@@ -654,6 +655,10 @@ Module RemoteUser
             Advance_mode = True
         End If
 
+        If User.Contains("saadi") Then
+            Advance_mode = True
+        End If
+
         Return Advance_mode
     End Function
 
@@ -914,6 +919,10 @@ Module Config_INI_files
 
         GetPrivateProfileString(Domain_Value, "SQL_Database", "", sb, sb.Capacity, INI_Files)
         INI_SQL_Database = sb.ToString
+
+        '' NEW REINSTALLPATH
+        GetPrivateProfileString(Domain_Value, "REINSTALLPATH", "", sb, sb.Capacity, INI_Files)
+        INI_REINSTALLPATH = sb.ToString
 
     End Sub
 
@@ -1299,11 +1308,17 @@ Module Services
         sc.MachineName = ComputerName
         sc.ServiceName = NameService
 
-        If sc.Status = ServiceControllerStatus.Running Then
-            isRunning = True
-        Else
-            isRunning = False
-        End If
+        Try
+            If sc.Status = ServiceControllerStatus.Running Then
+                isRunning = True
+            Else
+                isRunning = False
+            End If
+        Catch ex As Exception
+            Console.WriteLine("found an issue " & ex.Message)
+        End Try
+
+
 
 
     End Sub

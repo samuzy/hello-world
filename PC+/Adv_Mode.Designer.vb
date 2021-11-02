@@ -73,7 +73,7 @@ Partial Class Adv_Mode
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lbl_abr_size = New System.Windows.Forms.Label()
         Me.cmd_Del_WMI = New System.Windows.Forms.Button()
-        Me.cmd_WSUS_Download = New System.Windows.Forms.Button()
+        Me.cmd_WSUS_Download_NEW = New System.Windows.Forms.Button()
         Me.cmd_DataStore = New System.Windows.Forms.Button()
         Me.cmd_Client_Logs = New System.Windows.Forms.Button()
         Me.cmd_BITS_Location = New System.Windows.Forms.Button()
@@ -142,7 +142,7 @@ Partial Class Adv_Mode
         Me.Panel1.Controls.Add(Me.GroupBox2)
         Me.Panel1.Controls.Add(Me.GroupBox1)
         Me.Panel1.Controls.Add(Me.cmd_Del_WMI)
-        Me.Panel1.Controls.Add(Me.cmd_WSUS_Download)
+        Me.Panel1.Controls.Add(Me.cmd_WSUS_Download_NEW)
         Me.Panel1.Controls.Add(Me.cmd_DataStore)
         Me.Panel1.Controls.Add(Me.cmd_Client_Logs)
         Me.Panel1.Controls.Add(Me.cmd_BITS_Location)
@@ -468,11 +468,11 @@ Partial Class Adv_Mode
         Me.cmd_Del_WMI.Name = "cmd_Del_WMI"
         Me.cmd_Del_WMI.UseVisualStyleBackColor = True
         '
-        'cmd_WSUS_Download
+        'cmd_WSUS_Download_NEW
         '
-        resources.ApplyResources(Me.cmd_WSUS_Download, "cmd_WSUS_Download")
-        Me.cmd_WSUS_Download.Name = "cmd_WSUS_Download"
-        Me.cmd_WSUS_Download.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cmd_WSUS_Download_NEW, "cmd_WSUS_Download_NEW")
+        Me.cmd_WSUS_Download_NEW.Name = "cmd_WSUS_Download_NEW"
+        Me.cmd_WSUS_Download_NEW.UseVisualStyleBackColor = True
         '
         'cmd_DataStore
         '
@@ -532,7 +532,7 @@ Partial Class Adv_Mode
     Friend WithEvents TT As System.Windows.Forms.ToolTip
     Friend WithEvents lbl_Version As System.Windows.Forms.Label
     Friend WithEvents lbl_loading As System.Windows.Forms.Label
-    Friend WithEvents cmd_WSUS_Download As System.Windows.Forms.Button
+    Friend WithEvents cmd_WSUS_Download_NEW As System.Windows.Forms.Button
     Friend WithEvents cmd_DataStore As System.Windows.Forms.Button
     Friend WithEvents cmd_Client_Logs As System.Windows.Forms.Button
     Friend WithEvents cmd_BITS_Location As System.Windows.Forms.Button

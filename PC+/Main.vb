@@ -11,6 +11,8 @@ Imports System.ComponentModel
 Imports System.Text.RegularExpressions
 Imports Microsoft.Win32
 Imports System.DirectoryServices.AccountManagement
+Imports System.Text
+
 
 ' *******************************************************************************************************************************************************
 '      PC++ Créé en Janvier 2015, Mise a jour en 2016 (orienté vers SCCM) et renomée SCCM PC Admin
@@ -37,6 +39,7 @@ Public Class Main
     Private loadServiceWindows As Integer = 0
     Private loadRunningWSUS_SCUP As Integer = 0
     Private loadProgramsAndFeaturesTab As Integer = 0
+    Private loadSoftwareCacheTab As Integer = 0
     Private WithEvents MyProcess As Process
     Private Delegate Sub AppendOutputTextDelegate(ByVal text As String)
     Dim strComputer, strRService, strSName
@@ -202,6 +205,13 @@ Public Class Main
     Friend Sub Connexion()
 
         Me.Cursor = Cursors.WaitCursor
+        If Advance_mode = True Or User.Contains("saadi") Then
+            Me.AdvancedMode_Menu.Visible = True
+            AdvancedModeTab.Visible = True
+        Else
+            Me.AdvancedMode_Menu.Visible = False
+            AdvancedModeTab.Visible = False
+        End If
 
         'Vérification si le PC est "Online"
         ComputerName = Trim(txt_PCName_NEW.Text)
@@ -363,10 +373,12 @@ Public Class Main
 
             'Validation pour l'activation du mode Avancé seulement pour le HRDC-DRHC.NET
             RemoteUser.GetGroups(Username)
-            If Advance_mode = True Then
+            If Advance_mode = True Or User.Contains("saadi") Then
                 Me.AdvancedMode_Menu.Visible = True
+                AdvancedModeTab.Visible = True
             Else
                 Me.AdvancedMode_Menu.Visible = False
+                AdvancedModeTab.Visible = False
             End If
 
             'Validation si un reboot est nesséssaire
@@ -967,7 +979,13 @@ Public Class Main
                     Dim menu_strip As MenuStrip = DirectCast(c, MenuStrip)
                     For Each child As ToolStripMenuItem In menu_strip.Items
                         resources.ApplyResources(child, child.Name, New CultureInfo(cultureName))
-                        If Advance_mode = True Then Me.AdvancedMode_Menu.Visible = True Else Me.AdvancedMode_Menu.Visible = False
+                        If Advance_mode = True Then
+                            Me.AdvancedMode_Menu.Visible = True
+                            AdvancedModeTab.Visible = True
+                        Else
+                            Me.AdvancedMode_Menu.Visible = False
+                            AdvancedModeTab.Visible = False
+                        End If
                     Next child
                 End If
             Next c
@@ -1091,15 +1109,17 @@ Public Class Main
         Me.pic_Explorer.BorderStyle = BorderStyle.None
     End Sub
 
-    Private Sub cmd_Reinstall_client_Click(sender As Object, e As EventArgs) Handles cmd_Reinstall_client.Click, REINSTALLSCCMCLIENTToolStripMenuItem1.Click
-
+    Private Sub cmd_Reinstall_client_Click(sender As Object, e As EventArgs) Handles cmd_Reinstall_client.Click, REINSTALLSCCMCLIENTToolStripMenuItem1.Click, cmd_Reinstall_client_NEW.Click
+        Dim strResult As String = ""
         'Valide que le fichier INI est la 
         If CheckFileExists(INI_Files) = False Then
             MsgBox(My.Resources.Message_file_ini_missing, MsgBoxStyle.Critical)
             INI_READ_ERROR = True
             Exit Sub
         Else
+            'MsgBox(My.Resources.Message_long_wait_time, MsgBoxStyle.Critical)
             INI_READ_ERROR = False
+            'CMDAutomate(INI_REINSTALLPATH, strResult)
         End If
 
         'Valide que l'ordinateur sois join Domain 
@@ -1119,8 +1139,13 @@ Public Class Main
             SiteCode = "?"
             ClientVer = "?"
 
-            Dim popupReinstallClientForm As Popup_Reinstall_Client = New Popup_Reinstall_Client
-            popupReinstallClientForm.ShowDialog(Me)
+            'Dim popupReinstallClientForm As Popup_Reinstall_Client = New Popup_Reinstall_Client
+            'popupReinstallClientForm.ShowDialog(Me)
+
+            'CMDAutomate(INI_REINSTALLPATH, strResult)
+            Read_INI(UCase(PC_Domain))
+            RunDosCommand(INI_REINSTALLPATH.Replace("PATH=", ""))
+
         End If
     End Sub
 
@@ -1258,12 +1283,12 @@ Public Class Main
 
     End Sub
 
-    Private Sub cmd_Add_SW_Click(sender As Object, e As EventArgs) Handles cmd_Add_SW.Click
+    Private Sub cmd_Add_SW_NEW_Click(sender As Object, e As EventArgs)
         'Va demander au client de choisir la longueur de la fenetre de maintenance désirer
-        Dim popupMWTime As Popup_MW_Time = New Popup_MW_Time
-        popupMWTime.ShowDialog(Me)
-        If MW_Select = "NULL" Then Exit Sub
-        Me.Cursor = Cursors.WaitCursor
+        'Dim popupMWTime As Popup_MW_Time = New Popup_MW_Time
+        'popupMWTime.ShowDialog(Me)
+        'If MW_Select = "NULL" Then Exit Sub
+        'Me.Cursor = Cursors.WaitCursor
 
         Dim newSW As New SMSSchedules.SMS_ST_NonRecurring
         'Dim swDate As DateTime
@@ -1460,7 +1485,7 @@ Public Class Main
             pic_rightArrow.Visible = False
             pic_notOk.Visible = True
             pic_Ok.Visible = False
-            MsgBox(My.Resources.ErrorRegistryConnection, MsgBoxStyle.Critical, "SCCM PC Admin")
+            'MsgBox(My.Resources.ErrorRegistryConnection, MsgBoxStyle.Critical, "SCCM PC Admin")
         Else
             Me.pic_ON_RemoteRegistry.Visible = True
             Me.pic_OFF_RemoteRegistry.Visible = False
@@ -1635,7 +1660,17 @@ Public Class Main
         Dim strTitle As String = tp.Text
 
         'If the current index is the Selected Index, change the color 
-        If MainTab.SelectedIndex = e.Index Then
+        If MainTab.SelectedIndex = e.Index And MainTab.SelectedIndex > 7 And Advance_mode = True Then
+
+            'this is the background color of the tabpage header
+            br = New SolidBrush(Color.Black) ' chnge to your choice
+            g.FillRectangle(br, e.Bounds)
+
+            'this is the foreground color of the text in the tab header
+            br = New SolidBrush(Color.Black) ' change to your choice
+            g.DrawString(strTitle, MainTab.Font, br, r, sf)
+            tp.Text = ""
+        ElseIf MainTab.SelectedIndex = e.Index Then
 
             'this is the background color of the tabpage header
             br = New SolidBrush(Color.Aquamarine) ' chnge to your choice
@@ -1644,7 +1679,6 @@ Public Class Main
             'this is the foreground color of the text in the tab header
             br = New SolidBrush(Color.Black) ' change to your choice
             g.DrawString(strTitle, MainTab.Font, br, r, sf)
-
         Else
 
             'these are the colors for the unselected tab pages 
@@ -1654,6 +1688,50 @@ Public Class Main
             g.DrawString(strTitle, MainTab.Font, br, r, sf)
 
         End If
+    End Sub
+
+    Public Sub Tab_pkg_app_SelectedIndexChanged(sendeer As Object, e As EventArgs) Handles Tab_pkg_app.SelectedIndexChanged
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Select Case Tab_pkg_app.SelectedIndex
+                Case 0
+                    ''start page - do nothing
+                Case 1
+                    If loadExecutionAPPSTab = 0 Then
+                        loadExecutionAPPSTab = 1
+                        ShowExecutionHistoryAPPS()
+                    End If
+
+                Case 2
+                    If loadExecutionPKGSTab = 0 Then
+                        loadExecutionPKGSTab = 1
+                        ShowExecutionHistoryPKGS()
+                    End If
+
+                Case 3
+                    If loadRunningPKGSTab = 0 Then
+                        loadRunningPKGSTab = 1
+                        ShowRunningPKGS()
+                    End If
+
+                Case 4
+                    If loadAdvertisementsTab = 0 Then
+                        loadAdvertisementsTab = 1
+                        ShowAdvertisements()
+                    End If
+
+                Case 5
+                    If loadSoftwareCacheTab = 0 Then
+                        loadSoftwareCacheTab = 1
+                        RunESSetupInfo()
+                    End If
+            End Select
+
+        Catch ex As Exception
+            Me.Cursor = Cursors.Default
+        End Try
+        Me.Cursor = Cursors.Default
+
     End Sub
 
     Public Sub MainTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MainTab.SelectedIndexChanged
@@ -1722,7 +1800,7 @@ Public Class Main
                     lbl_loading.Visible = False
                 Case 6
                     RefreshServiceWindows()
-                Case 7
+                Case 7 ' RUN DOS COMMANDS
                     txt_ComputerName_NEW.Text = ComputerName
 
                     'Affichage de la version du programme
@@ -1742,9 +1820,17 @@ Public Class Main
                     'Affiche les imformation du Network du client
                     txt_IP_NEW.Text = IPAddress_Value
                     txt_MacAddress_NEW.Text = MacAddress(ComputerName)
-                Case 9
-                    InitCommandWindow()
+                Case 8  ' LOG FILES
+                    'groupBoxAdvMode1.Visible = True
+                    'MW_Select = "NULL"
+                    'If Advance_mode = True Or User.Contains("saadi") Then
+                    'groupBoxAdvMode1.Visible = True
 
+                    ' Else
+                    'groupBoxAdvMode1.Visible = False
+                    'End If
+                Case 9 ' COLLECTION
+                    ShowCollection()
             End Select
 
         Catch ex As Exception
@@ -2129,7 +2215,7 @@ Public Class Main
             'La liste n'est pas vide donc bypass le Select
             ListViewInstalledSoftware_NEW.Items(0).Selected = True
             ListViewInstalledSoftware_NEW.Select()
-            Label1.Visible = True
+            Label1lblProgFeatActivateTabMsg.Visible = True
             'Exit Select
         End If
         ListViewInstalledSoftware_NEW.Items.Clear()
@@ -2835,7 +2921,7 @@ Public Class Main
     Private Sub cmd_Refresh_Click(sender As Object, e As EventArgs) Handles cmd_Refresh_NEW.Click
         onetime = 0
         ProgressBar.Value = 0
-        ListView1.Items.Clear()
+        lstvw_ExecHistPkgs.Items.Clear()
 
         Me.Cursor = Cursors.WaitCursor
         chk_ApprovedPatch_NEW.Checked = True
@@ -2848,109 +2934,117 @@ Public Class Main
 
         onetime = 0
         Me.Refresh()
-        If ListView1.Items.Count <> 0 Then
+        If lstvw_ExecHistPkgs.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView1.Items(0).Selected = True
-            ListView1.Select()
+            lstvw_ExecHistPkgs.Items(0).Selected = True
+            lstvw_ExecHistPkgs.Select()
             lbl_UserLoggedIn_NEW.Visible = True
             'Exit Select
         End If
-        ListView1.Items.Clear()
+        lstvw_ExecHistPkgs.Items.Clear()
         ProgressBar.Value = 0
         ProgressBar.Visible = True
 
         'Valide que ce se script ne passe que une fois
         If onetime = 1 Then Exit Sub
 
-        Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86, False)
-        Dim SubKeyName() As String = Key.GetSubKeyNames()
-        Dim Index, count, countVal As Integer
-        Dim SubKey As RegistryKey
-        Dim SubLevel2_Name As String()
-        Dim SubLevel2_Key As String
-        Dim SubLevel3_Key As RegistryKey
-        Dim Key_PkgName, Key_Date, Key_State As String
-        Dim tasksequence As Boolean = False
-        ProgressBar.Value = 1
-        count = Key.SubKeyCount
-        Me.Update()
-
-        For Index = 0 To Key.SubKeyCount - 1
-            SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index), False)
-            SubLevel2_Name = SubKey.GetSubKeyNames()
-            For Each SubLevel2_Key In SubLevel2_Name
-                SubLevel3_Key = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index) + "\" + SubLevel2_Key, False)
+        Try
 
 
-                Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+            Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86, False)
+            Dim SubKeyName() As String = Key.GetSubKeyNames()
+            Dim Index, count, countVal As Integer
+            Dim SubKey As RegistryKey
+            Dim SubLevel2_Name As String()
+            Dim SubLevel2_Key As String
+            Dim SubLevel3_Key As RegistryKey
+            Dim Key_PkgName, Key_Date, Key_State As String
+            Dim tasksequence As Boolean = False
+            ProgressBar.Value = 1
+            count = Key.SubKeyCount
+            Me.Update()
 
-                'Vérification si ces un TS
-                '***************************************************************************************************************
-                If Key_PkgName = "*" Then
-                    Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
-                    Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
-                    Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+            For Index = 0 To Key.SubKeyCount - 1
+                SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index), False)
+                SubLevel2_Name = SubKey.GetSubKeyNames()
+                For Each SubLevel2_Key In SubLevel2_Name
+                    SubLevel3_Key = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index) + "\" + SubLevel2_Key, False)
 
-                    Dim info As ManagementObject
-                    For Each info In search.Get()
-                        If SubKeyName(Index) = info("PKG_PackageID") Then
-                            Key_PkgName = "(TS) " & info("PKG_Name")
+
+                    Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+
+                    'Vérification si ces un TS
+                    '***************************************************************************************************************
+                    If Key_PkgName = "*" Then
+                        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
+                        Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
+                        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
+
+                        Dim info As ManagementObject
+                        For Each info In search.Get()
+                            If SubKeyName(Index) = info("PKG_PackageID") Then
+                                Key_PkgName = "(TS) " & info("PKG_Name")
+                                tasksequence = True
+                            End If
+                        Next
+                        If Key_PkgName = "*" Then
+                            Key_PkgName = "(TS) " & "Task Sequence"
                             tasksequence = True
                         End If
-                    Next
-                    If Key_PkgName = "*" Then
-                        Key_PkgName = "(TS) " & "Task Sequence"
-                        tasksequence = True
+                    Else
+                        Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+                        tasksequence = False
                     End If
-                Else
-                    Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
-                    tasksequence = False
-                End If
-                '***************************************************************************************************************
+                    '***************************************************************************************************************
 
-                Key_Date = SubLevel3_Key.GetValue("_RunStartTime")
-                Key_State = SubLevel3_Key.GetValue("_State")
+                    Key_Date = SubLevel3_Key.GetValue("_RunStartTime")
+                    Key_State = SubLevel3_Key.GetValue("_State")
 
-                'ListView1.Sorting = Windows.Forms.SortOrder.Ascending
-                Me.ListView1.Sorting = Windows.Forms.SortOrder.None
+                    'ListView1.Sorting = Windows.Forms.SortOrder.Ascending
+                    Me.lstvw_ExecHistPkgs.Sorting = Windows.Forms.SortOrder.None
 
-                Dim item As New ListViewItem(SubKeyName(Index))
+                    Dim item As New ListViewItem(SubKeyName(Index))
 
-                If tasksequence = True Then
-                    item.BackColor = Color.LightBlue
-                    item.ForeColor = Color.DarkBlue
-                End If
+                    If tasksequence = True Then
+                        item.BackColor = Color.LightBlue
+                        item.ForeColor = Color.DarkBlue
+                    End If
 
-                item.SubItems.Add(Key_PkgName)
-                item.SubItems.Add(Key_State)
+                    item.SubItems.Add(Key_PkgName)
+                    item.SubItems.Add(Key_State)
 
-                If Key_State = "Failure" Then
-                    item.BackColor = Color.DarkRed
-                    item.ForeColor = Color.White
-                End If
+                    If Key_State = "Failure" Then
+                        item.BackColor = Color.DarkRed
+                        item.ForeColor = Color.White
+                    End If
 
-                item.SubItems.Add(Key_Date)
-                ListView1.Items.Add(item)
+                    item.SubItems.Add(Key_Date)
+                    lstvw_ExecHistPkgs.Items.Add(item)
 
-                Me.Update()
-                countVal = ((Index + 1) / count) * 100
-                If countVal > 100 Or countVal < 0 Then countVal = 100
-                ProgressBar.Value = countVal
+                    Me.Update()
+                    countVal = ((Index + 1) / count) * 100
+                    If countVal > 100 Or countVal < 0 Then countVal = 100
+                    ProgressBar.Value = countVal
+                Next
             Next
-        Next
-        ProgressBar.Visible = False
-        onetime = 1
+            ProgressBar.Visible = False
+            onetime = 1
 
-        'Commande pour le sort de la colonne
-        Tab_Select = 1
-        AddHandler Me.ListView1.ColumnClick, AddressOf ColumnClick
-        lbl_UserLoggedIn_NEW.Visible = True
+            'Commande pour le sort de la colonne
+            Tab_Select = 1
+            AddHandler Me.lstvw_ExecHistPkgs.ColumnClick, AddressOf ColumnClick
+            lbl_UserLoggedIn_NEW.Visible = True
 
-        If ListView1.Items.Count > 0 Then
-            ListView1.Items(0).Selected = True
-            ListView1.Select()
-        End If
-        Me.Refresh()
+            If lstvw_ExecHistPkgs.Items.Count > 0 Then
+                lstvw_ExecHistPkgs.Items(0).Selected = True
+                lstvw_ExecHistPkgs.Select()
+            End If
+            Me.Refresh()
+
+        Catch ex As Exception
+            Console.WriteLine("exception caught in ShowExecutionHistoryPKGS : " & ex.Message)
+        End Try
+
 
     End Sub
 
@@ -2962,10 +3056,10 @@ Public Class Main
 
             Select Case Tab_Select
                 Case 1
-                    ListView1.Sorting = SortOrder.Descending
+                    lstvw_ExecHistPkgs.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 Case 2
-                    ListView2.Sorting = SortOrder.Descending
+                    listvw_ExecHistApps.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 Case 3
                     ListView3.Sorting = SortOrder.Descending
@@ -2986,26 +3080,26 @@ Public Class Main
         Select Case Tab_Select
 
             Case 1
-                If ListView1.Sorting = SortOrder.Descending Then
-                    ListView1.Sorting = SortOrder.Ascending
+                If lstvw_ExecHistPkgs.Sorting = SortOrder.Descending Then
+                    lstvw_ExecHistPkgs.Sorting = SortOrder.Ascending
                     sortIt = SortOrder.Ascending
                 Else
-                    ListView1.Sorting = SortOrder.Descending
+                    lstvw_ExecHistPkgs.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 End If
 
-                Me.ListView1.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+                Me.lstvw_ExecHistPkgs.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
             Case 2
-                If ListView2.Sorting = SortOrder.Descending Then
-                    ListView2.Sorting = SortOrder.Ascending
+                If listvw_ExecHistApps.Sorting = SortOrder.Descending Then
+                    listvw_ExecHistApps.Sorting = SortOrder.Ascending
                     sortIt = SortOrder.Ascending
                 Else
-                    ListView2.Sorting = SortOrder.Descending
+                    listvw_ExecHistApps.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 End If
 
-                Me.ListView2.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+                Me.listvw_ExecHistApps.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
             Case 3
                 If ListView3.Sorting = SortOrder.Descending Then
@@ -3048,15 +3142,15 @@ Public Class Main
         onetime = 0
         Me.Refresh()
 
-        If ListView2.Items.Count <> 0 Then
+        If listvw_ExecHistApps.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView2.Items(0).Selected = True
-            ListView2.Select()
+            listvw_ExecHistApps.Items(0).Selected = True
+            listvw_ExecHistApps.Select()
             'cmd_apps_refresh.Visible = True
             'Exit Select
         End If
 
-        ListView2.Items.Clear()
+        listvw_ExecHistApps.Items.Clear()
         ProgressBar.Value = 0
         ProgressBar.Visible = True
         'cmd_apps_refresh.Visible = True
@@ -3174,7 +3268,7 @@ Public Class Main
 
                 If Not AppName Is "" Then
                     'ListView2.Sorting = Windows.Forms.SortOrder.Ascending
-                    Me.ListView2.Sorting = Windows.Forms.SortOrder.None
+                    Me.listvw_ExecHistApps.Sorting = Windows.Forms.SortOrder.None
                     Dim item As New ListViewItem(AppName)
                     item.SubItems.Add(AppStatus)
                     item.SubItems.Add(EvaluationState)
@@ -3182,7 +3276,7 @@ Public Class Main
                     item.SubItems.Add(Date_Dealine)
                     item.SubItems.Add(Date_LastEvalTime)
                     item.SubItems.Add(Date_LastInstallTime)
-                    ListView2.Items.Add(item)
+                    listvw_ExecHistApps.Items.Add(item)
                     Me.Update()
                 End If
                 countVal = ((Index + 1) / count) * 100
@@ -3203,7 +3297,7 @@ Public Class Main
 
         'Commande pour le sort de la colonne
         Tab_Select = 2
-        AddHandler Me.ListView2.ColumnClick, AddressOf ColumnClick
+        AddHandler Me.listvw_ExecHistApps.ColumnClick, AddressOf ColumnClick
 
         'Active le autosize
         ColumnHeader5.Width = -2
@@ -3214,9 +3308,9 @@ Public Class Main
         ColumnHeader20.Width = -2
         ColumnHeader21.Width = -2
 
-        If ListView2.Items.Count > 0 Then
-            ListView2.Items(0).Selected = True
-            ListView2.Select()
+        If listvw_ExecHistApps.Items.Count > 0 Then
+            listvw_ExecHistApps.Items(0).Selected = True
+            listvw_ExecHistApps.Select()
         End If
         Me.Refresh()
 
@@ -3467,13 +3561,18 @@ Public Class Main
         Me.Refresh()
     End Sub
 
-    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, ListView1.DoubleClick
+    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, lstvw_ExecHistPkgs.DoubleClick
         ShowExecutionHistoryPKGS()
     End Sub
 
-    Private Sub ListExecutionHistoryAPPS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, ListView2.DoubleClick
+    Private Sub ListExecutionHistoryAPPS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, listvw_ExecHistApps.DoubleClick
         ShowExecutionHistoryAPPS()
     End Sub
+
+    Private Sub SoftwareCacheLocation_Tab_DoubleClick(sender As Object, e As EventArgs) Handles SoftwareCacheLocation_Tab.DoubleClick, SoftwareCacheLocation_Tab.Click
+        RunESSetupInfo()
+    End Sub
+
 
     Private Sub LoadMorePcInfo()
         Me.Cursor = Cursors.WaitCursor
@@ -3589,7 +3688,7 @@ Public Class Main
     Private Sub btnCenterConsole_Click(sender As Object, e As EventArgs) Handles btnCenterConsole.Click
 
         MainTab.Width = 1437
-        SecondaryTab.Hide()
+        'SecondaryTab.Hide()
         MainTab.Refresh()
         btnCenterConsole.Hide()
         btnCenterConsole2.Show()
@@ -3599,7 +3698,7 @@ Public Class Main
     Private Sub btnCenterConsole2_Click(sender As Object, e As EventArgs) Handles btnCenterConsole2.Click
 
         MainTab.Width = 773
-        SecondaryTab.Show()
+        'SecondaryTab.Show()
         MainTab.Refresh()
         btnCenterConsole.Show()
         btnCenterConsole2.Hide()
@@ -3750,6 +3849,7 @@ Public Class Main
             .RedirectStandardOutput = True
             .RedirectStandardError = True
         End With
+
         MyProcess.Start()
 
         MyProcess.BeginErrorReadLine()
@@ -3758,17 +3858,26 @@ Public Class Main
     End Sub
 
     Private Sub BtnCommandInput_Click(sender As Object, e As EventArgs) Handles btnCommandInput.Click
-        MyProcess.StandardInput.WriteLine(txtCommandInput.Text)
+        'InitCommandWindow()
+        'MyProcess.StandardInput.WriteLine(txtCommandInput.Text)
+        'MyProcess.StandardInput.Flush()
+        'txtCommandInput.Text = ""
+
+        RunDosCommand(txtCommandInput.Text)
+    End Sub
+    Private Sub RunDosCommand(strCommand As String)
+        InitCommandWindow()
+        MyProcess.StandardInput.WriteLine(strCommand)
         MyProcess.StandardInput.Flush()
         txtCommandInput.Text = ""
     End Sub
 
-
-    'Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-    '    MyProcess.StandardInput.WriteLine("EXIT") 'send an EXIT command to the Command Prompt
-    '    MyProcess.StandardInput.Flush()
-    '    MyProcess.Close()
-    'End Sub
+    Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        InitCommandWindow()
+        MyProcess.StandardInput.WriteLine("EXIT") 'send an EXIT command to the Command Prompt
+        MyProcess.StandardInput.Flush()
+        MyProcess.Close()
+    End Sub
 
     Private Sub MyProcess_ErrorDataReceived(ByVal sender As Object, ByVal e As System.Diagnostics.DataReceivedEventArgs) Handles MyProcess.ErrorDataReceived
         AppendOutputText(vbCrLf & "Error: " & e.Data)
@@ -3790,12 +3899,6 @@ Public Class Main
 
     Private Sub BtnClearCommandWindow_Click(sender As Object, e As EventArgs) Handles btnClearCommandWindow.Click
         txtCommandOutput.Text = ""
-    End Sub
-
-    Private Sub btnESSetupInfo_Click(sender As Object, e As EventArgs) Handles btnESSetupInfo.Click
-        MyProcess.StandardInput.WriteLine("C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe -noprofile -ExecutionPolicy Bypass -File ""C:\utils-outils\ES-Setup Info\ES-Setup Info.ps1"" ")
-        MyProcess.StandardInput.Flush()
-        txtCommandInput.Text = ""
     End Sub
 
     Private Sub BranchCache_Port_8009()
@@ -4864,6 +4967,473 @@ Public Class Main
         Button3_Click()
     End Sub
 
+    Private Sub DdlDesiredLength_SelectedIndexChanged(sender As Object, e As EventArgs)
+        MW_Select = ddlDesiredLength.SelectedItem
+    End Sub
+
+    Private Sub Cmd_GPO_NEW_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim Result_msg = MsgBox(My.Resources.ConfirmGPOUpdate & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.TitleGPUpdate & " : " & ComputerName)
+
+        If Result_msg = 6 Then
+            RemoteExec("cmd /c gpupdate /force /boot")
+            Reboot_Send = True
+            Thread.Sleep(5000)
+            ComputerName = ""
+            Main.Instance.txt_PCName_NEW.Text = "..."
+            Me.Close()
+            'Active le chagement de la souris en mode attente
+            Main.Instance.Affichage_Defaut()
+            Main.Instance.Connexion()
+            'Remet le cursor en mode defaut
+            Main_Start_Form.Instance.Show()
+            Main.Instance.Close()
+            Me.Cursor = Cursors.Default
+            Main_Start_Form.Instance.Cursor = Cursors.Default
+            Main_Start_Form.Instance.pic_rightArrow.Visible = True
+            Main_Start_Form.Instance.pic_notOk.Visible = False
+            Main_Start_Form.Instance.pic_Ok.Visible = False
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Cmd_Del_WMI_NEW_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+
+        'arret du service sccm
+        Service_to_OFF("ccmexec", True)
+
+        If Service_ON_OFF = "OFF" Then
+            Try
+                Dim objWMIService As Object
+                Dim objItem As Object
+
+                objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\" & ComputerName & "\root")
+                objItem = objWMIService.Get("__Namespace.Name='CCM'")
+                objItem.delete_()
+
+                MsgBox(My.Resources.ConfirmRemoveWMINamespace, MsgBoxStyle.Information, "SCCM PC Admin")
+
+            Catch ex As Exception
+
+                MsgBox(My.Resources.ErrorUnexpected & " - " & Err.Number & " - " & Err.Description, MsgBoxStyle.Critical, "SCCM PC Admin")
+
+            End Try
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Cmd_Rebuilding_WMI_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+
+        'arret du service Windows Management Instrumentation
+        Cursor = Cursors.WaitCursor
+        Service_to_ON("winmgmt", False)
+        Service_to_OFF("winmgmt", True)
+        Cursor = Cursors.Arrow
+
+        '******* Suprimmer le répertoire "Repository" du WMI "C:\windows\system32\wbem\Repository"
+        Try
+            Cursor = Cursors.WaitCursor
+            Dim strSDPath
+            strSDPath = "\\" & ComputerName & "\admin$\System32\wbem\Repository"
+            System.IO.Directory.Delete(strSDPath, True)
+            Thread.Sleep(3000)
+            Cursor = Cursors.Arrow
+        Catch ex As Exception
+            ' Gestion de l'erreur
+            Cursor = Cursors.Arrow
+        End Try
+
+        'Démarrage du service Windows Management Instrumentation
+        Cursor = Cursors.WaitCursor
+        Service_to_ON("winmgmt", True)
+        Cursor = Cursors.Arrow
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Cmd_Re_Registering_NEW_Click(sender As Object, e As EventArgs)
+        Me.Cursor = Cursors.WaitCursor
+
+        'arret du service Windows Management Instrumentation
+        Cursor = Cursors.WaitCursor
+        Service_to_ON("winmgmt", False)
+        Service_to_OFF("winmgmt", True)
+        Cursor = Cursors.Arrow
+
+        '******* Suprimmer le répertoire "Repository" du WMI "C:\windows\system32\wbem\Repository"
+        Try
+            Cursor = Cursors.WaitCursor
+            Dim strSDPath
+            strSDPath = "\\" & ComputerName & "\admin$\System32\wbem\Repository"
+            System.IO.Directory.Delete(strSDPath, True)
+            Thread.Sleep(3000)
+            Cursor = Cursors.Arrow
+        Catch ex As Exception
+            ' Gestion de l'erreur
+            Cursor = Cursors.Arrow
+        End Try
+
+        'Démarrage du service Windows Management Instrumentation
+        Cursor = Cursors.WaitCursor
+        Service_to_ON("winmgmt", True)
+        Cursor = Cursors.Arrow
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Cmd_registry_pol_Click(sender As Object, e As EventArgs)
+        Dim fso = CreateObject("Scripting.FileSystemObject")
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim Result_msg = MsgBox(My.Resources.ConfirmGPOUpdate & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.TitleGPUpdate & " : " & ComputerName)
+        If Result_msg = 6 Then
+
+            '******* Suprimmer le fichier ..\Windows\System32\GroupPolicy\Machine\Registry.pol
+            Dim strSDPath
+            strSDPath = "\\" & ComputerName & "\admin$\System32\GroupPolicy\Machine"
+            Try
+
+                Dim folder = fso.GetFolder(strSDPath)
+
+                For Each f In folder.Files
+                    Try
+                        Name = f.name
+                        If Name = "Registry.pol" Then f.Delete()
+                    Catch ex As Exception
+
+                    End Try
+                Next
+            Catch ex As Exception
+
+            End Try
+
+            ' Envoye la comande du GPUpdate par la suite
+            RemoteExec("cmd /c gpupdate /force /boot")
+            Reboot_Send = True
+            Thread.Sleep(5000)
+            ComputerName = ""
+            Main.Instance.txt_PCName_NEW.Text = "..."
+            Me.Close()
+            'Active le chagement de la souris en mode attente
+            Main.Instance.Affichage_Defaut()
+            Main.Instance.Connexion()
+            'Remet le cursor en mode defaut
+            Main_Start_Form.Instance.Show()
+            Main.Instance.Close()
+            Me.Cursor = Cursors.Default
+            Main_Start_Form.Instance.Cursor = Cursors.Default
+            Main_Start_Form.Instance.pic_rightArrow.Visible = True
+            Main_Start_Form.Instance.pic_notOk.Visible = False
+            Main_Start_Form.Instance.pic_Ok.Visible = False
+        End If
+
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Cmd_WSUS_Download_NEW_Click(sender As Object, e As EventArgs)
+        Try
+            Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\SoftwareDistribution\Download")
+        Catch ex As Exception
+            ' Gestion de l'erreur
+        End Try
+    End Sub
+
+    Private Sub Cmd_BITS_Location_NEW_Click(sender As Object, e As EventArgs)
+        Try
+            Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\ProgramData\Microsoft\Network\Downloader")
+        Catch ex As Exception
+            ' Gestion de l'erreur
+        End Try
+    End Sub
+
+    Private Sub Cmd_DataStore_NEW_Click(sender As Object, e As EventArgs)
+        Try
+            Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\SoftwareDistribution\DataStore")
+        Catch ex As Exception
+            ' Gestion de l'erreur
+        End Try
+    End Sub
+
+    Private Sub Cmd_Client_Logs_NEW_Click(sender As Object, e As EventArgs)
+        Try
+            Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\CCM\Logs")
+        Catch ex As Exception
+            ' Gestion de l'erreur
+        End Try
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Lstv_Collection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstv_Collection.SelectedIndexChanged
+        ShowCollection()
+    End Sub
+
+    Public Sub ShowCollection()
+        'cherche le domain associer au SCCM Server et le site code
+        Read_INI(UCase(PC_Domain))
+
+
+        'Vérifie si le poste a été valider avec le nom de domaine (ex:xxxx.cips.communication.gc.ca)
+
+        Dim ComputerName_Short As String
+        Dim index As Integer = ComputerName.IndexOf(".")
+        If index <> -1 Then
+            ComputerName_Short = ComputerName.Substring(0, (index))
+        Else
+            ComputerName_Short = ComputerName
+        End If
+
+        '*************************************************************************************
+        'Connection au serveur SQL 
+        '************************************************************************************* 
+        Try
+            Dim sqlConnection1 As New SqlConnection("server=" & INI_SQL_Server & ";database=" & INI_SQL_Database & ";User ID=THMVACC;Password=Passw0rd1")
+            Dim cmd As New SqlCommand
+            Dim reader As SqlDataReader
+
+            cmd.CommandText = "Select C.CollectionID,C.Name,C.Comment from dbo.v_Collection C join dbo.v_FullCollectionMembership FCM on C.CollectionID = FCM.CollectionID Where FCM.Name = '" & ComputerName_Short & "'"
+            cmd.CommandType = CommandType.Text
+            cmd.Connection = sqlConnection1
+
+            sqlConnection1.Open()
+            reader = cmd.ExecuteReader()
+            lstv_Collection.Items.Clear()
+            ' lecture des data.....
+            While reader.Read
+                Me.lstv_Collection.Sorting = Windows.Forms.SortOrder.Ascending
+                Dim ls As New ListViewItem(reader.Item("Name").ToString())
+                ls.SubItems.Add(reader.Item("CollectionID").ToString())
+                lstv_Collection.Items.Add(ls)
+            End While
+
+            'ColumnHeader1.Width = -1
+            'ColumnHeader2.Width = -1
+            lstv_Collection.Refresh()
+
+            sqlConnection1.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub RunESSetupInfo()
+
+        Dim Result_msg = MsgBox(My.Resources.WarningRunSoftwareCache & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.WarningRunSoftwareCache & " : " & ComputerName)
+        If Result_msg = 6 Then
+            Try
+                ProgressBar.Value = 0
+                ProgressBar.Visible = True
+                Label2.Visible = True
+                Dim script = New StringBuilder()
+
+                script.AppendLine("$results = get-childitem -recurse -depth 1 \\" & ComputerName & "\c$\windows\ccmcache -filter ES-Setup.exe ")
+                script.AppendLine("  Write-Host('##START##')  ")
+                script.AppendLine("  foreach($item in $results){  ")
+                script.AppendLine("      Write-Host('||',$item.DirectoryName, '##', $item.VersionInfo.ProductName, '||' )  ")
+                script.AppendLine("      }  ")
+                script.AppendLine("  Write-Host('##END##')  ")
+
+                Dim objProcess As New System.Diagnostics.Process()
+
+                objProcess.StartInfo.FileName = "powershell.exe "
+                objProcess.StartInfo.Arguments = script.ToString
+                objProcess.StartInfo.RedirectStandardOutput = True
+                objProcess.StartInfo.RedirectStandardError = True
+                objProcess.StartInfo.UseShellExecute = False
+                objProcess.StartInfo.CreateNoWindow = True
+                objProcess.Start()
+
+                Dim output As String = objProcess.StandardOutput.ReadToEnd()
+                Dim errors As String = objProcess.StandardError.ReadToEnd()
+
+                txtCommandOutput.Text += "Output:" + Environment.NewLine
+                txtCommandOutput.Text += "-------" + Environment.NewLine
+                txtCommandOutput.Text += output + Environment.NewLine
+                txtCommandOutput.Text += Environment.NewLine
+                txtCommandOutput.Text += "Errors:" + Environment.NewLine
+                txtCommandOutput.Text += "-------" + Environment.NewLine
+                txtCommandOutput.Text += errors + Environment.NewLine
+                ShowESSetupInfoListView(output)
+
+            Catch ex As Exception
+                txtCommandOutput.Clear()
+                txtCommandOutput.Text = "Problem encountered trying to run the ES setup Info Command"
+                ProgressBar.Value = 0
+                ProgressBar.Visible = False
+            End Try
+        Else
+            loadSoftwareCacheTab = 0
+        End If
+
+
+
+
+    End Sub
+
+
+    Sub ShowESSetupInfoListView(data As String)
+
+        onetime = 0
+        Me.Refresh()
+
+        If ListView5.Items.Count <> 0 Then
+            'La liste n'est pas vide donc bypass le Select
+            ListView5.Items(0).Selected = True
+            ListView5.Select()
+            'Exit Select
+        End If
+
+        ListView5.Items.Clear()
+
+        Try
+            'Valide que ce se script ne passe que une fois
+
+            'Dim strSplit1 = data.Split("##START##")
+            data = data.Replace("& vbLf &", "")
+            Dim SearchWithinThis As String = data
+            Dim StartSearch As String = "##START##"
+            Dim FirstCharacterPos As Integer = SearchWithinThis.IndexOf(StartSearch)
+            Dim EndSearch As String = "##END##"
+            Dim LastCharacterPos As Integer = SearchWithinThis.IndexOf(EndSearch)
+
+            data = data.Substring(FirstCharacterPos, LastCharacterPos - FirstCharacterPos).Replace("##START##", "").Replace(" vbLf &", "")
+
+            'Dim phrase1 As String = data.Split("##START##")(1)
+            'Dim phrase2 As String = phrase1.Split("##END##")(0)
+            Dim strESResults = data.Split("||")
+
+            For i As Integer = 0 To UBound(strESResults)
+
+                If (strESResults(i).Length > 5) Then
+                    Me.ListView5.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem("ESEdit Info " & i.ToString)
+                    item.SubItems.Add(strESResults(i).Split("##")(0))
+                    item.SubItems.Add(strESResults(i).Split("##")(2))
+
+                    ListView5.Items.Add(item)
+                    Me.Update()
+
+                    ProgressBar.Value = i
+                    Me.Update()
+                End If
+                'ListView3.Sorting = Windows.Forms.SortOrder.Ascending
+
+            Next
+            ProgressBar.Visible = False
+
+        Catch ex As Exception
+            'GEstion de l'erreur
+            Console.WriteLine("exception splitting stuff " & ex.Message)
+            ProgressBar.Visible = False
+        End Try
+
+        'Commande pour le sort de la colonne
+        Tab_Select = 3
+        AddHandler Me.ListView5.ColumnClick, AddressOf ColumnClick
+        If ListView5.Items.Count > 0 Then
+            ListView5.Items(0).Selected = True
+            ListView5.Select()
+        End If
+        Me.Refresh()
+
+    End Sub
+
+
+
+
+    Private Sub Cmd_Client_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Cmd_Collection_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    'Private Sub ListView5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView5.SelectedIndexChanged
+    '    RunESSetupInfo()
+    'End Sub
+
+    Private Sub Listvw_ExecHistApps_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listvw_ExecHistApps.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Cmd_load_Logs1_NEW_Click(sender As Object, e As EventArgs) Handles cmd_load_Logs1_NEW.Click, cmb_Logs1_NEW.SelectedIndexChanged
+        'Valide que la valleur vide ou ... ne sois pas pris en compte
+        If cmb_Logs1_NEW.Text = "" Or cmb_Logs1_NEW.Text = "..." Then Exit Sub
+
+        'Reset des autre Combobox
+        cmb_Logs2_NEW.Text = ""
+        cmb_Logs3_NEW.Text = ""
+        cmb_Logs4_NEW.Text = ""
+        cmb_Logs5_NEW.Text = ""
+
+        'Envoye la valeur sélectionner pour ouvrir le fichier log
+        Logs_Call(cmb_Logs1_NEW.Text, True)
+    End Sub
+
+    Private Sub Cmd_load_Logs2_NEW_Click(sender As Object, e As EventArgs) Handles cmd_load_Logs2_NEW.Click, cmb_Logs2_NEW.SelectedIndexChanged
+        'Valide que la valleur vide ou ... ne sois pas pris en compte
+        If cmb_Logs2_NEW.Text = "" Or cmb_Logs2_NEW.Text = "..." Then Exit Sub
+
+        'Reset des autre Combobox
+        cmb_Logs1_NEW.Text = ""
+        cmb_Logs3_NEW.Text = ""
+        cmb_Logs4_NEW.Text = ""
+        cmb_Logs5_NEW.Text = ""
+
+        'Envoye la valeur sélectionner pour ouvrir le fichier log
+        Logs_Call(cmb_Logs2_NEW.Text, True)
+    End Sub
+
+    Private Sub Cmd_load_Logs3_NEW_Click(sender As Object, e As EventArgs) Handles cmd_load_Logs3_NEW.Click, cmb_Logs3_NEW.SelectedIndexChanged
+        'Valide que la valleur vide ou ... ne sois pas pris en compte
+        If cmb_Logs3_NEW.Text = "" Or cmb_Logs3_NEW.Text = "..." Then Exit Sub
+
+        'Reset des autre Combobox
+        cmb_Logs1_NEW.Text = ""
+        cmb_Logs2_NEW.Text = ""
+        cmb_Logs4_NEW.Text = ""
+        cmb_Logs5_NEW.Text = ""
+
+        'Envoye la valeur sélectionner pour ouvrir le fichier log
+        Logs_Call(cmb_Logs3_NEW.Text, True)
+    End Sub
+
+    Private Sub Cmd_load_Logs4_NEW_Click(sender As Object, e As EventArgs) Handles cmd_load_Logs4_NEW.Click, cmb_Logs4_NEW.SelectedIndexChanged
+        'Valide que la valleur vide ou ... ne sois pas pris en compte
+        If cmb_Logs4_NEW.Text = "" Or cmb_Logs4_NEW.Text = "..." Then Exit Sub
+
+        'Reset des autre Combobox
+        cmb_Logs1_NEW.Text = ""
+        cmb_Logs2_NEW.Text = ""
+        cmb_Logs3_NEW.Text = ""
+        cmb_Logs5_NEW.Text = ""
+
+        'Envoye la valeur sélectionner pour ouvrir le fichier log
+        Logs_Call(cmb_Logs4_NEW.Text, True)
+    End Sub
+
+    Private Sub Cmd_load_Logs5_NEW_Click(sender As Object, e As EventArgs) Handles cmd_load_Logs5_NEW.Click, cmb_Logs5_NEW.SelectedIndexChanged
+        'Valide que la valleur vide ou ... ne sois pas pris en compte
+        If cmb_Logs5_NEW.Text = "" Or cmb_Logs5_NEW.Text = "..." Then Exit Sub
+
+        'Reset des autre Combobox
+        cmb_Logs1_NEW.Text = ""
+        cmb_Logs2_NEW.Text = ""
+        cmb_Logs3_NEW.Text = ""
+        cmb_Logs4_NEW.Text = ""
+
+        'Envoye la valeur sélectionner pour ouvrir le fichier log
+        Logs_Call(cmb_Logs5_NEW.Text, True)
+    End Sub
+
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         Button10_Click()
     End Sub
@@ -4919,4 +5489,991 @@ Public Class Main
     Private Sub CMD_ALL_Click(sender As Object, e As EventArgs) Handles CMD_ALL.Click
         CMD_ALL_Click()
     End Sub
+    Private Sub cmd_Add_SW_Click(sender As Object, e As EventArgs) Handles cmd_Add_SW.Click
+        'Va demander au client de choisir la longueur de la fenetre de maintenance désirer
+        Dim popupMWTime As Popup_MW_Time = New Popup_MW_Time
+        popupMWTime.ShowDialog(Me)
+        If MW_Select = "NULL" Then Exit Sub
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim newSW As New SMSSchedules.SMS_ST_NonRecurring
+        'Dim swDate As DateTime
+        Dim ts As TimeSpan
+        Dim objService As Object
+        Dim instServiceWindow As Object = ""
+        Dim clsServiceWindow As Object
+        Dim Conv_Schedules As String = ""
+        Dim CurrentDate As Date = Now
+        Dim End_taskDate As Integer
+        Dim Start_taskDate As Date
+
+        Try
+
+            Try
+                'recherche le décalage du fuseau horraire du pc a distance
+                TimeZone(ComputerName)
+            Catch ex As Exception
+
+            End Try
+
+            Start_taskDate = CurrentDate.AddHours(TimeZone_PC)
+
+            Select Case MW_Select
+
+                Case 1 'Retourne 1h
+                    End_taskDate = 1
+                Case 2 'Retourne 2h
+                    End_taskDate = 2
+                Case 4 'Retourne 4h
+                    End_taskDate = 4
+                Case 8 'Retourne 8h
+                    End_taskDate = 8
+                Case 12 'Retourne 12h
+                    End_taskDate = 12
+                Case 24 'Retourne 24h
+                    End_taskDate = 24
+                Case 48 'Retourne 48h
+                    End_taskDate = 48
+                Case 72 'Retourne 72h
+                    End_taskDate = 72
+
+                Case Else
+                    'Par default ajout si erreur une fenetre minimum de 1 heurs
+                    End_taskDate = 1
+
+            End Select
+
+            Try
+                'Conection a la classe du WMI 
+                objService = GetObject("winmgmts:\\" & ComputerName & "\root\ccm\policy\machine\requestedconfig")
+                clsServiceWindow = objService.Get("CCM_ServiceWindow")
+                instServiceWindow = clsServiceWindow.SpawnInstance_
+
+                'Convertie la Schedules pour la mettre en place au WMI
+                newSW.StartTime = Start_taskDate
+                newSW.IsGMT = False
+
+                ts = New TimeSpan(End_taskDate, 0, 0)
+                newSW.MinuteDuration = ts.Minutes
+                newSW.HourDuration = ts.Hours
+                newSW.DayDuration = ts.Days
+
+                'Mes en place la nouvelle fenetre de maintenance manuelle
+
+                instServiceWindow.PolicySource = "Local"
+                instServiceWindow.ServiceWindowType = "1"
+                instServiceWindow.Schedules = newSW.ScheduleID
+                instServiceWindow.PolicyVersion = "1"
+                instServiceWindow.ServiceWindowID = Guid.NewGuid.ToString
+
+                instServiceWindow.Put_()
+
+                'Prend une pause de 10 secondes
+                Dim waitForm As Wait = New Wait(10)
+                waitForm.ShowDialog(Me)
+            Catch ex As Exception
+                'Gestion des erreur
+            End Try
+
+        Catch ex As Exception
+            'Gestion des erreur
+            Me.Cursor = Cursors.Default
+        End Try
+
+        instServiceWindow = ""
+        Me.Cursor = Cursors.Default
+    End Sub
+
+
+    Private Sub Logs_Call(logs_files As String, Open_Logs As Boolean)
+
+        txt_Description.Text = ""
+
+        Select Case logs_files
+
+            Case "AppDiscovery.log"
+                txt_Description.Text = My.Resources.AppDiscovery
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "AppEnforce.log"
+                txt_Description.Text = My.Resources.AppEnforce
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "AppIntentEval.log"
+                txt_Description.Text = My.Resources.AppIntentEval
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "AssetAdvisor.log"
+                txt_Description.Text = My.Resources.AssetAdvisor
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "BgbHttpProxy.log"
+                txt_Description.Text = My.Resources.BgbHttpProxy
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CAS.log"
+                txt_Description.Text = My.Resources.CAS
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Ccm32BitLauncher.log"
+                txt_Description.Text = My.Resources.Ccm32BitLauncher
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmEval.log"
+                txt_Description.Text = My.Resources.CcmEval
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmEvalTask.log"
+                txt_Description.Text = My.Resources.CcmEvalTask
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmExec.log"
+                txt_Description.Text = My.Resources.CcmExec
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmMessaging.log"
+                txt_Description.Text = My.Resources.CcmMessaging
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CCMNotificationAgent.log"
+                txt_Description.Text = My.Resources.CCMNotificationAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Ccmperf.log"
+                txt_Description.Text = My.Resources.Ccmperf
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmRepair.log"
+                txt_Description.Text = My.Resources.CcmRepair
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CcmRestart.log"
+                txt_Description.Text = My.Resources.CcmRestart
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CCMSDKProvider.log"
+                txt_Description.Text = My.Resources.CCMSDKProvider
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Ccmsetup.log"
+                txt_Description.Text = My.Resources.ccmsetup
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\ccmsetup\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Ccmsetup-ccmeval.log"
+                txt_Description.Text = My.Resources.ccmsetup_ccmeval
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\ccmsetup\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CertificateMaintenance.log"
+                txt_Description.Text = My.Resources.CertificateMaintenance
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CIAgent.log"
+                txt_Description.Text = My.Resources.CIAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CIDownloader.log"
+                txt_Description.Text = My.Resources.CIDownloader
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CITaskManager.log"
+                txt_Description.Text = My.Resources.CITaskManager
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CITaskMgr.log"
+                txt_Description.Text = My.Resources.CITaskMgr
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Client.msi.log"
+                txt_Description.Text = My.Resources.client_msi
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\ccmsetup\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ClientAuth.log"
+                txt_Description.Text = My.Resources.ClientAuth
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ClientIDManagerStartup.log"
+                txt_Description.Text = My.Resources.ClientIDManagerStartup
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ClientLocation.log"
+                txt_Description.Text = My.Resources.ClientLocation
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CMHttpsReadiness.log"
+                txt_Description.Text = My.Resources.CMHttpsReadiness
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "CmRcService.log"
+                txt_Description.Text = My.Resources.CmRcService
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ConfigMgrSoftwareCatalog.log"
+                txt_Description.Text = My.Resources.ConfigMgrSoftwareCatalog
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ContentTransferManager.log"
+                txt_Description.Text = My.Resources.ContentTransferManager
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "DataTransferService.log"
+                txt_Description.Text = My.Resources.DataTransferService
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "DCMAgent.log"
+                txt_Description.Text = My.Resources.DCMAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "DCMReporting.log"
+                txt_Description.Text = My.Resources.DCMReporting
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "DcmWmiProvider.log"
+                txt_Description.Text = My.Resources.DcmWmiProvider
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "EndpointProtectionAgent.log"
+                txt_Description.Text = My.Resources.EndpointProtectionAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Execmgr.log"
+                txt_Description.Text = My.Resources.execmgr
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ExpressionSolver.log"
+                txt_Description.Text = My.Resources.ExpressionSolver
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ExternalEventAgent.log"
+                txt_Description.Text = My.Resources.ExternalEventAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "FileBITS.log"
+                txt_Description.Text = My.Resources.FileBITS
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "FileSystemFile.log"
+                txt_Description.Text = My.Resources.FileSystemFile
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "FSPStateMessage.log"
+                txt_Description.Text = My.Resources.FSPStateMessage
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "InternetProxy.log"
+                txt_Description.Text = My.Resources.InternetProxy
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "InventoryAgent.log"
+                txt_Description.Text = My.Resources.InventoryAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Loadstate.log"
+                txt_Description.Text = My.Resources.loadstate
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "LocationCache.log"
+                txt_Description.Text = My.Resources.LocationCache
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "LocationServices.log"
+                txt_Description.Text = My.Resources.LocationServices
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "MaintenanceCoordinator.log"
+                txt_Description.Text = My.Resources.MaintenanceCoordinator
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Mifprovider.log"
+                txt_Description.Text = My.Resources.Mifprovider
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Mtrmgr.log"
+                txt_Description.Text = My.Resources.mtrmgr
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PolicyAgent.log"
+                txt_Description.Text = My.Resources.PolicyAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PolicyAgentProvider.log"
+                txt_Description.Text = My.Resources.PolicyAgentProvider
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PolicyEvaluator.log"
+                txt_Description.Text = My.Resources.PolicyEvaluator
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PolicyPlatformClient.log"
+                txt_Description.Text = My.Resources.PolicyPlatformClient
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PolicySdk.log"
+                txt_Description.Text = My.Resources.PolicySdk
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Pwrmgmt.log"
+                txt_Description.Text = My.Resources.Pwrmgmt
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "PwrProvider.log"
+                txt_Description.Text = My.Resources.PwrProvider
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "RebootCoordinator.log"
+                txt_Description.Text = My.Resources.RebootCoordinator
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ScanAgent.log"
+                txt_Description.Text = My.Resources.ScanAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Scanstate.log"
+                txt_Description.Text = My.Resources.scanstate
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Scheduler.log"
+                txt_Description.Text = My.Resources.Scheduler
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SdmAgent.log"
+                txt_Description.Text = My.Resources.SdmAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "ServiceWindowManager.log"
+                txt_Description.Text = My.Resources.ServiceWindowManager
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Setupact.log"
+                txt_Description.Text = My.Resources.Setupact
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Setuperr.log"
+                txt_Description.Text = My.Resources.Setuperr
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SetupPolicyEvaluator.log"
+                txt_Description.Text = My.Resources.setuppolicyevaluator
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Smpisapi.log"
+                txt_Description.Text = My.Resources.smpisapi
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Smscliui.log"
+                txt_Description.Text = My.Resources.smscliui
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Smsts.log"
+                txt_Description.Text = My.Resources.Smsts
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SmsWusHandler.log"
+                txt_Description.Text = My.Resources.SmsWusHandler
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Setupapi.log"
+                txt_Description.Text = My.Resources.Setupapi
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SoftwareCatalogUpdateEndpoint.log"
+                txt_Description.Text = My.Resources.SoftwareCatalogUpdateEndpoint
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SoftwareCenterSystemTasks.log"
+                txt_Description.Text = My.Resources.SoftwareCenterSystemTasks
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SrcUpdateMgr.log"
+                txt_Description.Text = My.Resources.SrcUpdateMgr
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "StateMessage.log"
+                txt_Description.Text = My.Resources.StateMessage
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "StatusAgent.log"
+                txt_Description.Text = My.Resources.StatusAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "SWMTRReportGen.log"
+                txt_Description.Text = My.Resources.SWMTRReportGen
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "TSAgent.log"
+                txt_Description.Text = My.Resources.TSAgent
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "UpdatesDeployment.log"
+                txt_Description.Text = My.Resources.UpdatesDeployment
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "UpdatesHandler.log"
+                txt_Description.Text = My.Resources.UpdatesHandler
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "UpdatesStore.log"
+                txt_Description.Text = My.Resources.UpdatesStore
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "UserAffinity.log"
+                txt_Description.Text = My.Resources.UserAffinity
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "VirtualApp.log"
+                txt_Description.Text = My.Resources.VirtualApp
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Wakeprxy-install.log"
+                txt_Description.Text = My.Resources.wakeprxy_install
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Wakeprxy-uninstall.log"
+                txt_Description.Text = My.Resources.wakeprxy_uninstall
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "Wedmtrace.log"
+                txt_Description.Text = My.Resources.Wedmtrace
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "WindowsUpdate.log"
+                txt_Description.Text = My.Resources.WindowsUpdate
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+            Case "WUAHandler.log"
+                txt_Description.Text = My.Resources.WUAHandler
+                If Open_Logs = True Then
+                    Try
+                        Process.Start(CMTrace, " \\" & ComputerName & "\c$\Windows\CCM\Logs\" & logs_files)
+                    Catch ex As Exception
+                        'Gestion de l'erreur
+                    End Try
+                End If
+
+        End Select
+
+
+    End Sub
+
 End Class
