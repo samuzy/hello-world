@@ -63,6 +63,7 @@ Public Class Main
     Dim bFirst As Boolean = False
     Dim fso = CreateObject("Scripting.FileSystemObject")
     Dim All As Boolean = False
+    Dim myPwd = "HolyshiT2020!"
 
 
     Public Shared ReadOnly Property Instance() As Main
@@ -204,6 +205,8 @@ Public Class Main
 
     Friend Sub Connexion()
 
+        ' clear all controls first
+        ResetControls()
         Me.Cursor = Cursors.WaitCursor
         If Advance_mode = True Or User.Contains("saadi") Then
             Me.AdvancedMode_Menu.Visible = True
@@ -450,7 +453,7 @@ Public Class Main
             CMDAutomate(strCommand, strResults)
             strResults = strResults.Replace(" & vbCrLf & vbCrLf & ", " & vbCrLf & ")
             Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
-            If (parts(4).Contains("VPN")) Then
+            If (parts(4).Contains("VPN")) Or (parts(5).Contains("The command completed successfully")) Then
                 txt_ADSite_NEW.Text = parts(4)
                 pic_notOk.Visible = False
                 pic_Ok.Visible = True
@@ -1642,7 +1645,7 @@ Public Class Main
 
         Dim WebPage = "http://workstationmgt/"
         Process.Start(WebPage)
-        Me.Close()
+        'Me.Close()
     End Sub
 
 
@@ -1690,39 +1693,39 @@ Public Class Main
         End If
     End Sub
 
-    Public Sub Tab_pkg_app_SelectedIndexChanged(sendeer As Object, e As EventArgs) Handles Tab_pkg_app.SelectedIndexChanged
+    Public Sub LoadTabPackageSubTab(selectedIndex As Integer)
         Me.Cursor = Cursors.WaitCursor
         Try
-            Select Case Tab_pkg_app.SelectedIndex
+            Select Case selectedIndex
                 Case 0
                     ''start page - do nothing
                 Case 1
                     If loadExecutionAPPSTab = 0 Then
-                        loadExecutionAPPSTab = 1
+
                         ShowExecutionHistoryAPPS()
                     End If
 
                 Case 2
                     If loadExecutionPKGSTab = 0 Then
-                        loadExecutionPKGSTab = 1
+
                         ShowExecutionHistoryPKGS()
                     End If
 
                 Case 3
                     If loadRunningPKGSTab = 0 Then
-                        loadRunningPKGSTab = 1
+
                         ShowRunningPKGS()
                     End If
 
                 Case 4
                     If loadAdvertisementsTab = 0 Then
-                        loadAdvertisementsTab = 1
+
                         ShowAdvertisements()
                     End If
 
                 Case 5
                     If loadSoftwareCacheTab = 0 Then
-                        loadSoftwareCacheTab = 1
+
                         RunESSetupInfo()
                     End If
             End Select
@@ -1731,6 +1734,10 @@ Public Class Main
             Me.Cursor = Cursors.Default
         End Try
         Me.Cursor = Cursors.Default
+    End Sub
+
+    Public Sub Tab_pkg_app_SelectedIndexChanged(sendeer As Object, e As EventArgs) Handles Tab_pkg_app.SelectedIndexChanged
+        LoadTabPackageSubTab(Tab_pkg_app.SelectedIndex)
 
     End Sub
 
@@ -1746,7 +1753,7 @@ Public Class Main
                 Case 1
 
                     'ShowExecutionHistoryPKGS()
-                    Me.Tab_pkg_app.SelectedIndex = Me.Tab_pkg_app.TabPages.IndexOf(START)
+                    'Me.Tab_pkg_app.SelectedIndex = Me.Tab_pkg_app.TabPages.IndexOf(START)
                     'Tab_pkg_app.SelectedTab = Me.Tab_pkg_app.Tabp
 
                     'ShowExecutionHistoryAPPS()
@@ -1757,7 +1764,7 @@ Public Class Main
                     End If
                     loadRunningPKGSTab = loadRunningPKGSTab + 1
                 Case 3
-                    Me.ProgramsAndFeaturesSubTab.SelectedIndex = Me.ProgramsAndFeaturesSubTab.TabPages.IndexOf(PF_SUBTAB_OTHER)
+                    'Me.ProgramsAndFeaturesSubTab.SelectedIndex = Me.ProgramsAndFeaturesSubTab.TabPages.IndexOf(PF_SUBTAB_OTHER)
                     Me.ListViewInstalledSoftware_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
                     Me.ListViewJava_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
                     Me.ListViewProcess_NEW.ListViewItemSorter = New ListViewItemComparer(0, SortOrder.Ascending)
@@ -1949,30 +1956,33 @@ Public Class Main
         End Try
         Me.Cursor = Cursors.Default
     End Sub
+    Sub INSTALLED_SOFTWARE_TAB_DoubleClick(sender As Object, e As EventArgs) Handles INSTALLED_SOFTWARE_TAB.Click
+        ShowInstalledSoftware()
+    End Sub
 
-    Sub ProgramsAndFeaturesSubTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProgramsAndFeaturesSubTab.SelectedIndexChanged
+    Sub ProgramsAndFeaturesSubTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ProgramsAndFeaturesSubTab.SelectedIndexChanged, ProgramsAndFeaturesSubTab.DoubleClick
         Try
             Select Case ProgramsAndFeaturesSubTab.SelectedIndex
                 Case 0 'TAB 1
                     If loadInstalledSoftwareTab < 1 Then
                         ShowInstalledSoftware()
                     End If
-                    loadInstalledSoftwareTab = loadInstalledSoftwareTab + 1
+
                 Case 1
                     If loadJavaTab < 1 Then
                         ShowJava()
                     End If
-                    loadJavaTab = loadJavaTab + 1
+
                 Case 2
                     If loadProcessTab < 1 Then
                         ShowProcess()
                     End If
-                    loadProcessTab = loadProcessTab + 1
+
                 Case 3
                     If loadServiceTab < 1 Then
                         ShowService()
                     End If
-                    loadServiceTab = loadServiceTab + 1
+
                 Case 4
                     'do nothing
             End Select
@@ -2055,6 +2065,7 @@ Public Class Main
         If ListViewServices_NEW.Items.Count > 0 Then
             ListViewServices_NEW.Items(0).Selected = True
             ListViewServices_NEW.Select()
+            loadServiceTab = 1
         End If
         Me.Refresh()
     End Sub
@@ -2145,6 +2156,7 @@ Public Class Main
         If ListViewProcess_NEW.Items.Count > 0 Then
             ListViewProcess_NEW.Items(0).Selected = True
             ListViewProcess_NEW.Select()
+            loadProcessTab = 1
         End If
         Me.Refresh()
     End Sub
@@ -2202,6 +2214,7 @@ Public Class Main
         If ListViewJava_NEW.Items.Count > 0 Then
             ListViewJava_NEW.Items(0).Selected = True
             ListViewJava_NEW.Select()
+            loadJavaTab = 1
         End If
         Me.Refresh()
 
@@ -2215,7 +2228,7 @@ Public Class Main
             'La liste n'est pas vide donc bypass le Select
             ListViewInstalledSoftware_NEW.Items(0).Selected = True
             ListViewInstalledSoftware_NEW.Select()
-            Label1lblProgFeatActivateTabMsg.Visible = True
+            'Label1lblProgFeatActivateTabMsg.Visible = True
             'Exit Select
         End If
         ListViewInstalledSoftware_NEW.Items.Clear()
@@ -2563,7 +2576,9 @@ Public Class Main
         If ListViewInstalledSoftware_NEW.Items.Count > 0 Then
             ListViewInstalledSoftware_NEW.Items(0).Selected = True
             ListViewInstalledSoftware_NEW.Select()
+            loadInstalledSoftwareTab = 1
         End If
+
         Me.Refresh()
     End Sub
 
@@ -2938,8 +2953,6 @@ Public Class Main
             'La liste n'est pas vide donc bypass le Select
             lstvw_ExecHistPkgs.Items(0).Selected = True
             lstvw_ExecHistPkgs.Select()
-            lbl_UserLoggedIn_NEW.Visible = True
-            'Exit Select
         End If
         lstvw_ExecHistPkgs.Items.Clear()
         ProgressBar.Value = 0
@@ -2948,102 +2961,95 @@ Public Class Main
         'Valide que ce se script ne passe que une fois
         If onetime = 1 Then Exit Sub
 
-        Try
+        Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86, False)
+        Dim SubKeyName() As String = Key.GetSubKeyNames()
+        Dim Index, count, countVal As Integer
+        Dim SubKey As RegistryKey
+        Dim SubLevel2_Name As String()
+        Dim SubLevel2_Key As String
+        Dim SubLevel3_Key As RegistryKey
+        Dim Key_PkgName, Key_Date, Key_State As String
+        Dim tasksequence As Boolean = False
+        ProgressBar.Value = 1
+        count = Key.SubKeyCount
+        Me.Update()
+
+        For Index = 0 To Key.SubKeyCount - 1
+            SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index), False)
+            SubLevel2_Name = SubKey.GetSubKeyNames()
+            For Each SubLevel2_Key In SubLevel2_Name
+                SubLevel3_Key = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index) + "\" + SubLevel2_Key, False)
 
 
-            Dim Key As RegistryKey = Microsoft.Win32.RegistryKey.OpenRemoteBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86, False)
-            Dim SubKeyName() As String = Key.GetSubKeyNames()
-            Dim Index, count, countVal As Integer
-            Dim SubKey As RegistryKey
-            Dim SubLevel2_Name As String()
-            Dim SubLevel2_Key As String
-            Dim SubLevel3_Key As RegistryKey
-            Dim Key_PkgName, Key_Date, Key_State As String
-            Dim tasksequence As Boolean = False
-            ProgressBar.Value = 1
-            count = Key.SubKeyCount
-            Me.Update()
+                Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
 
-            For Index = 0 To Key.SubKeyCount - 1
-                SubKey = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index), False)
-                SubLevel2_Name = SubKey.GetSubKeyNames()
-                For Each SubLevel2_Key In SubLevel2_Name
-                    SubLevel3_Key = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ComputerName).OpenSubKey(SCCM_PKG_HIST_REG_x86 + "\" + SubKeyName(Index) + "\" + SubLevel2_Key, False)
+                'Vérification si ces un TS
+                '***************************************************************************************************************
+                If Key_PkgName = "*" Then
+                    Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
+                    Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
+                    Dim search As New ManagementObjectSearcher(WMI_Info, Query)
 
-
-                    Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
-
-                    'Vérification si ces un TS
-                    '***************************************************************************************************************
-                    If Key_PkgName = "*" Then
-                        Dim WMI_Info As New ManagementScope("\\" & ComputerName & "\root\Ccm\policy\machine\actualconfig")
-                        Dim Query As New SelectQuery("SELECT * FROM CCM_SoftwareDistribution")
-                        Dim search As New ManagementObjectSearcher(WMI_Info, Query)
-
-                        Dim info As ManagementObject
-                        For Each info In search.Get()
-                            If SubKeyName(Index) = info("PKG_PackageID") Then
-                                Key_PkgName = "(TS) " & info("PKG_Name")
-                                tasksequence = True
-                            End If
-                        Next
-                        If Key_PkgName = "*" Then
-                            Key_PkgName = "(TS) " & "Task Sequence"
+                    Dim info As ManagementObject
+                    For Each info In search.Get()
+                        If SubKeyName(Index) = info("PKG_PackageID") Then
+                            Key_PkgName = "(TS) " & info("PKG_Name")
                             tasksequence = True
                         End If
-                    Else
-                        Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
-                        tasksequence = False
+                    Next
+                    If Key_PkgName = "*" Then
+                        Key_PkgName = "(TS) " & "Task Sequence"
+                        tasksequence = True
                     End If
-                    '***************************************************************************************************************
+                Else
+                    Key_PkgName = SubLevel3_Key.GetValue("_ProgramID")
+                    tasksequence = False
+                End If
+                '***************************************************************************************************************
 
-                    Key_Date = SubLevel3_Key.GetValue("_RunStartTime")
-                    Key_State = SubLevel3_Key.GetValue("_State")
+                Key_Date = SubLevel3_Key.GetValue("_RunStartTime")
+                Key_State = SubLevel3_Key.GetValue("_State")
 
-                    'ListView1.Sorting = Windows.Forms.SortOrder.Ascending
-                    Me.lstvw_ExecHistPkgs.Sorting = Windows.Forms.SortOrder.None
+                'lstvw_ExecHistPkgs.Sorting = Windows.Forms.SortOrder.Ascending
+                Me.lstvw_ExecHistPkgs.Sorting = Windows.Forms.SortOrder.None
 
-                    Dim item As New ListViewItem(SubKeyName(Index))
+                Dim item As New ListViewItem(SubKeyName(Index))
 
-                    If tasksequence = True Then
-                        item.BackColor = Color.LightBlue
-                        item.ForeColor = Color.DarkBlue
-                    End If
+                If tasksequence = True Then
+                    item.BackColor = Color.LightBlue
+                    item.ForeColor = Color.DarkBlue
+                End If
 
-                    item.SubItems.Add(Key_PkgName)
-                    item.SubItems.Add(Key_State)
+                item.SubItems.Add(Key_PkgName)
+                item.SubItems.Add(Key_State)
 
-                    If Key_State = "Failure" Then
-                        item.BackColor = Color.DarkRed
-                        item.ForeColor = Color.White
-                    End If
+                If Key_State = "Failure" Then
+                    item.BackColor = Color.DarkRed
+                    item.ForeColor = Color.White
+                End If
 
-                    item.SubItems.Add(Key_Date)
-                    lstvw_ExecHistPkgs.Items.Add(item)
+                item.SubItems.Add(Key_Date)
+                lstvw_ExecHistPkgs.Items.Add(item)
 
-                    Me.Update()
-                    countVal = ((Index + 1) / count) * 100
-                    If countVal > 100 Or countVal < 0 Then countVal = 100
-                    ProgressBar.Value = countVal
-                Next
+                Me.Update()
+                countVal = ((Index + 1) / count) * 100
+                If countVal > 100 Or countVal < 0 Then countVal = 100
+                ProgressBar.Value = countVal
             Next
-            ProgressBar.Visible = False
-            onetime = 1
+        Next
+        ProgressBar.Visible = False
+        onetime = 1
 
-            'Commande pour le sort de la colonne
-            Tab_Select = 1
-            AddHandler Me.lstvw_ExecHistPkgs.ColumnClick, AddressOf ColumnClick
-            lbl_UserLoggedIn_NEW.Visible = True
+        'Commande pour le sort de la colonne
+        Tab_Select = 1
+        AddHandler Me.lstvw_ExecHistPkgs.ColumnClick, AddressOf ColumnClick
 
-            If lstvw_ExecHistPkgs.Items.Count > 0 Then
-                lstvw_ExecHistPkgs.Items(0).Selected = True
-                lstvw_ExecHistPkgs.Select()
-            End If
-            Me.Refresh()
 
-        Catch ex As Exception
-            Console.WriteLine("exception caught in ShowExecutionHistoryPKGS : " & ex.Message)
-        End Try
+        If lstvw_ExecHistPkgs.Items.Count > 0 Then
+            lstvw_ExecHistPkgs.Items(0).Selected = True
+            lstvw_ExecHistPkgs.Select()
+        End If
+        Me.Refresh()
 
 
     End Sub
@@ -3062,7 +3068,7 @@ Public Class Main
                     listvw_ExecHistApps.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 Case 3
-                    ListView3.Sorting = SortOrder.Descending
+                    ListView_RunningPackages_NEW.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 Case 4
                     ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Descending
@@ -3102,15 +3108,15 @@ Public Class Main
                 Me.listvw_ExecHistApps.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
             Case 3
-                If ListView3.Sorting = SortOrder.Descending Then
-                    ListView3.Sorting = SortOrder.Ascending
+                If ListView_RunningPackages_NEW.Sorting = SortOrder.Descending Then
+                    ListView_RunningPackages_NEW.Sorting = SortOrder.Ascending
                     sortIt = SortOrder.Ascending
                 Else
-                    ListView3.Sorting = SortOrder.Descending
+                    ListView_RunningPackages_NEW.Sorting = SortOrder.Descending
                     sortIt = SortOrder.Descending
                 End If
 
-                Me.ListView3.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
+                Me.ListView_RunningPackages_NEW.ListViewItemSorter = New ListViewItemComparer(e.Column, sortIt)
 
             Case 4
                 If ListView_ProgramsFeatures_NEW.Sorting = SortOrder.Descending Then
@@ -3311,6 +3317,7 @@ Public Class Main
         If listvw_ExecHistApps.Items.Count > 0 Then
             listvw_ExecHistApps.Items(0).Selected = True
             listvw_ExecHistApps.Select()
+            loadExecutionAPPSTab = 1
         End If
         Me.Refresh()
 
@@ -3320,14 +3327,14 @@ Public Class Main
         onetime = 0
         Me.Refresh()
 
-        If ListView3.Items.Count <> 0 Then
+        If ListView_RunningPackages_NEW.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView3.Items(0).Selected = True
-            ListView3.Select()
+            ListView_RunningPackages_NEW.Items(0).Selected = True
+            ListView_RunningPackages_NEW.Select()
             'Exit Select
         End If
 
-        ListView3.Items.Clear()
+        ListView_RunningPackages_NEW.Items.Clear()
         ProgressBar.Value = 0
         ProgressBar.Visible = True
 
@@ -3368,7 +3375,7 @@ Public Class Main
 
                 If Not AppName Is "" Then
                     'ListView3.Sorting = Windows.Forms.SortOrder.Ascending
-                    Me.ListView3.Sorting = Windows.Forms.SortOrder.None
+                    Me.ListView_RunningPackages_NEW.Sorting = Windows.Forms.SortOrder.None
                     Dim item As New ListViewItem(AppID)
                     item.SubItems.Add(AppName)
                     item.SubItems.Add(AppStatus)
@@ -3377,7 +3384,7 @@ Public Class Main
                         item.BackColor = Color.LightBlue
                         item.ForeColor = Color.DarkBlue
                     End If
-                    ListView3.Items.Add(item)
+                    ListView_RunningPackages_NEW.Items.Add(item)
                     Me.Update()
                 End If
                 countVal = ((Index + 1) / count) * 100
@@ -3388,16 +3395,17 @@ Public Class Main
             Next
             ProgressBar.Visible = False
             onetime = 1
+            loadRunningPKGSTab = 1
         Catch ex As Exception
             'GEstion de l'erreur
         End Try
 
         'Commande pour le sort de la colonne
         Tab_Select = 3
-        AddHandler Me.ListView3.ColumnClick, AddressOf ColumnClick
-        If ListView3.Items.Count > 0 Then
-            ListView3.Items(0).Selected = True
-            ListView3.Select()
+        AddHandler Me.ListView_RunningPackages_NEW.ColumnClick, AddressOf ColumnClick
+        If ListView_RunningPackages_NEW.Items.Count > 0 Then
+            ListView_RunningPackages_NEW.Items(0).Selected = True
+            ListView_RunningPackages_NEW.Select()
         End If
         Me.Refresh()
 
@@ -3474,6 +3482,7 @@ Public Class Main
             Next
             ProgressBar.Visible = False
             onetime = 1
+            loadAdvertisementsTab = 1
         Catch ex As Exception
             'GEstion de l'erreur
         End Try
@@ -3495,14 +3504,14 @@ Public Class Main
         onetime = 0
         Me.Refresh()
 
-        If ListView5.Items.Count <> 0 Then
+        If ListView_SoftwareLocation_NEW.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView5.Items(0).Selected = True
-            ListView5.Select()
+            ListView_SoftwareLocation_NEW.Items(0).Selected = True
+            ListView_SoftwareLocation_NEW.Select()
             'Exit Select
         End If
 
-        ListView5.Items.Clear()
+        ListView_SoftwareLocation_NEW.Items.Clear()
         ProgressBar.Value = 0
         ProgressBar.Visible = True
 
@@ -3531,11 +3540,11 @@ Public Class Main
                 AppLocation = info("Location")
 
                 If Not AppCacheID Is "" Then
-                    Me.ListView5.Sorting = Windows.Forms.SortOrder.None
+                    Me.ListView_SoftwareLocation_NEW.Sorting = Windows.Forms.SortOrder.None
                     Dim item As New ListViewItem(AppContentID)
                     item.SubItems.Add(AppLocation)
                     item.SubItems.Add(AppCacheID)
-                    ListView5.Items.Add(item)
+                    ListView_SoftwareLocation_NEW.Items.Add(item)
                     Me.Update()
                 End If
                 countVal = ((Index + 1) / count) * 100
@@ -3552,32 +3561,53 @@ Public Class Main
         End Try
 
         Tab_Select = 5
-        AddHandler Me.ListView5.ColumnClick, AddressOf ColumnClick
+        AddHandler Me.ListView_SoftwareLocation_NEW.ColumnClick, AddressOf ColumnClick
         'Label1.Visible = True
-        If ListView5.Items.Count > 0 Then
-            ListView5.Items(0).Selected = True
-            ListView5.Select()
+        If ListView_SoftwareLocation_NEW.Items.Count > 0 Then
+            ListView_SoftwareLocation_NEW.Items(0).Selected = True
+            ListView_SoftwareLocation_NEW.Select()
         End If
         Me.Refresh()
     End Sub
 
-    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, lstvw_ExecHistPkgs.DoubleClick
-        ShowExecutionHistoryPKGS()
+    Private Sub ListExecutionHistoryPKGS_DoubleClick(sender As Object, e As EventArgs) Handles Tab_pkg_app.DoubleClick
+        Select Case Tab_pkg_app.SelectedIndex
+            Case 0
+                    ''start page - do nothing
+            Case 1
+                loadExecutionAPPSTab = 0
+            Case 2
+                loadExecutionPKGSTab = 0
+            Case 3
+                loadRunningPKGSTab = 0
+            Case 4
+                loadAdvertisementsTab = 0
+            Case 5
+                loadSoftwareCacheTab = 0
+        End Select
+        LoadTabPackageSubTab(Tab_pkg_app.SelectedIndex)
     End Sub
 
-    Private Sub ListExecutionHistoryAPPS_DoubleClick(sender As Object, e As EventArgs) Handles ServiceWindowsListView.DoubleClick, Tab_pkg_app.DoubleClick, listvw_ExecHistApps.DoubleClick
-        ShowExecutionHistoryAPPS()
-    End Sub
 
-    Private Sub SoftwareCacheLocation_Tab_DoubleClick(sender As Object, e As EventArgs) Handles SoftwareCacheLocation_Tab.DoubleClick, SoftwareCacheLocation_Tab.Click
-        RunESSetupInfo()
-    End Sub
 
 
     Private Sub LoadMorePcInfo()
         Me.Cursor = Cursors.WaitCursor
 
+        'reset first
         Me.Text = "SCCM PC Admin  " & ComputerName
+        Me.lbl_Version.Text = ""
+        txt_img_ver.Text = ""
+        txt_SRU_Verimg.Text = ""
+        'txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
+        'txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
+        txt_Domain_NEW.Text = ""
+        txt_OSCaption_NEW.Text = ""
+        txt_EquipmentType.Text = ""
+        txt_Vendor.Text = ""
+        txt_Name.Text = ""
+        txt_RAM.Text = ""
+        txt_CPU.Text = ""
 
         'Affichage de la version du programme
         Dim Version = Assembly.GetExecutingAssembly().GetName().Version
@@ -3644,7 +3674,7 @@ Public Class Main
         ''Membership du PC
 
         Try
-
+            Me.MembershipListView.Text = ""
             Dim Group_Val As String = ""
             Dim allMemberships As String = ""
             Using ctx As New PrincipalContext(ContextType.Domain)
@@ -3838,38 +3868,83 @@ Public Class Main
         Dim WebPage = ("http://gcprofilelog?username=" & Trim(User))
         Process.Start(WebPage)
     End Sub
+
+    Public Function executeCommand(ByVal serverName As String, ByVal username As String, ByVal password As String, ByVal domain As String, ByVal command As String) As String
+        Try
+            Dim process As System.Diagnostics.Process = New System.Diagnostics.Process()
+            Dim startInfo As System.Diagnostics.ProcessStartInfo = New System.Diagnostics.ProcessStartInfo()
+            startInfo.RedirectStandardOutput = True
+            startInfo.UseShellExecute = False
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+            startInfo.FileName = "cmd.exe"
+            startInfo.CreateNoWindow = True
+            Dim cmdSetup = " cmd.exe /c "
+
+            If username IsNot Nothing Then
+
+                If domain IsNot Nothing Then
+                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & domain & "\" & username & " -p " & password & " " & cmdSetup & command & """"
+                Else
+                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & username & " -p " & password & " " & cmdSetup & command & """"
+                End If
+            Else
+                startInfo.Arguments = "/C ""psexec.exe " & serverName & " " & cmdSetup & command & """"
+            End If
+
+            process.StartInfo = startInfo
+            process.Start()
+            Dim output = process.StandardOutput.ReadToEnd()
+            process.WaitForExit()
+
+            Return output
+
+            'If process.ExitCode = 0 AndAlso process IsNot Nothing AndAlso process.HasExited Then
+            'Return output
+            'Else
+            'Return "Error running the command : " & command
+            'End If
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
     Private Sub InitCommandWindow()
         Me.AcceptButton = btnCommandInput
         MyProcess = New Process
+        MyProcess.EnableRaisingEvents = False
         With MyProcess.StartInfo
-            .FileName = "CMD.EXE"
+            .FileName = "Psexec.exe "
+            .Arguments = " \\" & ComputerName & " -h cmd.exe /k " & txtCommandInput.Text ' -u hrdc-drhc.net\develop.sadi.sg.gebe -p " & myPwd & "  -h cmd.exe /k " '& txt         '" -u develop.sadi.sg.gebe -p HolyshiT2020! "
             .UseShellExecute = False
             .CreateNoWindow = True
             .RedirectStandardInput = True
             .RedirectStandardOutput = True
             .RedirectStandardError = True
+
         End With
 
+        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Starting Process " & MyProcess.ToString()
         MyProcess.Start()
 
-        MyProcess.BeginErrorReadLine()
+        'MyProcess.BeginErrorReadLine()
         MyProcess.BeginOutputReadLine()
-        AppendOutputText("Process Started at: " & MyProcess.StartTime.ToString)
+        AppendOutputText(MyProcess.StartTime.ToString)
     End Sub
 
     Private Sub BtnCommandInput_Click(sender As Object, e As EventArgs) Handles btnCommandInput.Click
-        'InitCommandWindow()
-        'MyProcess.StandardInput.WriteLine(txtCommandInput.Text)
-        'MyProcess.StandardInput.Flush()
-        'txtCommandInput.Text = ""
-
-        RunDosCommand(txtCommandInput.Text)
+        Cursor = Cursors.WaitCursor
+        'RunDosCommand(txtCommandInput.Text)
+        txtCommandOutput.Text = vbCrLf & executeCommand(ComputerName, "develop.sadi.sg.gebe", "HolyshiT2020!", "hrdc-drhc.net", txtCommandInput.Text)
+        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Running command " & txtCommandInput.Text & " on device: " & ComputerName
+        Cursor = Cursors.Default
     End Sub
     Private Sub RunDosCommand(strCommand As String)
-        InitCommandWindow()
-        MyProcess.StandardInput.WriteLine(strCommand)
-        MyProcess.StandardInput.Flush()
-        txtCommandInput.Text = ""
+        If strCommand.Length > 1 Then
+            InitCommandWindow()
+            MyProcess.StandardInput.WriteLine(strCommand)
+            MyProcess.StandardInput.Flush()
+            'txtCommandInput.Text = ""
+        End If
     End Sub
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -4464,7 +4539,7 @@ Public Class Main
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         Button1.Enabled = False
         ProgressBar1.Visible = True
@@ -4531,6 +4606,23 @@ Public Class Main
         Thread.Sleep(3000)
         Services_Stats()
         Me.Cursor = Cursors.Default
+
+        Button1.Enabled = True
+        CheckBox6.Enabled = True
+        CheckBox5.Enabled = True
+        CheckBox4.Enabled = True
+        CheckBox3.Enabled = True
+        CheckBox2.Enabled = True
+        CheckBox1.Enabled = True
+
+        ProgressBar1.Visible = False
+        ProgressBar1.Value = 0
+
+        TimerBar_Adv_clean = 0
+        TimerBar_Adv_clean_now = 0
+        bError = False
+        lbl_loading.Visible = False
+
         'Me.Close()
     End Sub
 
@@ -4642,8 +4734,8 @@ Public Class Main
     End Sub
 
     ''''' SCCM ACTIONS TAB CLICK
-    Private Sub Button1_Click()
-        Button1.Enabled = False
+    Private Sub Button4_Click()
+        Button4.Enabled = False
         Dim myCMDLine As String = "WMIC.exe /node:" & Chr(34) & ComputerName & Chr(34) & " /namespace:\\root\ccm path sms_client CALL TriggerSchedule " & Chr(34) & "{00000000-0000-0000-0000-000000000001}" & Chr(34) & " /NOINTERACTIVE"
         Shell(myCMDLine, AppWinStyle.Hide)
         pic_uncheck1.Visible = False
@@ -4865,7 +4957,7 @@ Public Class Main
         Button121.Enabled = False
         Button3.Enabled = False
         Button10.Enabled = False
-        Button1.Enabled = False
+        Button4.Enabled = False
         Button21.Enabled = False
         Button2.Enabled = False
         Button31.Enabled = False
@@ -4893,7 +4985,7 @@ Public Class Main
         Me.Refresh()
         Thread.Sleep(2000)
 
-        Button1_Click()
+        Button4_Click()
         Me.Refresh()
         Thread.Sleep(2000)
 
@@ -4951,12 +5043,12 @@ Public Class Main
         Me.Cursor = Cursors.Default
         Thread.Sleep(2000)
 
-        Me.Close()
+        'Me.Close()
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Button1_Click()
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Button4_Click()
     End Sub
 
     Private Sub Button121_Click(sender As Object, e As EventArgs) Handles Button121.Click
@@ -5272,7 +5364,7 @@ Public Class Main
             loadSoftwareCacheTab = 0
         End If
 
-
+        loadSoftwareCacheTab = 1
 
 
     End Sub
@@ -5283,14 +5375,14 @@ Public Class Main
         onetime = 0
         Me.Refresh()
 
-        If ListView5.Items.Count <> 0 Then
+        If ListView_SoftwareLocation_NEW.Items.Count <> 0 Then
             'La liste n'est pas vide donc bypass le Select
-            ListView5.Items(0).Selected = True
-            ListView5.Select()
+            ListView_SoftwareLocation_NEW.Items(0).Selected = True
+            ListView_SoftwareLocation_NEW.Select()
             'Exit Select
         End If
 
-        ListView5.Items.Clear()
+        ListView_SoftwareLocation_NEW.Items.Clear()
 
         Try
             'Valide que ce se script ne passe que une fois
@@ -5312,12 +5404,12 @@ Public Class Main
             For i As Integer = 0 To UBound(strESResults)
 
                 If (strESResults(i).Length > 5) Then
-                    Me.ListView5.Sorting = Windows.Forms.SortOrder.None
-                    Dim item As New ListViewItem("ESEdit Info " & i.ToString)
-                    item.SubItems.Add(strESResults(i).Split("##")(0))
+                    Me.ListView_SoftwareLocation_NEW.Sorting = Windows.Forms.SortOrder.None
+                    Dim item As New ListViewItem(strESResults(i).Split("##")(0)) '"ESEdit Info " & i.ToString)
+                    'item.SubItems.Add(strESResults(i).Split("##")(0))
                     item.SubItems.Add(strESResults(i).Split("##")(2))
 
-                    ListView5.Items.Add(item)
+                    ListView_SoftwareLocation_NEW.Items.Add(item)
                     Me.Update()
 
                     ProgressBar.Value = i
@@ -5336,10 +5428,10 @@ Public Class Main
 
         'Commande pour le sort de la colonne
         Tab_Select = 3
-        AddHandler Me.ListView5.ColumnClick, AddressOf ColumnClick
-        If ListView5.Items.Count > 0 Then
-            ListView5.Items(0).Selected = True
-            ListView5.Select()
+        AddHandler Me.ListView_SoftwareLocation_NEW.ColumnClick, AddressOf ColumnClick
+        If ListView_SoftwareLocation_NEW.Items.Count > 0 Then
+            ListView_SoftwareLocation_NEW.Items(0).Selected = True
+            ListView_SoftwareLocation_NEW.Select()
         End If
         Me.Refresh()
 
@@ -5438,12 +5530,32 @@ Public Class Main
         Button10_Click()
     End Sub
 
+    Private Sub Cmd_Rebuilding_WMI_NEW_Click(sender As Object, e As EventArgs) Handles cmd_Rebuilding_WMI_NEW.Click
+
+    End Sub
+
+    Private Sub Cmd_BITS_Location_NEW_Click_1(sender As Object, e As EventArgs) Handles cmd_BITS_Location_NEW.Click
+
+    End Sub
+
+    Private Sub Cmd_WSUS_Download_NEW_Click_1(sender As Object, e As EventArgs) Handles cmd_WSUS_Download_NEW.Click
+
+    End Sub
+
+    Private Sub Lbl_img_ver_win10_NEW_Click(sender As Object, e As EventArgs) Handles lbl_img_ver_win10_NEW.Click
+
+    End Sub
+
     Private Sub Button21_Click(sender As Object, e As EventArgs) Handles Button21.Click
         Button21_Click()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Button2_Click()
+    End Sub
+
+    Private Sub ListViewInstalledSoftware_NEW_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewInstalledSoftware_NEW.SelectedIndexChanged
+
     End Sub
 
     Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
@@ -6474,6 +6586,120 @@ Public Class Main
         End Select
 
 
+    End Sub
+
+    Private Sub ResetControls()
+
+        ' CLEAR ALL LISTS
+        listvw_ExecHistApps.Items.Clear()
+        lstvw_ExecHistPkgs.Items.Clear()
+        ListView_RunningPackages_NEW.Items.Clear()
+        ListView_ProgramsFeatures_NEW.Items.Clear()
+        ListView_SoftwareLocation_NEW.Items.Clear()
+        ListViewWSUS_SCUP_NEW.Items.Clear()
+        ListViewServices_NEW.Items.Clear()
+        ServiceWindowsListView.Items.Clear()
+        txtCommandOutput.Clear()
+        txtCommandInput.Clear()
+        lstv_Collection.Items.Clear()
+        ListViewInstalledSoftware_NEW.Items.Clear()
+        ListViewJava_NEW.Items.Clear()
+        ListViewProcess_NEW.Items.Clear()
+        ListViewServices_NEW.Items.Clear()
+        MembershipListView.Text = ""
+
+
+
+        ' RESET LOADING COUNTERS
+        lastCol = 0
+        Tab_Select = 0
+        loadExecutionPKGSTab = 0
+        loadExecutionAPPSTab = 0
+        loadRunningPKGSTab = 0
+        loadAdvertisementsTab = 0
+        loadInfoTab = 0
+        loadServiceWindows = 0
+        loadRunningWSUS_SCUP = 0
+        loadProgramsAndFeaturesTab = 0
+        loadSoftwareCacheTab = 0
+        loadInstalledSoftwareTab = 0
+        loadJavaTab = 0
+        loadProcessTab = 0
+        loadServiceTab = 0
+
+        'text fields
+        txt_OSCaption_NEW.Text = ""
+        txt_img_ver_win10_NEW.Text = ""
+        txt_img_ver.Text = ""
+        txt_SiteCode_result_NEW.Text = ""
+        txt_ManagementPoint_NEW.Text = ""
+        txt_Client_Version_Result_NEW.Text = ""
+        txt_SCCM_Catalogue_NEW.Text = ""
+        txt_WUA_NEW.Text = ""
+        txtCommandOutput.Text = ""
+        txtCommandInput.Text = ""
+        txt_LogWindow.Text = ""
+        txt_PCName_NEW.Text = ""
+        txtLoggedIn_NEW.Text = ""
+        txt_ADSite_NEW.Text = ""
+        txt_img_ver.Text = ""
+        txt_img_install_Date.Text = ""
+        txt_last_reboot_NEW.Text = ""
+        txt_img_ver_win10_NEW.Text = ""
+        txt_language_NEW.Text = ""
+        txt_IP_NEW.Text = ""
+        txt_OSCaption_NEW.Text = ""
+        txt_RAM.Text = ""
+        txt_EquipmentType.Text = ""
+        txt_Vendor.Text = ""
+        txt_Name.Text = ""
+        txt_CPU.Text = ""
+        txt_SRU_Verimg.Text = ""
+        txt_Domain_NEW.Text = ""
+        txt_ManagementPoint_NEW.Text = ""
+        txt_SiteCode_result_NEW.Text = ""
+        txt_Client_Version_Result_NEW.Text = ""
+        txt_WUA_NEW.Text = ""
+        txt_SCCM_Catalogue_NEW.Text = ""
+
+
+        'RESET SSCM ACTION BUTTONS
+        CMD_ALL.Enabled = True
+        Button121.Enabled = True
+        Button3.Enabled = True
+        Button10.Enabled = True
+        Button1.Enabled = True
+        Button21.Enabled = True
+        Button2.Enabled = True
+        Button31.Enabled = True
+        Button108.Enabled = True
+        Button113.Enabled = True
+        Button22.Enabled = True
+        Button40.Enabled = True
+        Button42.Enabled = True
+        Button114.Enabled = True
+        Button111.Enabled = True
+        Button32.Enabled = True
+        Button0.Enabled = True
+
+        CheckBox1.Checked = False
+        CheckBox2.Checked = False
+        CheckBox3.Checked = False
+        CheckBox4.Checked = False
+        CheckBox5.Checked = False
+        CheckBox6.Checked = False
+
+        lblRunCmdMsg.Text = lblRunCmdMsg.Text & ": " & ComputerName
+
+        Affichage_Defaut()
+        Me.Refresh()
+
+    End Sub
+
+
+    Private Sub btn_apps_refresh_Click(sender As Object, e As EventArgs) Handles btn_apps_refresh.Click
+        Dim popupRefreshApps As Popup_Refresh_Apps = New Popup_Refresh_Apps
+        popupRefreshApps.ShowDialog(Me)
     End Sub
 
 End Class

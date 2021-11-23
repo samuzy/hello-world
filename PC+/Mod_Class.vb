@@ -194,7 +194,8 @@ Module Get_PC_Information
         If m_strChassisTypes = "12" Then
             m_strChassisTypes = "MOBILE_DEVICE"
         ElseIf m_strChassisTypes = "0" Then
-            m_strChassisTypes = "?"
+            'm_strChassisTypes = "?"
+            m_strChassisTypes = "LAPTOP"
         Else
             m_strChassisTypes = "DESKTOP"
         End If

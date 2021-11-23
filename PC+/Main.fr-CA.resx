@@ -14958,7 +14958,7 @@
     <value>Réinitialisation forcée des politiques</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
-    <value>Cycle d'inventaire matériel</value>
+    <value>Start</value>
   </data>
   <data name="Button10.Text" xml:space="preserve">
     <value>Cycle de collecte de fichiers</value>
@@ -15111,9 +15111,9 @@
   <data name="cmd_registry_pol_NEW.Text" xml:space="preserve">
     <value>Delete the file: Registry.pol (client computer)</value>
   </data>
-  <data name="cmd_registry_pol_NEW.ToolTip" xml:space="preserve">
+  <!--<data name="cmd_registry_pol_NEW.ToolTip" xml:space="preserve">
     <value>Reboot remote computer</value>
-  </data>
+  </data>-->
   <data name="cmd_Client_Logs_NEW.Text" xml:space="preserve">
     <value>Client Logs</value>
   </data>
@@ -15141,7 +15141,18 @@
   <data name="btnAddMaintWindow_NEW.Text" xml:space="preserve">
     <value>Add Maintenance Window</value>
   </data>
-
+  <data name="lblRunCmdMsg" xml:space="preserve">
+    <value>[FR] Running commands will run on the connected device</value>
+  </data>
+  <data name="btn_apps_refresh" xml:space="preserve">
+    <value>[FR] Send Forced Update</value>
+  </data>
+  <data name="cmd_Refresh_NEW.text" xml:space="preserve">
+    <value>[FR] Refresh the screen</value>
+  </data>
+  
+  
+  
   <data name="pic_notOk.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
       iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
