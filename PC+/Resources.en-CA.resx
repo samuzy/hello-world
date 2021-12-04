@@ -763,4 +763,7 @@
   <data name="Error_BAD_AD" xml:space="preserve">
     <value>The computer you just entered is in an "OU" that is not included in SCCM. Please make sure you have the correct computer name or move it into the proper  “OU”.</value>
   </data>
+  <data name="Error_BAD_CON" xml:space="preserve">
+    <value>The computer you just entered cannot be reached.  Please make sure you have the correct computer name.</value>
+  </data>  
 </root>

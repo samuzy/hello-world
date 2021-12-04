@@ -1888,4 +1888,7 @@
   <data name="Error_BAD_AD" xml:space="preserve">
     <value>Error_BAD_AD</value>
   </data>
+  <data name="Error_BAD_CON" xml:space="preserve">
+    <value>Error_BAD_CON</value>
+  </data>
 </root>

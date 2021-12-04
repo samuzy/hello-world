@@ -98,6 +98,7 @@ Public Class Main
         ResetVersion()
     End Sub
 
+
     Private Sub ResetLanguage()
 
         If OSLanguage = "1036" Then
@@ -114,7 +115,7 @@ Public Class Main
             txt_ADSite_NEW.Text = m_strChassisTypes
         End If
 
-        txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
+        txt_img_install_Date_NEW.Text = WMIDateConvert(str_InstallDate)
         txt_last_reboot_NEW.Text = WMIDateConvert(str_LastBootUpTime)
 
     End Sub
@@ -174,6 +175,49 @@ Public Class Main
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        'FROM MAIN_START_FORM
+        PC_Status = False
+        pic_Ok.Visible = False
+        pic_notOk.Visible = False
+        pic_rightArrow.Visible = True
+        Err_Services_Acces = False
+        Err_RemoteRegistry_Acces = False
+        Err_MPSSVC_Acces = False
+        Err_CCMEXEC_Acces = False
+        Err_BITS_Acces = False
+        Err_PeerDistSvc_Acces = False
+        Err_wuauserv_Acces = False
+
+        'recupere le nom du pc ou est exécuter l'application
+        If ComputerName = "" Then ComputerName = System.Net.Dns.GetHostName.Trim
+        txt_PCName_NEW.Text = ComputerName
+
+        'vérifie la langue tu poste de travail pour afficher le programme dans la bonne langue au démarrage
+
+        If CurrentCulture.Name() = "fr-CA" Or CurrentCulture.Name() = "fr-FR" Then
+            GlobalUICulture = New CultureInfo("fr-CA")
+        Else
+            GlobalUICulture = New CultureInfo("en-CA")
+        End If
+
+        ResetLanguageMenuItems()
+        'ResetVersion()
+
+        'Vérification de l'utilistateur connecter
+        Username = RemoteUser.GetUserName()
+
+        'Valide le fichier INI soit la 
+        If CheckFileExists(INI_Files) Then
+            'do this if is true
+
+        Else
+            'do that if is False
+            MsgBox(My.Resources.Missing_INI_Files, MsgBoxStyle.Critical)
+            Close()
+        End If
+
+
+
         KeyPreview = True
 
         'Active le loading de la forme actuel
@@ -187,7 +231,7 @@ Public Class Main
 
         ResetVersion()
         Affichage_Defaut()
-        Connexion()
+        'Connexion()
 
         'Remet le cursor en mode defaut
         Me.Cursor = Cursors.Default
@@ -218,8 +262,14 @@ Public Class Main
 
         'Vérification si le PC est "Online"
         ComputerName = Trim(txt_PCName_NEW.Text)
+        If ComputerName.Contains("-") Then
+            ' do nothing for now, the - can't be stripped and these devices won't resolve properly during a nslookup reverse
+        Else
+            ComputerName = Regex.Replace(ComputerName, "[^a-zA-Z0-9.]", "")
+        End If
+
         'corrige le bug du CHAR invisible a la fin quand on entre une IP
-        ComputerName = Regex.Replace(ComputerName, "[^a-zA-Z0-9.]", "")
+
 
         If Reboot_Send = True Then
             Reboot_Send = False
@@ -265,14 +315,15 @@ Public Class Main
                     End If
 
                     'ComputerName = System.Net.Dns.GetHostName.Trim
-                    Main_Start_Form.Instance.txt_PCName.Text = ComputerName
-                    Main_Start_Form.Instance.pic_rightArrow.Visible = False
-                    Main_Start_Form.Instance.pic_notOk.Visible = True
-                    Main_Start_Form.Instance.pic_Ok.Visible = False
-                    Main_Start_Form.Instance.Text = "SCCM PC Admin"
-                    Main_Start_Form.Instance.Show()
+                    'Main_Start_Form.Instance.txt_PCName.Text = ComputerName
+                    'Main_Start_Form.Instance.pic_rightArrow.Visible = False
+                    'Main_Start_Form.Instance.pic_notOk.Visible = True
+                    'Main_Start_Form.Instance.pic_Ok.Visible = False
+                    'Main_Start_Form.Instance.Text = "SCCM PC Admin"
+                    'Main_Start_Form.Instance.Show()
                     Me.Cursor = Cursors.Default
-                    Main.Instance.Close()
+                    Me.lbl_loading.Visible = False
+                    'Main.Instance.Close()
 
                     Exit Sub
                 End If
@@ -351,7 +402,7 @@ Public Class Main
                 txt_img_ver_win10_NEW.Text = ""
             End If
 
-            txt_img_ver.Text = VerImg_data
+            txt_img_ver_NEW.Text = VerImg_data
             txt_SiteCode_result_NEW.Text = SiteCode
             txt_ManagementPoint_NEW.Text = ManagementPoint
             txt_Client_Version_Result_NEW.Text = ClientVer
@@ -475,8 +526,7 @@ Public Class Main
 
             'Désactive les loading
             Main_Start_Form.Instance.Label1.Visible = False
-            Me.lbl_loading.Visible = False
-            Me.Cursor = Cursors.Default
+
         Else
             pic_notOk.Visible = True
             pic_Ok.Visible = False
@@ -484,6 +534,12 @@ Public Class Main
 
         End If
 
+        '' assign new domain, username, password fields in the Dos Run Command Tab
+        txtRCW_domain.Text = txt_Domain_NEW.Text
+        txtRCW_username.Text = GetRunningSCCMAdminUser()
+        MainTab.SelectedIndex = 0
+        Me.lbl_loading.Visible = False
+        Me.Cursor = Cursors.Default
     End Sub
 
     Function CheckDNSAndIP() As Boolean
@@ -510,40 +566,50 @@ Public Class Main
                 End If
             Next
 
-            'Run twice
+            'Run twice only if ComputerName has no dashes
+            If ComputerName.Contains("-") Then
+                'don't do reverse lookup if it has a dash, problem with the DNS resolution with these devices so we have to bypass econd check
+                txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & strResults
+                retVal = True
+            Else
+                Dim arrayIPs = strListOfIPs.Split("###")
+                strResults = ""
 
-            Dim arrayIPs = strListOfIPs.Split("###")
-            strResults = ""
 
-
-            For i = 0 To UBound(arrayIPs)
-                If (Not arrayIPs(i).Equals("")) Then
-                    strCommand = "NSLOOKUP " & arrayIPs(i)
-                    CMDAutomate(strCommand, strResults)
-                    'parts = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
-                    'For j = 0 To UBound(parts)
-                    '    If (parts(i).Contains(ComputerName)) Then
-                    '        retVal = True
-                    '        Exit For
-                    '    End If
-                    'Next
-                    If strResults.Contains(ComputerName) Then
-                        'send to log window
-                        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & strResults
-                        retVal = True
-                        Exit For
+                For i = 0 To UBound(arrayIPs)
+                    If (Not arrayIPs(i).Equals("")) Then
+                        strCommand = "NSLOOKUP " & arrayIPs(i)
+                        CMDAutomate(strCommand, strResults)
+                        'parts = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+                        'For j = 0 To UBound(parts)
+                        '    If (parts(i).Contains(ComputerName)) Then
+                        '        retVal = True
+                        '        Exit For
+                        '    End If
+                        'Next
+                        If strResults.Contains(ComputerName) Then
+                            'send to log window
+                            txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & strResults
+                            retVal = True
+                            Exit For
+                        End If
                     End If
-                End If
-            Next
+                Next
 
-            'Dim strListedComputerName = parts(7)
-            If Not retVal Then
-                txt_PCName_NEW.Text = ""
-                txt_PCName_NEW.Text = txt_PCName_NEW.Text & " - DNS ISSUE"
+                'Dim strListedComputerName = parts(7)
+                If Not retVal Then
+                    txt_PCName_NEW.Text = ""
+                    txt_PCName_NEW.Text = txt_PCName_NEW.Text & " - DNS ISSUE"
+                End If
             End If
+
+
             'txt_NSLookup.Text = txt_NSLookup.Text & Newline & Newline & strCommand & Newline & parts(4) & Newline & parts(5) & Newline & parts(7) & Newline & parts(8)
         Else
             'txt_NSLookup.Text = "Not connected" & Newline & parts(4) & Newline & parts(5)
+            MsgBox(My.Resources.Error_BAD_CON & Chr(13) & Chr(10) & ComputerName, MsgBoxStyle.Critical)
+
+            txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Problem resolving address information"
         End If
 
         Return retVal
@@ -556,8 +622,8 @@ Public Class Main
         'Reset des valeurs par default
         txt_PCName_NEW.Text = ComputerName
         txt_Client_Version_Result_NEW.Text = "..."
-        txt_img_ver.Text = "..."
-        txt_img_install_Date.Text = "..."
+        txt_img_ver_NEW.Text = "..."
+        txt_img_install_Date_NEW.Text = "..."
         txt_language_NEW.Text = "..."
         txt_last_reboot_NEW.Text = "..."
         txt_SiteCode_result_NEW.Text = "..."
@@ -638,7 +704,7 @@ Public Class Main
         softwareForm.ShowDialog(Me)
     End Sub
 
-    Private Sub pic_Assitance_Click(sender As Object, e As EventArgs) Handles pic_Assitance.Click, REMOTEASSISTANCEToolStripMenuItem.Click
+    Private Sub pic_Assitance_Click(sender As Object, e As EventArgs) Handles picBoxHelp_NEW.Click, REMOTEASSISTANCEToolStripMenuItem.Click
         If pic_Assitance.Cursor = Cursors.Hand Then
             Me.Enabled = False
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\msra.exe", "/offerra " & ComputerName)
@@ -648,7 +714,7 @@ Public Class Main
         Me.Enabled = True
     End Sub
 
-    Private Sub pic_remote_Click(sender As Object, e As EventArgs) Handles pic_remote.Click, REMOTEDESKTOPToolStripMenuItem.Click
+    Private Sub pic_remote_Click(sender As Object, e As EventArgs) Handles picBoxRDP_NEW.Click, REMOTEDESKTOPToolStripMenuItem.Click
         'mstsc.exe
         Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\mstsc.exe", "/v: " & ComputerName)
         Thread.Sleep(1000)
@@ -1006,7 +1072,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub pic_Reboot_Click(sender As Object, e As EventArgs) Handles pic_Reboot.Click, REBOOTREMOTECOMPUTERToolStripMenuItem.Click
+    Private Sub pic_Reboot_Click(sender As Object, e As EventArgs) Handles picBocRestartNEW.Click, REBOOTREMOTECOMPUTERToolStripMenuItem.Click
         Me.Cursor = Cursors.WaitCursor
 
         Dim Result_msg = MsgBox(My.Resources.ConfirmReboot & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.MessageReboot & " : " & ComputerName)
@@ -1102,7 +1168,7 @@ Public Class Main
         popupRefreshApps.ShowDialog(Me)
     End Sub
 
-    Private Sub pic_Explorer_Click(sender As Object, e As EventArgs) Handles pic_Explorer.Click, EXPLORERToolStripMenuItem.Click
+    Private Sub pic_Explorer_Click(sender As Object, e As EventArgs) Handles picBoxFolder_NEW.Click, EXPLORERToolStripMenuItem.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$")
         Catch ex As Exception
@@ -1144,10 +1210,13 @@ Public Class Main
 
             'Dim popupReinstallClientForm As Popup_Reinstall_Client = New Popup_Reinstall_Client
             'popupReinstallClientForm.ShowDialog(Me)
-
-            'CMDAutomate(INI_REINSTALLPATH, strResult)
             Read_INI(UCase(PC_Domain))
-            RunDosCommand(INI_REINSTALLPATH.Replace("PATH=", ""))
+            'CMDAutomate(INI_REINSTALLPATH.Replace("PATH=", ""), strResult)
+            'Read_INI(UCase(PC_Domain))
+            'RunDosCommand(INI_REINSTALLPATH.Replace("PATH=", ""))
+            txtCommandInput.Text = (INI_REINSTALLPATH.Replace("PATH=", ""))
+            Me.Refresh()
+            RundCommands()
 
         End If
     End Sub
@@ -3597,7 +3666,7 @@ Public Class Main
         'reset first
         Me.Text = "SCCM PC Admin  " & ComputerName
         Me.lbl_Version.Text = ""
-        txt_img_ver.Text = ""
+        txt_img_ver_NEW.Text = ""
         txt_SRU_Verimg.Text = ""
         'txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
         'txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
@@ -3619,7 +3688,7 @@ Public Class Main
 
         'txt_ComputerName.Text = ComputerName
 
-        txt_img_ver.Text = VerImg_data
+        txt_img_ver_NEW.Text = VerImg_data
         txt_SRU_Verimg.Text = SRU_VerImg_data
         'txt_last_reboot.Text = WMIDateConvert(str_LastBootUpTime)
         'txt_img_install_Date.Text = WMIDateConvert(str_InstallDate)
@@ -3761,7 +3830,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub Txt_img_install_Date_TextChanged(sender As Object, e As EventArgs) Handles txt_img_install_Date.TextChanged
+    Private Sub Txt_img_install_Date_TextChanged(sender As Object, e As EventArgs) Handles txt_img_install_Date_NEW.TextChanged
 
     End Sub
 
@@ -3878,14 +3947,14 @@ Public Class Main
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
             startInfo.FileName = "cmd.exe"
             startInfo.CreateNoWindow = True
-            Dim cmdSetup = " cmd.exe /c "
+            Dim cmdSetup = " cmd.exe /c " ''needed before any command to ensure psexec runs the command and exits so we can capture the return
 
             If username IsNot Nothing Then
 
                 If domain IsNot Nothing Then
-                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & domain & "\" & username & " -p " & password & " " & cmdSetup & command & """"
+                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & txtRCW_domain.Text & "\" & txtRCW_username.Text & " -p " & txtRCW_password.Text & " " & cmdSetup & command & """"
                 Else
-                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & username & " -p " & password & " " & cmdSetup & command & """"
+                    startInfo.Arguments = "/C ""psexec.exe \\" & serverName & " -u " & txtRCW_username.Text & " -p " & txtRCW_password.Text & " " & cmdSetup & command & """"
                 End If
             Else
                 startInfo.Arguments = "/C ""psexec.exe " & serverName & " " & cmdSetup & command & """"
@@ -3898,23 +3967,47 @@ Public Class Main
 
             Return output
 
-            'If process.ExitCode = 0 AndAlso process IsNot Nothing AndAlso process.HasExited Then
-            'Return output
-            'Else
-            'Return "Error running the command : " & command
-            'End If
-
         Catch ex As Exception
+            txt_LogWindow.AppendText("Exception thrown: " & ex.Message)
             Throw ex
         End Try
     End Function
+
+
+    Public Function executeDosCommand(ByVal serverName As String, ByVal username As String, ByVal password As String, ByVal domain As String, ByVal command As String) As String
+        Try
+            Dim process As System.Diagnostics.Process = New System.Diagnostics.Process()
+            Dim startInfo As System.Diagnostics.ProcessStartInfo = New System.Diagnostics.ProcessStartInfo()
+            startInfo.RedirectStandardOutput = True
+            startInfo.UseShellExecute = False
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+            startInfo.FileName = "cmd.exe"
+            startInfo.CreateNoWindow = True
+            Dim cmdSetup = " cmd.exe /k " ''needed before any command to ensure psexec runs the command and exits so we can capture the return
+
+            startInfo.Arguments = cmdSetup & command
+            process.StartInfo = startInfo
+            process.Start()
+            Dim output = process.StandardOutput.ReadToEnd()
+            process.WaitForExit()
+
+            Return output
+
+        Catch ex As Exception
+            txt_LogWindow.AppendText("Exception thrown: " & ex.Message)
+            Throw ex
+
+        End Try
+    End Function
+
+
     Private Sub InitCommandWindow()
         Me.AcceptButton = btnCommandInput
         MyProcess = New Process
         MyProcess.EnableRaisingEvents = False
         With MyProcess.StartInfo
             .FileName = "Psexec.exe "
-            .Arguments = " \\" & ComputerName & " -h cmd.exe /k " & txtCommandInput.Text ' -u hrdc-drhc.net\develop.sadi.sg.gebe -p " & myPwd & "  -h cmd.exe /k " '& txt         '" -u develop.sadi.sg.gebe -p HolyshiT2020! "
+            .Arguments = " \\" & ComputerName & " - u " & txtRCW_domain.Text & "\" & txtRCW_username.Text & "  - p " & txtRCW_password.Text & " -h cmd.exe /c " & txtCommandInput.Text
             .UseShellExecute = False
             .CreateNoWindow = True
             .RedirectStandardInput = True
@@ -3932,11 +4025,28 @@ Public Class Main
     End Sub
 
     Private Sub BtnCommandInput_Click(sender As Object, e As EventArgs) Handles btnCommandInput.Click
-        Cursor = Cursors.WaitCursor
+        If txtRCW_password.Text = "" And txtRCW_username.Text = "" And txtRCW_domain.Text = "" Then
+            'can't run psexec comannds without credentials
+            txtCommandOutput.Text = "Must provide domain, username and password to run commands on remote computer"
+        Else
+
+            Cursor = Cursors.WaitCursor
+            'RunDosCommand(txtCommandInput.Text)
+            txtCommandOutput.Text = vbCrLf & executeCommand(ComputerName, txtRCW_username.Text, txtRCW_password.Text, txtRCW_domain.Text, txtCommandInput.Text)
+            txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Running command " & txtCommandInput.Text & " On device: " & ComputerName
+            Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub RundCommands()
+
+
+        'Cursor = Cursors.WaitCursor
         'RunDosCommand(txtCommandInput.Text)
-        txtCommandOutput.Text = vbCrLf & executeCommand(ComputerName, "develop.sadi.sg.gebe", "HolyshiT2020!", "hrdc-drhc.net", txtCommandInput.Text)
-        txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Running command " & txtCommandInput.Text & " on device: " & ComputerName
-        Cursor = Cursors.Default
+        txtCommandOutput.Text = vbCrLf & executeDosCommand(ComputerName, txtRCW_username.Text, txtRCW_password.Text, txtRCW_domain.Text, txtCommandInput.Text)
+            txt_LogWindow.Text = txt_LogWindow.Text & vbCrLf & "Running command " & txtCommandInput.Text & " On device: " & ComputerName
+        'Cursor = Cursors.Default
+
     End Sub
     Private Sub RunDosCommand(strCommand As String)
         If strCommand.Length > 1 Then
@@ -4601,11 +4711,8 @@ Public Class Main
             Me.Cursor = Cursors.Default
         End If
 
-        Me.Cursor = Cursors.WaitCursor
-        lbl_loading.Visible = False
         Thread.Sleep(3000)
         Services_Stats()
-        Me.Cursor = Cursors.Default
 
         Button1.Enabled = True
         CheckBox6.Enabled = True
@@ -4615,13 +4722,21 @@ Public Class Main
         CheckBox2.Enabled = True
         CheckBox1.Enabled = True
 
+        CheckBox6.Checked = False
+        CheckBox5.Checked = False
+        CheckBox4.Checked = False
+        CheckBox3.Checked = False
+        CheckBox2.Checked = False
+        CheckBox1.Checked = False
+
         ProgressBar1.Visible = False
-        ProgressBar1.Value = 0
+        'ProgressBar1.Value = 0
 
         TimerBar_Adv_clean = 0
         TimerBar_Adv_clean_now = 0
         bError = False
         lbl_loading.Visible = False
+        Me.Cursor = Cursors.Default
 
         'Me.Close()
     End Sub
@@ -5063,7 +5178,7 @@ Public Class Main
         MW_Select = ddlDesiredLength.SelectedItem
     End Sub
 
-    Private Sub Cmd_GPO_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_GPO_NEW_Click(sender As Object, e As EventArgs) Handles cmd_GPO_NEW.Click
         Me.Cursor = Cursors.WaitCursor
 
         Dim Result_msg = MsgBox(My.Resources.ConfirmGPOUpdate & Chr(13) & Chr(13) & My.Resources.ConfirmAction, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Resources.TitleGPUpdate & " : " & ComputerName)
@@ -5091,7 +5206,7 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub Cmd_Del_WMI_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_Del_WMI_NEW_Click(sender As Object, e As EventArgs) Handles cmd_Del_WMI_NEW.Click
         Me.Cursor = Cursors.WaitCursor
 
         'arret du service sccm
@@ -5118,7 +5233,7 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub Cmd_Rebuilding_WMI_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_Rebuilding_WMI_Click(sender As Object, e As EventArgs) Handles cmd_Rebuilding_WMI_NEW.Click
         Me.Cursor = Cursors.WaitCursor
 
         'arret du service Windows Management Instrumentation
@@ -5148,7 +5263,7 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub Cmd_Re_Registering_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_Re_Registering_NEW_Click(sender As Object, e As EventArgs) Handles cmd_Re_Registering_NEW.Click
         Me.Cursor = Cursors.WaitCursor
 
         'arret du service Windows Management Instrumentation
@@ -5178,7 +5293,7 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub Cmd_registry_pol_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_registry_pol_Click(sender As Object, e As EventArgs) Handles cmd_registry_pol_NEW.Click
         Dim fso = CreateObject("Scripting.FileSystemObject")
         Me.Cursor = Cursors.WaitCursor
 
@@ -5227,7 +5342,7 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub Cmd_WSUS_Download_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_WSUS_Download_NEW_Click(sender As Object, e As EventArgs) Handles cmd_WSUS_Download_NEW.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\SoftwareDistribution\Download")
         Catch ex As Exception
@@ -5235,7 +5350,7 @@ Public Class Main
         End Try
     End Sub
 
-    Private Sub Cmd_BITS_Location_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_BITS_Location_NEW_Click(sender As Object, e As EventArgs) Handles cmd_BITS_Location_NEW.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\ProgramData\Microsoft\Network\Downloader")
         Catch ex As Exception
@@ -5243,7 +5358,7 @@ Public Class Main
         End Try
     End Sub
 
-    Private Sub Cmd_DataStore_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_DataStore_NEW_Click(sender As Object, e As EventArgs) Handles cmd_DataStore_NEW.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\SoftwareDistribution\DataStore")
         Catch ex As Exception
@@ -5251,16 +5366,12 @@ Public Class Main
         End Try
     End Sub
 
-    Private Sub Cmd_Client_Logs_NEW_Click(sender As Object, e As EventArgs)
+    Private Sub Cmd_Client_Logs_NEW_Click(sender As Object, e As EventArgs) Handles cmd_Client_Logs_NEW.Click
         Try
             Process.Start("C:\utils-outils\Explorer++.exe", "\\" & ComputerName & "\c$\Windows\CCM\Logs")
         Catch ex As Exception
             ' Gestion de l'erreur
         End Try
-    End Sub
-
-    Private Sub Button5_Click(sender As Object, e As EventArgs)
-
     End Sub
 
     Private Sub Lstv_Collection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstv_Collection.SelectedIndexChanged
@@ -5530,18 +5641,6 @@ Public Class Main
         Button10_Click()
     End Sub
 
-    Private Sub Cmd_Rebuilding_WMI_NEW_Click(sender As Object, e As EventArgs) Handles cmd_Rebuilding_WMI_NEW.Click
-
-    End Sub
-
-    Private Sub Cmd_BITS_Location_NEW_Click_1(sender As Object, e As EventArgs) Handles cmd_BITS_Location_NEW.Click
-
-    End Sub
-
-    Private Sub Cmd_WSUS_Download_NEW_Click_1(sender As Object, e As EventArgs) Handles cmd_WSUS_Download_NEW.Click
-
-    End Sub
-
     Private Sub Lbl_img_ver_win10_NEW_Click(sender As Object, e As EventArgs) Handles lbl_img_ver_win10_NEW.Click
 
     End Sub
@@ -5555,6 +5654,30 @@ Public Class Main
     End Sub
 
     Private Sub ListViewInstalledSoftware_NEW_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewInstalledSoftware_NEW.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub PictBoxRestartNEW_Click(sender As Object, e As EventArgs) Handles picBocRestartNEW.Click
+
+    End Sub
+
+    Private Sub PicBoxHelp_NEW_Click(sender As Object, e As EventArgs) Handles picBoxHelp_NEW.Click
+
+    End Sub
+
+    Private Sub PicBoxRDP_NEW_Click(sender As Object, e As EventArgs) Handles picBoxRDP_NEW.Click
+
+    End Sub
+
+    Private Sub PicBoxFolder_NEW_Click(sender As Object, e As EventArgs) Handles picBoxFolder_NEW.Click
+
+    End Sub
+
+    Private Sub SCCM_INFORMATION_BOX_Enter(sender As Object, e As EventArgs) Handles SCCM_INFORMATION_BOX.Enter
+
+    End Sub
+
+    Private Sub BrpBoxRCWCredBox_Enter(sender As Object, e As EventArgs) Handles brpBoxRCWCredBox.Enter
 
     End Sub
 
@@ -5601,7 +5724,7 @@ Public Class Main
     Private Sub CMD_ALL_Click(sender As Object, e As EventArgs) Handles CMD_ALL.Click
         CMD_ALL_Click()
     End Sub
-    Private Sub cmd_Add_SW_Click(sender As Object, e As EventArgs) Handles cmd_Add_SW.Click
+    Private Sub btnAddMaintWindow_NEW_Click(sender As Object, e As EventArgs) Handles btnAddMaintWindow_NEW.Click
         'Va demander au client de choisir la longueur de la fenetre de maintenance désirer
         Dim popupMWTime As Popup_MW_Time = New Popup_MW_Time
         popupMWTime.ShowDialog(Me)
@@ -6630,7 +6753,7 @@ Public Class Main
         'text fields
         txt_OSCaption_NEW.Text = ""
         txt_img_ver_win10_NEW.Text = ""
-        txt_img_ver.Text = ""
+        txt_img_ver_NEW.Text = ""
         txt_SiteCode_result_NEW.Text = ""
         txt_ManagementPoint_NEW.Text = ""
         txt_Client_Version_Result_NEW.Text = ""
@@ -6642,8 +6765,8 @@ Public Class Main
         txt_PCName_NEW.Text = ""
         txtLoggedIn_NEW.Text = ""
         txt_ADSite_NEW.Text = ""
-        txt_img_ver.Text = ""
-        txt_img_install_Date.Text = ""
+        txt_img_ver_NEW.Text = ""
+        txt_img_install_Date_NEW.Text = ""
         txt_last_reboot_NEW.Text = ""
         txt_img_ver_win10_NEW.Text = ""
         txt_language_NEW.Text = ""
@@ -6689,7 +6812,7 @@ Public Class Main
         CheckBox5.Checked = False
         CheckBox6.Checked = False
 
-        lblRunCmdMsg.Text = lblRunCmdMsg.Text & ": " & ComputerName
+        lblRunCmdMsg.Text = "* domain, username and password must be provided to run commands on " & ": " & ComputerName
 
         Affichage_Defaut()
         Me.Refresh()
@@ -6701,5 +6824,20 @@ Public Class Main
         Dim popupRefreshApps As Popup_Refresh_Apps = New Popup_Refresh_Apps
         popupRefreshApps.ShowDialog(Me)
     End Sub
+
+    Public Function GetRunningSCCMAdminUser()
+        Dim strCommand As String = "tasklist /V /FI ""ImageName eq sccmpcadmin.exe"" /FO LIST"
+        Dim strResults = ""
+        Dim Newline As String
+        Newline = System.Environment.NewLine
+
+        'RunDosCommand(strCommand)
+        CMDAutomate(strCommand, strResults)
+        Dim parts As String() = strResults.Split(New String() {Environment.NewLine}, StringSplitOptions.None)
+        If (parts(11).Contains("User Name:")) Then
+            strResults = parts(11).Split("\")(1)
+        End If
+        Return strResults
+    End Function
 
 End Class

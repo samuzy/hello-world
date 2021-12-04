@@ -45,6 +45,9 @@ Public Class Main_Start_Form
 
     Private Sub Main_Start_Form_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        'Main.Instance.Show()
+        'Me.Close()
+
         'Mise par défault les Valeurs de démarrage
         PC_Status = False
         pic_Ok.Visible = False
@@ -85,6 +88,10 @@ Public Class Main_Start_Form
             MsgBox(My.Resources.Missing_INI_Files, MsgBoxStyle.Critical)
             Close()
         End If
+
+        '''' WE don't need this popupa anymore other than to load some resorces, show the main form and close the pop-up immediately
+        Main.Instance.Show()
+        Me.Close()
 
     End Sub
 

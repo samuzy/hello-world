@@ -880,6 +880,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Error_BAD_CON.
+        '''</summary>
+        Friend ReadOnly Property Error_BAD_CON() As String
+            Get
+                Return ResourceManager.GetString("Error_BAD_CON", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ERROR_ANALYZE_BEFORE_RETRY.
         '''</summary>
         Friend ReadOnly Property ErrorAnalyzeBeforeRetry() As String

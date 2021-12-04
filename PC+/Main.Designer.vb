@@ -83,6 +83,15 @@ Partial Class Main
         Me.lblChange15Minutes_NEW = New System.Windows.Forms.Label()
         Me.cmd_Rebuilding_WMI_NEW = New System.Windows.Forms.Button()
         Me.cmd_BITS_Location_NEW = New System.Windows.Forms.Button()
+        Me.cmd_pkg_apps = New System.Windows.Forms.Button()
+        Me.cmd_Force_Apps_update = New System.Windows.Forms.Button()
+        Me.cmd_Reinstall_client = New System.Windows.Forms.Button()
+        Me.cmd_pc_info = New System.Windows.Forms.Button()
+        Me.cmd_Force_WSUS = New System.Windows.Forms.Button()
+        Me.cmd_SCCM_WSUS_SCUP_Approved = New System.Windows.Forms.Button()
+        Me.cmd_Clear_cache_bits = New System.Windows.Forms.Button()
+        Me.cmd_SCCM_Action = New System.Windows.Forms.Button()
+        Me.cmdSoftware = New System.Windows.Forms.Button()
         Me.cmd_Re_Registering_NEW = New System.Windows.Forms.Button()
         Me.cmd_Client_Logs_NEW = New System.Windows.Forms.Button()
         Me.cmd_DataStore_NEW = New System.Windows.Forms.Button()
@@ -169,21 +178,12 @@ Partial Class Main
         Me.lbl_Name = New System.Windows.Forms.Label()
         Me.txt_CPU = New System.Windows.Forms.TextBox()
         Me.lbl_EquipmentType_NEW = New System.Windows.Forms.Label()
-        Me.txt_ADSite_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_img_ver_win10_NEW = New System.Windows.Forms.Label()
-        Me.lbl_ADSite_NEW = New System.Windows.Forms.Label()
-        Me.pic_rightArrow = New System.Windows.Forms.PictureBox()
         Me.lbl_Ram = New System.Windows.Forms.Label()
-        Me.pic_notOk = New System.Windows.Forms.PictureBox()
-        Me.pic_Ok = New System.Windows.Forms.PictureBox()
-        Me.txt_img_install_Date = New System.Windows.Forms.TextBox()
-        Me.lbl_PCName_NEW = New System.Windows.Forms.Label()
+        Me.txt_img_install_Date_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_CPU = New System.Windows.Forms.Label()
-        Me.lbl_UserLoggedIn_NEW = New System.Windows.Forms.Label()
         Me.lblOsInstallDate = New System.Windows.Forms.Label()
-        Me.txt_PCName_NEW = New System.Windows.Forms.TextBox()
         Me.txt_Vendor = New System.Windows.Forms.TextBox()
-        Me.txtLoggedIn_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_Vendor = New System.Windows.Forms.Label()
         Me.txt_IP_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_IPAddress_NEW = New System.Windows.Forms.Label()
@@ -191,7 +191,7 @@ Partial Class Main
         Me.lbl_OS_NEW = New System.Windows.Forms.Label()
         Me.txt_last_reboot_NEW = New System.Windows.Forms.TextBox()
         Me.txt_language_NEW = New System.Windows.Forms.TextBox()
-        Me.txt_img_ver = New System.Windows.Forms.TextBox()
+        Me.txt_img_ver_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_LastRestart_NEW = New System.Windows.Forms.Label()
         Me.lbl_OSLang_NEW = New System.Windows.Forms.Label()
         Me.lblImageVersion = New System.Windows.Forms.Label()
@@ -319,12 +319,19 @@ Partial Class Main
         Me.cmd_Add_SW = New System.Windows.Forms.Button()
         Me.cmd_Show_SW = New System.Windows.Forms.Button()
         Me.RUN_COMMAND_TAB = New System.Windows.Forms.TabPage()
-        Me.lblRunCmdMsg = New System.Windows.Forms.Label()
         Me.cmd_Reinstall_client_NEW = New System.Windows.Forms.Button()
         Me.btnClearCommandWindow = New System.Windows.Forms.Button()
         Me.txtCommandOutput = New System.Windows.Forms.TextBox()
         Me.btnCommandInput = New System.Windows.Forms.Button()
         Me.txtCommandInput = New System.Windows.Forms.TextBox()
+        Me.brpBoxRCWCredBox = New System.Windows.Forms.GroupBox()
+        Me.lblRunCmdMsg = New System.Windows.Forms.Label()
+        Me.lblRCW_domain = New System.Windows.Forms.Label()
+        Me.lblRCW_password = New System.Windows.Forms.Label()
+        Me.txtRCW_password = New System.Windows.Forms.TextBox()
+        Me.lblRCW__username = New System.Windows.Forms.Label()
+        Me.txtRCW_username = New System.Windows.Forms.TextBox()
+        Me.txtRCW_domain = New System.Windows.Forms.TextBox()
         Me.ADVANCE_MODE_TAB_1 = New System.Windows.Forms.TabPage()
         Me.Gr666 = New System.Windows.Forms.GroupBox()
         Me.cmd_load_Logs5_NEW = New System.Windows.Forms.Button()
@@ -369,16 +376,16 @@ Partial Class Main
         Me.lstv_Collection = New System.Windows.Forms.ListView()
         Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader45 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.pic_notOk = New System.Windows.Forms.PictureBox()
+        Me.pic_rightArrow = New System.Windows.Forms.PictureBox()
+        Me.txt_ADSite_NEW = New System.Windows.Forms.TextBox()
+        Me.lbl_ADSite_NEW = New System.Windows.Forms.Label()
+        Me.pic_Ok = New System.Windows.Forms.PictureBox()
+        Me.lbl_PCName_NEW = New System.Windows.Forms.Label()
+        Me.lbl_UserLoggedIn_NEW = New System.Windows.Forms.Label()
+        Me.txt_PCName_NEW = New System.Windows.Forms.TextBox()
+        Me.txtLoggedIn_NEW = New System.Windows.Forms.TextBox()
         Me.lbl_loading = New System.Windows.Forms.Label()
-        Me.cmd_pc_info = New System.Windows.Forms.Button()
-        Me.cmd_Reinstall_client = New System.Windows.Forms.Button()
-        Me.cmd_Force_Apps_update = New System.Windows.Forms.Button()
-        Me.cmd_Force_WSUS = New System.Windows.Forms.Button()
-        Me.cmd_pkg_apps = New System.Windows.Forms.Button()
-        Me.cmd_SCCM_WSUS_SCUP_Approved = New System.Windows.Forms.Button()
-        Me.cmd_Clear_cache_bits = New System.Windows.Forms.Button()
-        Me.cmd_SCCM_Action = New System.Windows.Forms.Button()
-        Me.cmdSoftware = New System.Windows.Forms.Button()
         Me.pic_reboot_status = New System.Windows.Forms.PictureBox()
         Me.txt_reboot_status = New System.Windows.Forms.Label()
         Me.Pic_OFF_wuauserv = New System.Windows.Forms.PictureBox()
@@ -435,47 +442,50 @@ Partial Class Main
         Me.ENToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserGuideToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.grpBoxConnectionInfo = New System.Windows.Forms.GroupBox()
+        Me.grpBoxTopButtons = New System.Windows.Forms.GroupBox()
+        Me.picBoxFolder_NEW = New System.Windows.Forms.PictureBox()
+        Me.picBocRestartNEW = New System.Windows.Forms.PictureBox()
+        Me.picBoxHelp_NEW = New System.Windows.Forms.PictureBox()
+        Me.picBoxRDP_NEW = New System.Windows.Forms.PictureBox()
         CType(Me.pic_Assitance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_Explorer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_Reboot, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBoxMaintenanceWindow_NEW.SuspendLayout
+        Me.GroupBoxMaintenanceWindow_NEW.SuspendLayout()
         CType(Me.pic_remote, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ProgramsAndFeaturesSubTab.SuspendLayout
-        Me.INSTALLED_SOFTWARE_TAB.SuspendLayout
-        Me.JAVA_TAB.SuspendLayout
-        Me.PROCESS_TAB.SuspendLayout
-        Me.SERVICES_TAB.SuspendLayout
-        Me.GroupBoxLogWindow_NEW.SuspendLayout
-        Me.MainTab.SuspendLayout
-        Me.COMPUTER_INFORMATION_TAB.SuspendLayout
-        Me.AdvancedModeTab.SuspendLayout
-        Me.AdvancedModeTab1.SuspendLayout
-        Me.Panel3.SuspendLayout
-        Me.AdvancedModeTab2.SuspendLayout
-        Me.groupBoxAdvMode2_2.SuspendLayout
+        Me.ProgramsAndFeaturesSubTab.SuspendLayout()
+        Me.INSTALLED_SOFTWARE_TAB.SuspendLayout()
+        Me.JAVA_TAB.SuspendLayout()
+        Me.PROCESS_TAB.SuspendLayout()
+        Me.SERVICES_TAB.SuspendLayout()
+        Me.GroupBoxLogWindow_NEW.SuspendLayout()
+        Me.MainTab.SuspendLayout()
+        Me.COMPUTER_INFORMATION_TAB.SuspendLayout()
+        Me.AdvancedModeTab.SuspendLayout()
+        Me.AdvancedModeTab1.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.AdvancedModeTab2.SuspendLayout()
+        Me.groupBoxAdvMode2_2.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.groupBoxAdvMode2_3.SuspendLayout
-        Me.groupBoxAdvMode2_4.SuspendLayout
-        Me.groupBoxAdvMode2_1.SuspendLayout
-        Me.Panel1.SuspendLayout
-        Me.groupBoxMembership_NEW.SuspendLayout
-        Me.SCCM_INFORMATION_BOX.SuspendLayout
-        Me.CompInfoGroupBox.SuspendLayout
-        CType(Me.pic_rightArrow, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pic_notOk, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pic_Ok, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SCCM_PK_APPS_TAB.SuspendLayout
-        Me.Tab_pkg_app.SuspendLayout
-        Me.START.SuspendLayout
+        Me.groupBoxAdvMode2_3.SuspendLayout()
+        Me.groupBoxAdvMode2_4.SuspendLayout()
+        Me.groupBoxAdvMode2_1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.groupBoxMembership_NEW.SuspendLayout()
+        Me.SCCM_INFORMATION_BOX.SuspendLayout()
+        Me.CompInfoGroupBox.SuspendLayout()
+        Me.SCCM_PK_APPS_TAB.SuspendLayout()
+        Me.Tab_pkg_app.SuspendLayout()
+        Me.START.SuspendLayout()
         CType(Me.pic_arrow, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.EXEC_HIST_APPS.SuspendLayout
-        Me.EXEC_HIST_PKG_TAB.SuspendLayout
-        Me.RUNNING_PKGS_TAB.SuspendLayout
-        Me.ADVERTISEMENTS_TAB.SuspendLayout
-        Me.SoftwareCacheLocation_Tab.SuspendLayout
-        Me.SCCM_WSUS_SCUP_TAB.SuspendLayout
-        Me.PROGRAMS_FEATURES_TAB.SuspendLayout
-        Me.SCCM_ACTIONS_TAB.SuspendLayout
+        Me.EXEC_HIST_APPS.SuspendLayout()
+        Me.EXEC_HIST_PKG_TAB.SuspendLayout()
+        Me.RUNNING_PKGS_TAB.SuspendLayout()
+        Me.ADVERTISEMENTS_TAB.SuspendLayout()
+        Me.SoftwareCacheLocation_Tab.SuspendLayout()
+        Me.SCCM_WSUS_SCUP_TAB.SuspendLayout()
+        Me.PROGRAMS_FEATURES_TAB.SuspendLayout()
+        Me.SCCM_ACTIONS_TAB.SuspendLayout()
         CType(Me.pic_uncheck0, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_done0, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_done121, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -508,21 +518,25 @@ Partial Class Main
         CType(Me.pic_uncheck31, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_uncheck108, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_uncheck113, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.REPAIR_CLEANING_TAB.SuspendLayout
-        Me.Panel2.SuspendLayout
+        Me.REPAIR_CLEANING_TAB.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.SuspendLayout
-        Me.RUN_COMMAND_TAB.SuspendLayout
-        Me.ADVANCE_MODE_TAB_1.SuspendLayout
-        Me.Gr666.SuspendLayout
-        Me.groupBoxAdvancedMode_NEW.SuspendLayout
+        Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.SuspendLayout()
+        Me.RUN_COMMAND_TAB.SuspendLayout()
+        Me.brpBoxRCWCredBox.SuspendLayout()
+        Me.ADVANCE_MODE_TAB_1.SuspendLayout()
+        Me.Gr666.SuspendLayout()
+        Me.groupBoxAdvancedMode_NEW.SuspendLayout()
         CType(Me.pic_redflag2_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_greenflag2_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_redflag1_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_greenflag1_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ADVANCE_MODE_TAB_4.SuspendLayout
+        Me.ADVANCE_MODE_TAB_4.SuspendLayout()
+        CType(Me.pic_notOk, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pic_rightArrow, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pic_Ok, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_reboot_status, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Pic_OFF_wuauserv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Pic_ON_wuauserv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -536,9 +550,15 @@ Partial Class Main
         CType(Me.Pic_OFF_MPSSVC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Pic_ON_MPSSVC, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pic_ON_RemoteRegistry, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MenuStrip1.SuspendLayout
-        Me.MenuStrip2.SuspendLayout
-        Me.SuspendLayout
+        Me.MenuStrip1.SuspendLayout()
+        Me.MenuStrip2.SuspendLayout()
+        Me.grpBoxConnectionInfo.SuspendLayout()
+        Me.grpBoxTopButtons.SuspendLayout()
+        CType(Me.picBoxFolder_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBocRestartNEW, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBoxHelp_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picBoxRDP_NEW, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'TT
         '
@@ -835,6 +855,7 @@ Partial Class Main
         '
         'lbl_Version
         '
+        Me.lbl_Version.BackColor = System.Drawing.Color.WhiteSmoke
         resources.ApplyResources(Me.lbl_Version, "lbl_Version")
         Me.lbl_Version.Name = "lbl_Version"
         '
@@ -900,8 +921,21 @@ Partial Class Main
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_registry_pol_NEW)
         Me.AdvancedModeTab1.Controls.Add(Me.Panel3)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_GPO_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.pic_Reboot)
+        Me.AdvancedModeTab1.Controls.Add(Me.pic_Assitance)
+        Me.AdvancedModeTab1.Controls.Add(Me.pic_remote)
+        Me.AdvancedModeTab1.Controls.Add(Me.pic_Explorer)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_Rebuilding_WMI_NEW)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_BITS_Location_NEW)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_pkg_apps)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Force_Apps_update)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Reinstall_client)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_pc_info)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Force_WSUS)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_SCCM_WSUS_SCUP_Approved)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_Clear_cache_bits)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmd_SCCM_Action)
+        Me.AdvancedModeTab1.Controls.Add(Me.cmdSoftware)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_Re_Registering_NEW)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_Client_Logs_NEW)
         Me.AdvancedModeTab1.Controls.Add(Me.cmd_DataStore_NEW)
@@ -962,6 +996,60 @@ Partial Class Main
         resources.ApplyResources(Me.cmd_BITS_Location_NEW, "cmd_BITS_Location_NEW")
         Me.cmd_BITS_Location_NEW.Name = "cmd_BITS_Location_NEW"
         Me.cmd_BITS_Location_NEW.UseVisualStyleBackColor = True
+        '
+        'cmd_pkg_apps
+        '
+        resources.ApplyResources(Me.cmd_pkg_apps, "cmd_pkg_apps")
+        Me.cmd_pkg_apps.Name = "cmd_pkg_apps"
+        Me.cmd_pkg_apps.UseVisualStyleBackColor = True
+        '
+        'cmd_Force_Apps_update
+        '
+        resources.ApplyResources(Me.cmd_Force_Apps_update, "cmd_Force_Apps_update")
+        Me.cmd_Force_Apps_update.Name = "cmd_Force_Apps_update"
+        Me.cmd_Force_Apps_update.UseVisualStyleBackColor = True
+        '
+        'cmd_Reinstall_client
+        '
+        resources.ApplyResources(Me.cmd_Reinstall_client, "cmd_Reinstall_client")
+        Me.cmd_Reinstall_client.Name = "cmd_Reinstall_client"
+        Me.cmd_Reinstall_client.UseVisualStyleBackColor = True
+        '
+        'cmd_pc_info
+        '
+        resources.ApplyResources(Me.cmd_pc_info, "cmd_pc_info")
+        Me.cmd_pc_info.Name = "cmd_pc_info"
+        Me.cmd_pc_info.UseVisualStyleBackColor = True
+        '
+        'cmd_Force_WSUS
+        '
+        resources.ApplyResources(Me.cmd_Force_WSUS, "cmd_Force_WSUS")
+        Me.cmd_Force_WSUS.Name = "cmd_Force_WSUS"
+        Me.cmd_Force_WSUS.UseVisualStyleBackColor = True
+        '
+        'cmd_SCCM_WSUS_SCUP_Approved
+        '
+        resources.ApplyResources(Me.cmd_SCCM_WSUS_SCUP_Approved, "cmd_SCCM_WSUS_SCUP_Approved")
+        Me.cmd_SCCM_WSUS_SCUP_Approved.Name = "cmd_SCCM_WSUS_SCUP_Approved"
+        Me.cmd_SCCM_WSUS_SCUP_Approved.UseVisualStyleBackColor = True
+        '
+        'cmd_Clear_cache_bits
+        '
+        resources.ApplyResources(Me.cmd_Clear_cache_bits, "cmd_Clear_cache_bits")
+        Me.cmd_Clear_cache_bits.Name = "cmd_Clear_cache_bits"
+        Me.cmd_Clear_cache_bits.UseVisualStyleBackColor = True
+        '
+        'cmd_SCCM_Action
+        '
+        resources.ApplyResources(Me.cmd_SCCM_Action, "cmd_SCCM_Action")
+        Me.cmd_SCCM_Action.Name = "cmd_SCCM_Action"
+        Me.cmd_SCCM_Action.UseVisualStyleBackColor = True
+        '
+        'cmdSoftware
+        '
+        resources.ApplyResources(Me.cmdSoftware, "cmdSoftware")
+        Me.cmdSoftware.Name = "cmdSoftware"
+        Me.cmdSoftware.UseVisualStyleBackColor = True
         '
         'cmd_Re_Registering_NEW
         '
@@ -1495,30 +1583,20 @@ Partial Class Main
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_Name)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_CPU)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_EquipmentType_NEW)
-        Me.CompInfoGroupBox.Controls.Add(Me.txt_ADSite_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_img_ver_win10_NEW)
-        Me.CompInfoGroupBox.Controls.Add(Me.lbl_ADSite_NEW)
-        Me.CompInfoGroupBox.Controls.Add(Me.pic_rightArrow)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_Ram)
-        Me.CompInfoGroupBox.Controls.Add(Me.pic_notOk)
-        Me.CompInfoGroupBox.Controls.Add(Me.pic_Ok)
-        Me.CompInfoGroupBox.Controls.Add(Me.txt_img_install_Date)
-        Me.CompInfoGroupBox.Controls.Add(Me.lbl_PCName_NEW)
+        Me.CompInfoGroupBox.Controls.Add(Me.txt_img_install_Date_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_CPU)
-        Me.CompInfoGroupBox.Controls.Add(Me.lbl_UserLoggedIn_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lblOsInstallDate)
-        Me.CompInfoGroupBox.Controls.Add(Me.txt_PCName_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_Vendor)
-        Me.CompInfoGroupBox.Controls.Add(Me.txtLoggedIn_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_Vendor)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_IP_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_IPAddress_NEW)
-        Me.CompInfoGroupBox.Controls.Add(Me.cmd_Check_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_OSCaption_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_OS_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_last_reboot_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.txt_language_NEW)
-        Me.CompInfoGroupBox.Controls.Add(Me.txt_img_ver)
+        Me.CompInfoGroupBox.Controls.Add(Me.txt_img_ver_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_LastRestart_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lbl_OSLang_NEW)
         Me.CompInfoGroupBox.Controls.Add(Me.lblImageVersion)
@@ -1598,101 +1676,41 @@ Partial Class Main
         resources.ApplyResources(Me.lbl_EquipmentType_NEW, "lbl_EquipmentType_NEW")
         Me.lbl_EquipmentType_NEW.Name = "lbl_EquipmentType_NEW"
         '
-        'txt_ADSite_NEW
-        '
-        Me.txt_ADSite_NEW.BackColor = System.Drawing.Color.GhostWhite
-        Me.txt_ADSite_NEW.Cursor = System.Windows.Forms.Cursors.Default
-        Me.txt_ADSite_NEW.ForeColor = System.Drawing.Color.MidnightBlue
-        resources.ApplyResources(Me.txt_ADSite_NEW, "txt_ADSite_NEW")
-        Me.txt_ADSite_NEW.Name = "txt_ADSite_NEW"
-        Me.txt_ADSite_NEW.ReadOnly = True
-        '
         'lbl_img_ver_win10_NEW
         '
         resources.ApplyResources(Me.lbl_img_ver_win10_NEW, "lbl_img_ver_win10_NEW")
         Me.lbl_img_ver_win10_NEW.Name = "lbl_img_ver_win10_NEW"
         Me.lbl_img_ver_win10_NEW.UseWaitCursor = True
         '
-        'lbl_ADSite_NEW
-        '
-        resources.ApplyResources(Me.lbl_ADSite_NEW, "lbl_ADSite_NEW")
-        Me.lbl_ADSite_NEW.Name = "lbl_ADSite_NEW"
-        '
-        'pic_rightArrow
-        '
-        resources.ApplyResources(Me.pic_rightArrow, "pic_rightArrow")
-        Me.pic_rightArrow.Name = "pic_rightArrow"
-        Me.pic_rightArrow.TabStop = False
-        '
         'lbl_Ram
         '
         resources.ApplyResources(Me.lbl_Ram, "lbl_Ram")
         Me.lbl_Ram.Name = "lbl_Ram"
         '
-        'pic_notOk
+        'txt_img_install_Date_NEW
         '
-        resources.ApplyResources(Me.pic_notOk, "pic_notOk")
-        Me.pic_notOk.Name = "pic_notOk"
-        Me.pic_notOk.TabStop = False
-        '
-        'pic_Ok
-        '
-        Me.pic_Ok.Image = Global.PC_.My.Resources.Resources.pic_Ok_mage
-        resources.ApplyResources(Me.pic_Ok, "pic_Ok")
-        Me.pic_Ok.Name = "pic_Ok"
-        Me.pic_Ok.TabStop = False
-        '
-        'txt_img_install_Date
-        '
-        Me.txt_img_install_Date.BackColor = System.Drawing.Color.GhostWhite
-        Me.txt_img_install_Date.Cursor = System.Windows.Forms.Cursors.Default
-        resources.ApplyResources(Me.txt_img_install_Date, "txt_img_install_Date")
-        Me.txt_img_install_Date.ForeColor = System.Drawing.Color.MidnightBlue
-        Me.txt_img_install_Date.Name = "txt_img_install_Date"
-        Me.txt_img_install_Date.ReadOnly = True
-        '
-        'lbl_PCName_NEW
-        '
-        resources.ApplyResources(Me.lbl_PCName_NEW, "lbl_PCName_NEW")
-        Me.lbl_PCName_NEW.Name = "lbl_PCName_NEW"
+        Me.txt_img_install_Date_NEW.BackColor = System.Drawing.Color.GhostWhite
+        Me.txt_img_install_Date_NEW.Cursor = System.Windows.Forms.Cursors.Default
+        resources.ApplyResources(Me.txt_img_install_Date_NEW, "txt_img_install_Date_NEW")
+        Me.txt_img_install_Date_NEW.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.txt_img_install_Date_NEW.Name = "txt_img_install_Date_NEW"
+        Me.txt_img_install_Date_NEW.ReadOnly = True
         '
         'lbl_CPU
         '
         resources.ApplyResources(Me.lbl_CPU, "lbl_CPU")
         Me.lbl_CPU.Name = "lbl_CPU"
         '
-        'lbl_UserLoggedIn_NEW
-        '
-        resources.ApplyResources(Me.lbl_UserLoggedIn_NEW, "lbl_UserLoggedIn_NEW")
-        Me.lbl_UserLoggedIn_NEW.BackColor = System.Drawing.Color.Transparent
-        Me.lbl_UserLoggedIn_NEW.Name = "lbl_UserLoggedIn_NEW"
-        '
         'lblOsInstallDate
         '
         resources.ApplyResources(Me.lblOsInstallDate, "lblOsInstallDate")
         Me.lblOsInstallDate.Name = "lblOsInstallDate"
-        '
-        'txt_PCName_NEW
-        '
-        Me.txt_PCName_NEW.BackColor = System.Drawing.Color.GhostWhite
-        resources.ApplyResources(Me.txt_PCName_NEW, "txt_PCName_NEW")
-        Me.txt_PCName_NEW.ForeColor = System.Drawing.Color.MidnightBlue
-        Me.txt_PCName_NEW.Name = "txt_PCName_NEW"
         '
         'txt_Vendor
         '
         Me.txt_Vendor.ForeColor = System.Drawing.Color.MidnightBlue
         resources.ApplyResources(Me.txt_Vendor, "txt_Vendor")
         Me.txt_Vendor.Name = "txt_Vendor"
-        '
-        'txtLoggedIn_NEW
-        '
-        Me.txtLoggedIn_NEW.BackColor = System.Drawing.Color.GhostWhite
-        Me.txtLoggedIn_NEW.Cursor = System.Windows.Forms.Cursors.Default
-        resources.ApplyResources(Me.txtLoggedIn_NEW, "txtLoggedIn_NEW")
-        Me.txtLoggedIn_NEW.ForeColor = System.Drawing.Color.MidnightBlue
-        Me.txtLoggedIn_NEW.Name = "txtLoggedIn_NEW"
-        Me.txtLoggedIn_NEW.ReadOnly = True
         '
         'lbl_Vendor
         '
@@ -1745,14 +1763,14 @@ Partial Class Main
         Me.txt_language_NEW.Name = "txt_language_NEW"
         Me.txt_language_NEW.ReadOnly = True
         '
-        'txt_img_ver
+        'txt_img_ver_NEW
         '
-        resources.ApplyResources(Me.txt_img_ver, "txt_img_ver")
-        Me.txt_img_ver.BackColor = System.Drawing.Color.GhostWhite
-        Me.txt_img_ver.Cursor = System.Windows.Forms.Cursors.Default
-        Me.txt_img_ver.ForeColor = System.Drawing.Color.MidnightBlue
-        Me.txt_img_ver.Name = "txt_img_ver"
-        Me.txt_img_ver.ReadOnly = True
+        resources.ApplyResources(Me.txt_img_ver_NEW, "txt_img_ver_NEW")
+        Me.txt_img_ver_NEW.BackColor = System.Drawing.Color.GhostWhite
+        Me.txt_img_ver_NEW.Cursor = System.Windows.Forms.Cursors.Default
+        Me.txt_img_ver_NEW.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.txt_img_ver_NEW.Name = "txt_img_ver_NEW"
+        Me.txt_img_ver_NEW.ReadOnly = True
         '
         'lbl_LastRestart_NEW
         '
@@ -2587,21 +2605,15 @@ Partial Class Main
         '
         'RUN_COMMAND_TAB
         '
-        Me.RUN_COMMAND_TAB.Controls.Add(Me.lblRunCmdMsg)
         Me.RUN_COMMAND_TAB.Controls.Add(Me.cmd_Reinstall_client_NEW)
         Me.RUN_COMMAND_TAB.Controls.Add(Me.btnClearCommandWindow)
         Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandOutput)
         Me.RUN_COMMAND_TAB.Controls.Add(Me.btnCommandInput)
         Me.RUN_COMMAND_TAB.Controls.Add(Me.txtCommandInput)
+        Me.RUN_COMMAND_TAB.Controls.Add(Me.brpBoxRCWCredBox)
         resources.ApplyResources(Me.RUN_COMMAND_TAB, "RUN_COMMAND_TAB")
         Me.RUN_COMMAND_TAB.Name = "RUN_COMMAND_TAB"
         Me.RUN_COMMAND_TAB.UseVisualStyleBackColor = True
-        '
-        'lblRunCmdMsg
-        '
-        resources.ApplyResources(Me.lblRunCmdMsg, "lblRunCmdMsg")
-        Me.lblRunCmdMsg.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.lblRunCmdMsg.Name = "lblRunCmdMsg"
         '
         'cmd_Reinstall_client_NEW
         '
@@ -2633,6 +2645,56 @@ Partial Class Main
         '
         resources.ApplyResources(Me.txtCommandInput, "txtCommandInput")
         Me.txtCommandInput.Name = "txtCommandInput"
+        '
+        'brpBoxRCWCredBox
+        '
+        Me.brpBoxRCWCredBox.Controls.Add(Me.lblRunCmdMsg)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.lblRCW_domain)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.lblRCW_password)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.txtRCW_password)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.lblRCW__username)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.txtRCW_username)
+        Me.brpBoxRCWCredBox.Controls.Add(Me.txtRCW_domain)
+        resources.ApplyResources(Me.brpBoxRCWCredBox, "brpBoxRCWCredBox")
+        Me.brpBoxRCWCredBox.Name = "brpBoxRCWCredBox"
+        Me.brpBoxRCWCredBox.TabStop = False
+        '
+        'lblRunCmdMsg
+        '
+        resources.ApplyResources(Me.lblRunCmdMsg, "lblRunCmdMsg")
+        Me.lblRunCmdMsg.BackColor = System.Drawing.Color.LightGray
+        Me.lblRunCmdMsg.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lblRunCmdMsg.Name = "lblRunCmdMsg"
+        '
+        'lblRCW_domain
+        '
+        resources.ApplyResources(Me.lblRCW_domain, "lblRCW_domain")
+        Me.lblRCW_domain.Name = "lblRCW_domain"
+        '
+        'lblRCW_password
+        '
+        resources.ApplyResources(Me.lblRCW_password, "lblRCW_password")
+        Me.lblRCW_password.Name = "lblRCW_password"
+        '
+        'txtRCW_password
+        '
+        resources.ApplyResources(Me.txtRCW_password, "txtRCW_password")
+        Me.txtRCW_password.Name = "txtRCW_password"
+        '
+        'lblRCW__username
+        '
+        resources.ApplyResources(Me.lblRCW__username, "lblRCW__username")
+        Me.lblRCW__username.Name = "lblRCW__username"
+        '
+        'txtRCW_username
+        '
+        resources.ApplyResources(Me.txtRCW_username, "txtRCW_username")
+        Me.txtRCW_username.Name = "txtRCW_username"
+        '
+        'txtRCW_domain
+        '
+        resources.ApplyResources(Me.txtRCW_domain, "txtRCW_domain")
+        Me.txtRCW_domain.Name = "txtRCW_domain"
         '
         'ADVANCE_MODE_TAB_1
         '
@@ -2956,65 +3018,71 @@ Partial Class Main
         '
         resources.ApplyResources(Me.ColumnHeader45, "ColumnHeader45")
         '
+        'pic_notOk
+        '
+        resources.ApplyResources(Me.pic_notOk, "pic_notOk")
+        Me.pic_notOk.Name = "pic_notOk"
+        Me.pic_notOk.TabStop = False
+        '
+        'pic_rightArrow
+        '
+        resources.ApplyResources(Me.pic_rightArrow, "pic_rightArrow")
+        Me.pic_rightArrow.Name = "pic_rightArrow"
+        Me.pic_rightArrow.TabStop = False
+        '
+        'txt_ADSite_NEW
+        '
+        Me.txt_ADSite_NEW.BackColor = System.Drawing.Color.GhostWhite
+        Me.txt_ADSite_NEW.Cursor = System.Windows.Forms.Cursors.Default
+        resources.ApplyResources(Me.txt_ADSite_NEW, "txt_ADSite_NEW")
+        Me.txt_ADSite_NEW.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.txt_ADSite_NEW.Name = "txt_ADSite_NEW"
+        Me.txt_ADSite_NEW.ReadOnly = True
+        '
+        'lbl_ADSite_NEW
+        '
+        resources.ApplyResources(Me.lbl_ADSite_NEW, "lbl_ADSite_NEW")
+        Me.lbl_ADSite_NEW.Name = "lbl_ADSite_NEW"
+        '
+        'pic_Ok
+        '
+        Me.pic_Ok.Image = Global.PC_.My.Resources.Resources.pic_Ok_mage
+        resources.ApplyResources(Me.pic_Ok, "pic_Ok")
+        Me.pic_Ok.Name = "pic_Ok"
+        Me.pic_Ok.TabStop = False
+        '
+        'lbl_PCName_NEW
+        '
+        resources.ApplyResources(Me.lbl_PCName_NEW, "lbl_PCName_NEW")
+        Me.lbl_PCName_NEW.Name = "lbl_PCName_NEW"
+        '
+        'lbl_UserLoggedIn_NEW
+        '
+        resources.ApplyResources(Me.lbl_UserLoggedIn_NEW, "lbl_UserLoggedIn_NEW")
+        Me.lbl_UserLoggedIn_NEW.BackColor = System.Drawing.Color.Transparent
+        Me.lbl_UserLoggedIn_NEW.Name = "lbl_UserLoggedIn_NEW"
+        '
+        'txt_PCName_NEW
+        '
+        Me.txt_PCName_NEW.BackColor = System.Drawing.Color.GhostWhite
+        resources.ApplyResources(Me.txt_PCName_NEW, "txt_PCName_NEW")
+        Me.txt_PCName_NEW.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.txt_PCName_NEW.Name = "txt_PCName_NEW"
+        '
+        'txtLoggedIn_NEW
+        '
+        Me.txtLoggedIn_NEW.BackColor = System.Drawing.Color.GhostWhite
+        Me.txtLoggedIn_NEW.Cursor = System.Windows.Forms.Cursors.Default
+        resources.ApplyResources(Me.txtLoggedIn_NEW, "txtLoggedIn_NEW")
+        Me.txtLoggedIn_NEW.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.txtLoggedIn_NEW.Name = "txtLoggedIn_NEW"
+        Me.txtLoggedIn_NEW.ReadOnly = True
+        '
         'lbl_loading
         '
         resources.ApplyResources(Me.lbl_loading, "lbl_loading")
         Me.lbl_loading.ForeColor = System.Drawing.Color.DarkRed
         Me.lbl_loading.Name = "lbl_loading"
-        '
-        'cmd_pc_info
-        '
-        resources.ApplyResources(Me.cmd_pc_info, "cmd_pc_info")
-        Me.cmd_pc_info.Name = "cmd_pc_info"
-        Me.cmd_pc_info.UseVisualStyleBackColor = True
-        '
-        'cmd_Reinstall_client
-        '
-        resources.ApplyResources(Me.cmd_Reinstall_client, "cmd_Reinstall_client")
-        Me.cmd_Reinstall_client.Name = "cmd_Reinstall_client"
-        Me.cmd_Reinstall_client.UseVisualStyleBackColor = True
-        '
-        'cmd_Force_Apps_update
-        '
-        resources.ApplyResources(Me.cmd_Force_Apps_update, "cmd_Force_Apps_update")
-        Me.cmd_Force_Apps_update.Name = "cmd_Force_Apps_update"
-        Me.cmd_Force_Apps_update.UseVisualStyleBackColor = True
-        '
-        'cmd_Force_WSUS
-        '
-        resources.ApplyResources(Me.cmd_Force_WSUS, "cmd_Force_WSUS")
-        Me.cmd_Force_WSUS.Name = "cmd_Force_WSUS"
-        Me.cmd_Force_WSUS.UseVisualStyleBackColor = True
-        '
-        'cmd_pkg_apps
-        '
-        resources.ApplyResources(Me.cmd_pkg_apps, "cmd_pkg_apps")
-        Me.cmd_pkg_apps.Name = "cmd_pkg_apps"
-        Me.cmd_pkg_apps.UseVisualStyleBackColor = True
-        '
-        'cmd_SCCM_WSUS_SCUP_Approved
-        '
-        resources.ApplyResources(Me.cmd_SCCM_WSUS_SCUP_Approved, "cmd_SCCM_WSUS_SCUP_Approved")
-        Me.cmd_SCCM_WSUS_SCUP_Approved.Name = "cmd_SCCM_WSUS_SCUP_Approved"
-        Me.cmd_SCCM_WSUS_SCUP_Approved.UseVisualStyleBackColor = True
-        '
-        'cmd_Clear_cache_bits
-        '
-        resources.ApplyResources(Me.cmd_Clear_cache_bits, "cmd_Clear_cache_bits")
-        Me.cmd_Clear_cache_bits.Name = "cmd_Clear_cache_bits"
-        Me.cmd_Clear_cache_bits.UseVisualStyleBackColor = True
-        '
-        'cmd_SCCM_Action
-        '
-        resources.ApplyResources(Me.cmd_SCCM_Action, "cmd_SCCM_Action")
-        Me.cmd_SCCM_Action.Name = "cmd_SCCM_Action"
-        Me.cmd_SCCM_Action.UseVisualStyleBackColor = True
-        '
-        'cmdSoftware
-        '
-        resources.ApplyResources(Me.cmdSoftware, "cmdSoftware")
-        Me.cmdSoftware.Name = "cmdSoftware"
-        Me.cmdSoftware.UseVisualStyleBackColor = True
         '
         'pic_reboot_status
         '
@@ -3143,7 +3211,7 @@ Partial Class Main
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.BackColor = System.Drawing.Color.AliceBlue
+        Me.MenuStrip1.BackColor = System.Drawing.Color.DarkGray
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Menu_About, Me.Menu_Option, Me.AdvancedMode_Menu})
         resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
@@ -3336,33 +3404,76 @@ Partial Class Main
         Me.UserGuideToolStripMenuItem1.Name = "UserGuideToolStripMenuItem1"
         resources.ApplyResources(Me.UserGuideToolStripMenuItem1, "UserGuideToolStripMenuItem1")
         '
+        'grpBoxConnectionInfo
+        '
+        Me.grpBoxConnectionInfo.BackColor = System.Drawing.Color.Azure
+        Me.grpBoxConnectionInfo.Controls.Add(Me.txt_ADSite_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.lbl_ADSite_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.lbl_PCName_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.lbl_UserLoggedIn_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.txt_PCName_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.txtLoggedIn_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.cmd_Check_NEW)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.pic_Ok)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.pic_notOk)
+        Me.grpBoxConnectionInfo.Controls.Add(Me.pic_rightArrow)
+        Me.grpBoxConnectionInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        resources.ApplyResources(Me.grpBoxConnectionInfo, "grpBoxConnectionInfo")
+        Me.grpBoxConnectionInfo.Name = "grpBoxConnectionInfo"
+        Me.grpBoxConnectionInfo.TabStop = False
+        '
+        'grpBoxTopButtons
+        '
+        Me.grpBoxTopButtons.BackColor = System.Drawing.Color.Azure
+        Me.grpBoxTopButtons.Controls.Add(Me.picBoxFolder_NEW)
+        Me.grpBoxTopButtons.Controls.Add(Me.picBocRestartNEW)
+        Me.grpBoxTopButtons.Controls.Add(Me.picBoxHelp_NEW)
+        Me.grpBoxTopButtons.Controls.Add(Me.picBoxRDP_NEW)
+        Me.grpBoxTopButtons.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        resources.ApplyResources(Me.grpBoxTopButtons, "grpBoxTopButtons")
+        Me.grpBoxTopButtons.Name = "grpBoxTopButtons"
+        Me.grpBoxTopButtons.TabStop = False
+        '
+        'picBoxFolder_NEW
+        '
+        resources.ApplyResources(Me.picBoxFolder_NEW, "picBoxFolder_NEW")
+        Me.picBoxFolder_NEW.Name = "picBoxFolder_NEW"
+        Me.picBoxFolder_NEW.TabStop = False
+        '
+        'picBocRestartNEW
+        '
+        resources.ApplyResources(Me.picBocRestartNEW, "picBocRestartNEW")
+        Me.picBocRestartNEW.Name = "picBocRestartNEW"
+        Me.picBocRestartNEW.TabStop = False
+        '
+        'picBoxHelp_NEW
+        '
+        resources.ApplyResources(Me.picBoxHelp_NEW, "picBoxHelp_NEW")
+        Me.picBoxHelp_NEW.Name = "picBoxHelp_NEW"
+        Me.picBoxHelp_NEW.TabStop = False
+        '
+        'picBoxRDP_NEW
+        '
+        resources.ApplyResources(Me.picBoxRDP_NEW, "picBoxRDP_NEW")
+        Me.picBoxRDP_NEW.Name = "picBoxRDP_NEW"
+        Me.picBoxRDP_NEW.TabStop = False
+        '
         'Main
         '
         Me.AcceptButton = Me.cmd_Check_NEW
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.BackColor = System.Drawing.Color.AliceBlue
-        Me.Controls.Add(Me.pic_Assitance)
+        Me.BackColor = System.Drawing.Color.DarkGray
+        Me.Controls.Add(Me.grpBoxTopButtons)
+        Me.Controls.Add(Me.grpBoxConnectionInfo)
+        Me.Controls.Add(Me.cmd_multi_user)
         Me.Controls.Add(Me.lbl_Version)
         Me.Controls.Add(Me.GroupBoxLogWindow_NEW)
-        Me.Controls.Add(Me.cmd_multi_user)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.MainTab)
-        Me.Controls.Add(Me.cmdSoftware)
-        Me.Controls.Add(Me.cmd_SCCM_Action)
-        Me.Controls.Add(Me.cmd_Clear_cache_bits)
-        Me.Controls.Add(Me.cmd_SCCM_WSUS_SCUP_Approved)
-        Me.Controls.Add(Me.cmd_pkg_apps)
-        Me.Controls.Add(Me.cmd_Force_WSUS)
-        Me.Controls.Add(Me.cmd_Force_Apps_update)
-        Me.Controls.Add(Me.cmd_Reinstall_client)
-        Me.Controls.Add(Me.cmd_pc_info)
         Me.Controls.Add(Me.pic_reboot_status)
-        Me.Controls.Add(Me.pic_remote)
         Me.Controls.Add(Me.txt_reboot_status)
-        Me.Controls.Add(Me.pic_Explorer)
         Me.Controls.Add(Me.lbl_loading)
-        Me.Controls.Add(Me.pic_Reboot)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.Pic_OFF_wuauserv)
         Me.Controls.Add(Me.lblRegedit1)
@@ -3401,7 +3512,7 @@ Partial Class Main
         Me.PROCESS_TAB.ResumeLayout(False)
         Me.SERVICES_TAB.ResumeLayout(False)
         Me.GroupBoxLogWindow_NEW.ResumeLayout(False)
-        Me.GroupBoxLogWindow_NEW.PerformLayout
+        Me.GroupBoxLogWindow_NEW.PerformLayout()
         Me.MainTab.ResumeLayout(False)
         Me.COMPUTER_INFORMATION_TAB.ResumeLayout(False)
         Me.AdvancedModeTab.ResumeLayout(False)
@@ -3409,24 +3520,21 @@ Partial Class Main
         Me.Panel3.ResumeLayout(False)
         Me.AdvancedModeTab2.ResumeLayout(False)
         Me.groupBoxAdvMode2_2.ResumeLayout(False)
-        Me.groupBoxAdvMode2_2.PerformLayout
+        Me.groupBoxAdvMode2_2.PerformLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.groupBoxAdvMode2_3.ResumeLayout(False)
-        Me.groupBoxAdvMode2_3.PerformLayout
+        Me.groupBoxAdvMode2_3.PerformLayout()
         Me.groupBoxAdvMode2_4.ResumeLayout(False)
-        Me.groupBoxAdvMode2_4.PerformLayout
+        Me.groupBoxAdvMode2_4.PerformLayout()
         Me.groupBoxAdvMode2_1.ResumeLayout(False)
-        Me.groupBoxAdvMode2_1.PerformLayout
+        Me.groupBoxAdvMode2_1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.groupBoxMembership_NEW.ResumeLayout(False)
-        Me.groupBoxMembership_NEW.PerformLayout
+        Me.groupBoxMembership_NEW.PerformLayout()
         Me.SCCM_INFORMATION_BOX.ResumeLayout(False)
-        Me.SCCM_INFORMATION_BOX.PerformLayout
+        Me.SCCM_INFORMATION_BOX.PerformLayout()
         Me.CompInfoGroupBox.ResumeLayout(False)
-        Me.CompInfoGroupBox.PerformLayout
-        CType(Me.pic_rightArrow, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pic_notOk, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pic_Ok, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CompInfoGroupBox.PerformLayout()
         Me.SCCM_PK_APPS_TAB.ResumeLayout(False)
         Me.Tab_pkg_app.ResumeLayout(False)
         Me.START.ResumeLayout(False)
@@ -3437,7 +3545,7 @@ Partial Class Main
         Me.ADVERTISEMENTS_TAB.ResumeLayout(False)
         Me.SoftwareCacheLocation_Tab.ResumeLayout(False)
         Me.SCCM_WSUS_SCUP_TAB.ResumeLayout(False)
-        Me.SCCM_WSUS_SCUP_TAB.PerformLayout
+        Me.SCCM_WSUS_SCUP_TAB.PerformLayout()
         Me.PROGRAMS_FEATURES_TAB.ResumeLayout(False)
         Me.SCCM_ACTIONS_TAB.ResumeLayout(False)
         CType(Me.pic_uncheck0, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3479,17 +3587,22 @@ Partial Class Main
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DISPLAY_MAINTENANCE_WINDOWS_TAB.ResumeLayout(False)
         Me.RUN_COMMAND_TAB.ResumeLayout(False)
-        Me.RUN_COMMAND_TAB.PerformLayout
+        Me.RUN_COMMAND_TAB.PerformLayout()
+        Me.brpBoxRCWCredBox.ResumeLayout(False)
+        Me.brpBoxRCWCredBox.PerformLayout()
         Me.ADVANCE_MODE_TAB_1.ResumeLayout(False)
         Me.Gr666.ResumeLayout(False)
-        Me.Gr666.PerformLayout
+        Me.Gr666.PerformLayout()
         Me.groupBoxAdvancedMode_NEW.ResumeLayout(False)
-        Me.groupBoxAdvancedMode_NEW.PerformLayout
+        Me.groupBoxAdvancedMode_NEW.PerformLayout()
         CType(Me.pic_redflag2_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_greenflag2_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_redflag1_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_greenflag1_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ADVANCE_MODE_TAB_4.ResumeLayout(False)
+        CType(Me.pic_notOk, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pic_rightArrow, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pic_Ok, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_reboot_status, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Pic_OFF_wuauserv, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Pic_ON_wuauserv, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3504,11 +3617,18 @@ Partial Class Main
         CType(Me.Pic_ON_MPSSVC, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pic_ON_RemoteRegistry, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout
+        Me.MenuStrip1.PerformLayout()
         Me.MenuStrip2.ResumeLayout(False)
-        Me.MenuStrip2.PerformLayout
+        Me.MenuStrip2.PerformLayout()
+        Me.grpBoxConnectionInfo.ResumeLayout(False)
+        Me.grpBoxConnectionInfo.PerformLayout()
+        Me.grpBoxTopButtons.ResumeLayout(False)
+        CType(Me.picBoxFolder_NEW, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBocRestartNEW, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBoxHelp_NEW, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picBoxRDP_NEW, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents txt_PCName_NEW As System.Windows.Forms.TextBox
@@ -3551,7 +3671,7 @@ Partial Class Main
     Friend WithEvents pic_ON_RemoteRegistry As System.Windows.Forms.PictureBox
     Friend WithEvents lbl_OSLang_NEW As System.Windows.Forms.Label
     Friend WithEvents lbl_LastRestart_NEW As System.Windows.Forms.Label
-    Friend WithEvents txt_img_ver As System.Windows.Forms.TextBox
+    Friend WithEvents txt_img_ver_NEW As System.Windows.Forms.TextBox
     Friend WithEvents txt_last_reboot_NEW As System.Windows.Forms.TextBox
     Friend WithEvents txt_language_NEW As System.Windows.Forms.TextBox
     Friend WithEvents Pic_OFF_wuauserv As System.Windows.Forms.PictureBox
@@ -3578,7 +3698,7 @@ Partial Class Main
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents cmd_Add_SW As System.Windows.Forms.Button
     Friend WithEvents pic_Ok As System.Windows.Forms.PictureBox
-    Friend WithEvents txt_img_install_Date As System.Windows.Forms.TextBox
+    Friend WithEvents txt_img_install_Date_NEW As System.Windows.Forms.TextBox
     Friend WithEvents lblOsInstallDate As System.Windows.Forms.Label
     Friend WithEvents cmd_pc_info As System.Windows.Forms.Button
     Friend WithEvents cmd_multi_user As System.Windows.Forms.Button
@@ -3924,4 +4044,17 @@ Partial Class Main
     Friend WithEvents Label16 As Label
     Friend WithEvents lblRunCmdMsg As Label
     Friend WithEvents btn_apps_refresh As Button
+    Friend WithEvents brpBoxRCWCredBox As GroupBox
+    Friend WithEvents lblRCW_domain As Label
+    Friend WithEvents lblRCW_password As Label
+    Friend WithEvents txtRCW_password As TextBox
+    Friend WithEvents lblRCW__username As Label
+    Friend WithEvents txtRCW_username As TextBox
+    Friend WithEvents txtRCW_domain As TextBox
+    Friend WithEvents grpBoxConnectionInfo As GroupBox
+    Friend WithEvents grpBoxTopButtons As GroupBox
+    Friend WithEvents picBocRestartNEW As PictureBox
+    Friend WithEvents picBoxHelp_NEW As PictureBox
+    Friend WithEvents picBoxRDP_NEW As PictureBox
+    Friend WithEvents picBoxFolder_NEW As PictureBox
 End Class
